@@ -4,6 +4,7 @@ import 'package:pollapp/Core/app_constants/image_constant.dart';
 
 import 'package:pollapp/Presentation/Cubit/cubit_files/splashScreen_cubit.dart';
 import 'package:pollapp/Presentation/Views/home_screen.dart';
+import 'package:pollapp/Presentation/Views/oneboarding_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class _SplashViewState extends State<SplashView>
           Navigator.of(context).pushReplacement(
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  HomeScreen(),
+                  OnboardingScreen(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                     return FadeTransition(opacity: animation, child: child);

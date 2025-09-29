@@ -12,7 +12,7 @@ class SplashCubit extends Cubit<SplashState> {
     
     try {
       // Simulate loading data, API calls, initialization, etc.
-      await Future.delayed(const Duration(seconds: 60));
+      await Future.delayed(const Duration(seconds: 10));
       
       // You can add your initialization logic here:
       // - Check authentication status
