@@ -11,44 +11,50 @@ class OnboardingView extends StatelessWidget {
   const OnboardingView({Key? key}) : super(key: key);
 
   // Move the pages list here as a private final field
-
-  Widget _buildPage(BuildContext context, {
-    required String title,
-    required String description,
-    required String image,
-    required int bgColor,
-  }) {
-    return Container(
-      color:Color(bgColor) ,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(image),
-          const SizedBox(height: 40),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.blue.shade800,
-              fontSize: 33
+Widget _buildPage(BuildContext context, {
+  required String title,
+  required String description,
+  required String image,
+  required int bgColor,
+}) {
+  return Container(
+    color: Color(bgColor),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: Image.asset(
+            image,
+            fit: BoxFit.contain,
+            alignment: Alignment.center,
+          ),
+        ),
+        const SizedBox(height: 40),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Colors.blue.shade800,
+            fontSize: 33,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: Text(
+            description,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Colors.black,
             ),
           ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Text(
-              description,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
+        ),
+      ],
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
@@ -119,66 +125,69 @@ class OnboardingView extends StatelessWidget {
           },
         ),
       ),
-      bottomSheet: BlocBuilder<OnboardingCubit, OnboardingState>(
-        builder: (context, state) {
-          if (state is! OnboardingPageChanged) return const SizedBox.shrink();
+   bottomSheet: BlocBuilder<OnboardingCubit, OnboardingState>(
+  builder: (context, state) {
+    if (state is! OnboardingPageChanged) return const SizedBox.shrink();
 
-          return Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, -2),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (state.currentPageIndex != pages.length - 1)
-                  TextButton(
-                    onPressed: () => context.read<OnboardingCubit>().skipToEnd(pages.length),
-                    child: const Text('Skip'),
-                  )
-                else
-                  const SizedBox.shrink(),
-                // Dots indicator
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(
-                    pages.length,
-                    (index) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: state.currentPageIndex == index
-                            ? Colors.indigo
-                            : Colors.grey,
-                      ),
-                    ),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: SizedBox(
+        height: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (state.currentPageIndex != pages.length - 1)
+              TextButton(
+                onPressed: () => context.read<OnboardingCubit>().skipToEnd(pages.length),
+                child: const Text('Skip'),
+              )
+            else
+              const SizedBox.shrink(),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(
+                pages.length,
+                (index) => Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: state.currentPageIndex == index
+                        ? Colors.indigo
+                        : Colors.grey,
                   ),
                 ),
-                if (state.currentPageIndex == pages.length - 1)
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) =>  HomeScreen()),
-                      );
-                    },
-                    child: const Text('Get Started'),
-                  )
-                else
-                  const SizedBox.shrink(),
-              ],
+              ),
             ),
-          );
-        },
+            if (state.currentPageIndex == pages.length - 1)
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                },
+                child: const Text('Get Started'),
+              )
+            else
+              const SizedBox.shrink(),
+          ],
+        ),
       ),
     );
+  },
+),);
   }
 }
