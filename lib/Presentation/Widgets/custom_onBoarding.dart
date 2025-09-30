@@ -89,7 +89,6 @@ class OnboardingView extends StatelessWidget {
         listener: (context, state) {
           if (state is OnboardingPageChanged &&
               state.currentPageIndex == state.totalPages - 1) {
-            // Optionally auto-navigate or show button
           }
         },
         child: BlocBuilder<OnboardingCubit, OnboardingState>(
