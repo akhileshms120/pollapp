@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pollapp/Presentation/Widgets/custom_textWidget.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -8,15 +9,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Assist'),
+        title:  CustomWidget.customTextWidget(text: 'KERALA POLICE'),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.grey[200],
-              child: const Icon(Icons.person, color: Colors.black),
-            ),
-          ),
+          
+         IconButton(
+      icon: const Icon(Icons.search),
+      onPressed: () {   
+      },
+    ),
+    IconButton(
+      icon: const Icon(Icons.notifications),
+      onPressed: () { 
+      },
+    ),
+    const SizedBox(width: 16.0), // Optional: 
         ],
       ),
       body: SingleChildScrollView(

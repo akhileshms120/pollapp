@@ -24,4 +24,12 @@ class AppConstants {
 
   static const String screen5MainTitle="Contacts";
   static const String screen5SubTitle="Contact serves as a vital link between the public and the police, offering more than puvblic and the police,offering more than 1400 contactys with phone numberrs,email addresses and more";
+
+
+  ///////////////////////////////Login Screen ///////////////////////
+  static const String otpButton ="Send OTP";
+  static const String welcomeText ="Welcome to POL-APP";
+  static const String welcomeSubText ="Offical Mobile app of KERALA POLICE";
+  static const String termsText ="Terms and Condition";
+  static const String privacy ="Privacy Policy";
 }

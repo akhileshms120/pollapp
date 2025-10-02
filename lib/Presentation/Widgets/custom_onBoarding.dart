@@ -1,46 +1,51 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Core/app_constants/image_constant.dart';
+import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Cubit/State/onboardinScreen_state.dart';
 import 'package:pollapp/Presentation/Views/home_screen.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({Key? key}) : super(key: key);
 
-  // Move the pages list here as a private final field
 Widget _buildPage(BuildContext context, {
   required String title,
   required String description,
   required String image,
   required int bgColor,
 }) {
+  final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
   return Container(
     color: Color(bgColor),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.5,
-          child: Image.asset(
-            image,
-            fit: BoxFit.contain,
-            alignment: Alignment.center,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: FittedBox(
+              fit: BoxFit.contain,
+              child: Image.asset(image),
+            ),
           ),
         ),
-        const SizedBox(height: 40),
+        SizedBox(height: isLandscape ? 20 : 40),
         Text(
           title,
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.bold,
             color: Colors.blue.shade800,
-            fontSize: 33,
+            fontSize: isLandscape ? 28 : 33,
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: isLandscape ? 8 : 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(
@@ -48,6 +53,7 @@ Widget _buildPage(BuildContext context, {
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Colors.black,
+              fontSize: isLandscape ? 14 : 16,
             ),
           ),
         ),
@@ -175,9 +181,7 @@ Widget _buildPage(BuildContext context, {
             if (state.currentPageIndex == pages.length - 1)
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
+                  Get.offNamed(RoutesName.loginScreen);
                 },
                 child: const Text('Get Started'),
               )

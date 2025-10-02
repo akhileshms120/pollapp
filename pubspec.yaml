@@ -53,11 +53,12 @@ dependencies:
   equatable: ^2.0.7
   liquid_swipe: ^3.1.0
   smooth_page_indicator: ^1.2.1
-  video_player: ^2.10.0
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^2.4.1
  
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -110,3 +111,12 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 # Flutter Native Splash configuration
+  
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/logo.png
+
+  android_12:
+    color: "#FFFFFF"
+    image: assets/images/logo1.png
+    icon_background_color: "#FFFFFF"                    # Enable for iOS

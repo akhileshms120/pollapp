@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:pollapp/Core/app_constants/colors.dart';
 import 'package:pollapp/Core/app_constants/image_constant.dart';
+import 'package:pollapp/Core/app_constants/routes_constant.dart';
 
 import 'package:pollapp/Presentation/Cubit/cubit_files/splashScreen_cubit.dart';
 import 'package:pollapp/Presentation/Views/home_screen.dart';
 import 'package:pollapp/Presentation/Views/oneboarding_screen.dart';
+import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -64,28 +69,18 @@ class _SplashViewState extends State<SplashView>
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
         if (state is SplashCompleted) {
-          Navigator.of(context).pushReplacement(
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  OnboardingScreen(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(opacity: animation, child: child);
-                  },
-              transitionDuration: const Duration(milliseconds: 500),
-            ),
-          );
+         Get.offNamed(RoutesName.onBoardingScreen);
         } else if (state is SplashError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Error: ${state.message}'),
-              backgroundColor: Colors.red,
+              content:CustomWidget.customTextWidget(text:'Error: ${state.message}',bgColor:AppColor.errorMessage  ),
+              backgroundColor: AppColor.errorMessage,
             ),
           );
         }
       },
       child: Scaffold(
-        backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
+        backgroundColor:AppColor.colorMode(mode: isDarkMode),
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -111,7 +106,7 @@ class _SplashViewState extends State<SplashView>
                           width: 150,
                           height: 150,
                           decoration: BoxDecoration(
-                            color: isDarkMode ? Colors.grey[800] : Colors.white,
+                            color: AppColor.colorMode(mode: isDarkMode),
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
@@ -125,17 +120,7 @@ class _SplashViewState extends State<SplashView>
                               ),
                             ],
                           ),
-                          child: Image.asset(
-                            splash_logo,
-                            width: 100,
-                            height: 100,
-                          ),
-                          // Replace with your logo:
-                          // child: Image.asset(
-                          //   'assets/images/logo.png',
-                          //   width: 100,
-                          //   height: 100,
-                          // ),
+                          child:CustomWidget.customImageWidget(imageText: splash_logo,height: 100,width: 100) 
                         ),
                       ),
                     );

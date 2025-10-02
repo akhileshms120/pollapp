@@ -1,22 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:pollapp/Core/routes/routes_name.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Views/home_screen.dart';
-import 'package:pollapp/Presentation/Views/services_screen.dart';
+import 'package:pollapp/Presentation/Views/login_screen.dart';
+import 'package:pollapp/Presentation/Views/oneboarding_screen.dart';
+import 'package:pollapp/Presentation/Views/splash_screen.dart';
 
-class Routes{
+class RoutePages {
 
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch(settings.name){
-      // case RoutesName.splashScreen:
-      //   return MaterialPageRoute(builder: (context)=>HomeScreen());
-      //case RoutesName.servicesScreen:
-       //return MaterialPageRoute(builder: (context)=>ServicesScreen());
-      default:
-      return MaterialPageRoute(builder: (context)=>const Scaffold(
-        body: Center(
-          child: Text("No route Gnerated"),
-        ),
-      ));
-    }
-  }
-  }
+ static final List<GetPage> appPages=[ 
+   GetPage(name: "/", page: () => SplashScreen()),
+  GetPage(name:RoutesName.onBoardingScreen , page: ()=>OnboardingScreen(),
+  transition: Transition.fade,
+  transitionDuration: Duration(milliseconds: 500),
+  ),
+  GetPage(name:RoutesName.homeScreen , page: ()=>HomeScreen()),
+  GetPage(name:RoutesName.loginScreen , page: ()=>LoginScreen()),
+  
+  
+  
+  
+  ];
+}
