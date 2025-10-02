@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:pollapp/Core/app_constants/colors.dart';
+import 'package:pollapp/Core/app_constants/image_constant.dart';
 
 class CustomWidget{
 
@@ -24,11 +27,17 @@ class CustomWidget{
    return Image.asset(imageText,width: width??0,height: height??0,);
   }
   catch(e){
-   return Image.asset("");
+  log("Error in Image Widget $e");
+   return Image.asset(errorImage);
   }
-  
  }
-
-
+ static Widget customSizedBox(double height,double width){
+  try{
+ return SizedBox(height: height,width: width,);
+  }catch(e){
+    log("Error in Sized Box $e");
+    return SizedBox();
+  }
+ }
   
 }
