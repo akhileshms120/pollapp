@@ -58,7 +58,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^2.4.1
+  # flutter_native_splash: ^2.4.1
  
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -112,11 +112,11 @@ flutter:
 
 # Flutter Native Splash configuration
   
-flutter_native_splash:
-  color: "#FFFFFF"
-  image: assets/images/logo.png
+# flutter_native_splash:
+#   color: "#FFFFFF"
+#   image: assets/images/logo.png
 
-  android_12:
-    color: "#FFFFFF"
-    image: assets/images/logo1.png
-    icon_background_color: "#FFFFFF"                    # Enable for iOS
+#   android_12:
+#     color: "#FFFFFF"
+#     image: assets/images/logo1.png
+#     icon_background_color: "#FFFFFF"                    # Enable for iOS
