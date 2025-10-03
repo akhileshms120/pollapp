@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Core/app_constants/colors.dart';
 import 'package:pollapp/Core/app_constants/image_constant.dart';
@@ -72,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       CustomWidget.customTextWidget(
                         text:
-                            "Official Mobile app of KERALA POLICE", // typo fixed
+                            "Official Mobile app of KERALA POLICE",
                         textColor: AppColor.getSubtitleColor(isDarkMode),
                       ),
                     ],
@@ -129,8 +127,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                            _textController.textEditingController.text.isEmpty?
-                          SnackBar(content: AlertDialog(title: Text("Please Enter Mobile Number"),)):
-                        
+                           _onVerify():
                         Get.toNamed(RoutesName.otpScreen,arguments: _textController.textEditingController.text);
                      
                       },
@@ -182,9 +179,9 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       TextButton(
-                        onPressed: () {
-                          // Handle terms tap
-                        },
+                        onPressed: ()=> 
+                          Get.toNamed(RoutesName.termsandCondtionScreen),
+                        
                         child: Text(
                           "Terms and Conditions", // wording fixed
                           style: TextStyle(
@@ -200,9 +197,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {
-                          // Handle privacy tap
-                        },
+                         onPressed: ()=> 
+                          Get.toNamed(RoutesName.privancyPolicyotpScreen),
                         child: Text(
                           AppConstants.privacyText,
                           style: TextStyle(
@@ -239,5 +235,18 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+void _onVerify() {
+  Get.snackbar(
+    "Error", 
+    "Please enter a valid phone number",
+    backgroundColor: Colors.red.shade50,
+    colorText: Colors.red.shade800,
+    snackPosition: SnackPosition.BOTTOM,
+    margin: const EdgeInsets.all(16),
+    borderRadius: 12,
+    icon: const Icon(Icons.error, color: Colors.red),
+    duration: const Duration(seconds: 3),
+  );
+}
 
 }

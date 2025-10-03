@@ -6,5 +6,7 @@ class RoutesName  {
    static const String loginScreen = "/login_screen";
   static const String servicesScreen = "/services_screen";
   static const String otpScreen ='/otp_screen';
+  static const String termsandCondtionScreen='/termsandCondtionScreen';
+  static const String privancyPolicyotpScreen='/privancyPolicyotpScreen';
 
 }
