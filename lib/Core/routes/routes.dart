@@ -5,9 +5,13 @@ import 'package:pollapp/Presentation/Views/home_screen.dart';
 import 'package:pollapp/Presentation/Views/login_screen.dart';
 import 'package:pollapp/Presentation/Views/oneboarding_screen.dart';
 import 'package:pollapp/Presentation/Views/otp_screen.dart';
+<<<<<<< HEAD
 import 'package:pollapp/Presentation/Views/privacyandpolicy_screen.dart';
 import 'package:pollapp/Presentation/Views/splash_screen.dart';
 import 'package:pollapp/Presentation/Views/termsandcontdion_screen.dart';
+=======
+import 'package:pollapp/Presentation/Views/splash_screen.dart';
+>>>>>>> 204d81a74058ff17fac2a4af6c9287b4fd6d26af
 
 class RoutePages {
 
@@ -20,8 +24,11 @@ class RoutePages {
   GetPage(name:RoutesName.homeScreen , page: ()=>HomeScreen()),
   GetPage(name:RoutesName.loginScreen , page: ()=>LoginScreen()),
   GetPage(name:RoutesName.otpScreen , page: ()=>OtpScreen()),
+<<<<<<< HEAD
   GetPage(name:RoutesName.termsandCondtionScreen , page: ()=>TermsandcontdionScreen()),
   GetPage(name:RoutesName.privancyPolicyotpScreen , page: ()=>PrivacyandpolicyScreen()),
+=======
+>>>>>>> 204d81a74058ff17fac2a4af6c9287b4fd6d26af
   
   
   

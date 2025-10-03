@@ -128,6 +128,8 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                            _textController.textEditingController.text.isEmpty?
                            _onVerify():
+                          
+                        
                         Get.toNamed(RoutesName.otpScreen,arguments: _textController.textEditingController.text);
                      
                       },
