@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Core/app_constants/colors.dart';
 import 'package:pollapp/Core/app_constants/image_constant.dart';
+import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -122,7 +125,7 @@ class LoginScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
                       onPressed: () {
-                        // Handle OTP button press
+                        Get.toNamed(RoutesName.otpVerificationScreen);
                       },
                       child: Text(
                         AppConstants.otpButton,

@@ -4,6 +4,7 @@ import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Views/home_screen.dart';
 import 'package:pollapp/Presentation/Views/login_screen.dart';
 import 'package:pollapp/Presentation/Views/oneboarding_screen.dart';
+import 'package:pollapp/Presentation/Views/otp_screen.dart';
 import 'package:pollapp/Presentation/Views/splash_screen.dart';
 
 class RoutePages {
@@ -16,6 +17,8 @@ class RoutePages {
   ),
   GetPage(name:RoutesName.homeScreen , page: ()=>HomeScreen()),
   GetPage(name:RoutesName.loginScreen , page: ()=>LoginScreen()),
+  GetPage(name:RoutesName.otpVerificationScreen , page: ()=>OtpScreen()),
+  
   
   
   
