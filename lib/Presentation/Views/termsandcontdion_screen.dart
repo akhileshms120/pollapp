@@ -9,5 +9,5 @@ class TermsandcontdionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomAppbar.customAppBar(title: "Terms and Condtion"));
-  }
+  }//
 }
