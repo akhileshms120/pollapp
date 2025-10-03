@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Core/app_constants/colors.dart';
 import 'package:pollapp/Core/app_constants/image_constant.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
+import 'package:pollapp/Presentation/Controller/text_controller.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
+   LoginScreen({super.key});
+ final _textController = Get.put(TextControllers());
   @override
   Widget build(BuildContext context) {
     final Brightness brightness = Theme.of(context).brightness;
@@ -87,6 +89,7 @@ class LoginScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: TextField(
+                      controller: _textController.textEditingController,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         prefixIcon: Icon(
@@ -125,7 +128,11 @@ class LoginScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
                       onPressed: () {
-                        Get.toNamed(RoutesName.otpScreen);
+                           _textController.textEditingController.text.isEmpty?
+                          SnackBar(content: AlertDialog(title: Text("Please Enter Mobile Number"),)):
+                        
+                        Get.toNamed(RoutesName.otpScreen,arguments: _textController.textEditingController.text);
+                     
                       },
                       child: Text(
                         AppConstants.otpButton,
@@ -231,4 +238,6 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+
 }
