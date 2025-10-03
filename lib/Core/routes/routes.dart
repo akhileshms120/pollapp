@@ -17,7 +17,7 @@ class RoutePages {
   ),
   GetPage(name:RoutesName.homeScreen , page: ()=>HomeScreen()),
   GetPage(name:RoutesName.loginScreen , page: ()=>LoginScreen()),
-  GetPage(name:RoutesName.otpVerificationScreen , page: ()=>OtpScreen()),
+  GetPage(name:RoutesName.otpScreen , page: ()=>OtpScreen()),
   
   
   

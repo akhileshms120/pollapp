@@ -125,7 +125,7 @@ class LoginScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
                       onPressed: () {
-                        Get.toNamed(RoutesName.otpVerificationScreen);
+                        Get.toNamed(RoutesName.otpScreen);
                       },
                       child: Text(
                         AppConstants.otpButton,

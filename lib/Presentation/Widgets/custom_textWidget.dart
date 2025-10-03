@@ -7,7 +7,7 @@ class CustomWidget{
     return Text(text,style: TextStyle(
       fontSize: fontSize,
       fontWeight:fontWeight??FontWeight.normal,
-      color:textColor?? blackColor
+      color:textColor?? AppColor.blackColor
     ),);
   }
 }
