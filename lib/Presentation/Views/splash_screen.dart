@@ -73,7 +73,7 @@ class _SplashViewState extends State<SplashView>
         } else if (state is SplashError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content:CustomWidget.customTextWidget(text:'Error: ${state.message}',bgColor:AppColor.errorMessage  ),
+              content:CustomWidget.customTextWidget(text:'Error: ${state.message}',backgroundColor:AppColor.errorMessage),
               backgroundColor: AppColor.errorMessage,
             ),
           );
@@ -120,7 +120,7 @@ class _SplashViewState extends State<SplashView>
                               ),
                             ],
                           ),
-                          child:CustomWidget.customImageWidget(imageText: splash_logo,height: 100,width: 100) 
+                          child:CustomWidget.customImageWidget(imagePath: splash_logo,height: 100,width: 100) 
                         ),
                       ),
                     );
@@ -161,13 +161,13 @@ class _SplashViewState extends State<SplashView>
                     );
                   },
                 ),
-                const SizedBox(height: 60),
+               CustomWidget.verticalSpacer(60),
                 BlocBuilder<SplashCubit, SplashState>(
                   builder: (context, state) {
                     if (state is SplashLoading) {
                       return CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          isDarkMode ? Colors.black : Colors.blue,
+                          isDarkMode ? Colors.black : Colors.white,
                         ),
                         strokeWidth: 2,
                       );
@@ -181,7 +181,7 @@ class _SplashViewState extends State<SplashView>
                                 : Colors.red.shade700,
                             size: 40,
                           ),
-                          const SizedBox(height: 10),
+                          CustomWidget.verticalSpacer(10),
                           TextButton(
                             onPressed: () {
                               context.read<SplashCubit>().loadInitialData();

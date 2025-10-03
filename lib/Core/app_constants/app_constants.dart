@@ -31,5 +31,5 @@ class AppConstants {
   static const String welcomeText ="Welcome to POL-APP";
   static const String welcomeSubText ="Offical Mobile app of KERALA POLICE";
   static const String termsText ="Terms and Condition";
-  static const String privacy ="Privacy Policy";
+  static const String privacyText ="Privacy Policy";
 }

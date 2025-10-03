@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pollapp/Presentation/Widgets/custom_textWidget.dart';
+import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 
 
 class HomeScreen extends StatelessWidget {

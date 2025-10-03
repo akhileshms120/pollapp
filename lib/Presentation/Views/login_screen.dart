@@ -6,151 +6,222 @@ import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final Brightness brightness = Theme.of(context).brightness;
+    final bool isDarkMode = brightness == Brightness.dark;
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final verticalSpacing = isLandscape ? 20.0 : 60.0;
+    final containerPadding = isLandscape ? 16.0 : 32.0;
+    final logoSize = isLandscape ? 60.0 : 80.0;
+    final fingerprintSize = isLandscape ? 40.0 : 60.0;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF2C3341),
+      backgroundColor: AppColor.getBackgroundColor(isDarkMode),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              const Color(0xFF2C3341).withOpacity(0.8),
-              const Color(0xFF2C3341).withOpacity(0.9),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          gradient: AppColor.getBackgroundGradient(isDarkMode),
         ),
         child: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.all(32.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              vertical: isLandscape ? 16.0 : 32.0,
+              horizontal: isLandscape ? 32.0 : 0.0,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Logo and Title
-                Column(
-                  children: [
-                    Image.asset(
-                      splash_logo,
-                      width: 80,
-                      height: 80,
-                    ),
-                    const SizedBox(height: 16),
-                     CustomWidget.customTextWidget(text:AppConstants.welcomeText,fontSize: 30,fontWeight: FontWeight.w600,textColor:AppColor.blackColor),
-                    CustomWidget.customTextWidget(text:AppConstants.welcomeSubText)
-                  ],
-                ),
-                const SizedBox(height: 60),
-                // Phone Number Input
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color(0xFF6B7A8F),
-                      width: 1.5,
-                    ),
-                    borderRadius: BorderRadius.circular(12.0),
+            child: Container(
+              width: isLandscape
+                  ? MediaQuery.of(context).size.width * 0.7
+                  : MediaQuery.of(context).size.width,
+              padding: EdgeInsets.all(containerPadding),
+              decoration: BoxDecoration(
+                gradient: AppColor.getContainerGradient(isDarkMode),
+                borderRadius: BorderRadius.circular(24.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColor.getShadowColor(isDarkMode),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
                   ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: '(+91)',
-                      hintStyle: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Logo and Title
+                  Column(
+                    children: [
+                      Image.asset(
+                        splash_logo,
+                        width: logoSize,
+                        height: logoSize,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
+                      SizedBox(height: isLandscape ? 8 : 16),
+                      CustomWidget.customTextWidget(
+                        text: AppConstants.welcomeText,
+                        fontSize: isLandscape ? 24 : 30,
+                        fontWeight: FontWeight.w600,
+                        textColor: AppColor.getTitleColor(isDarkMode),
                       ),
-                      border: InputBorder.none,
+                      CustomWidget.customTextWidget(
+                        text:
+                            "Official Mobile app of KERALA POLICE", // typo fixed
+                        textColor: AppColor.getSubtitleColor(isDarkMode),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: verticalSpacing),
+
+                  // Phone Number Input
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColor.getBorderColor(isDarkMode),
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
-                    keyboardType: TextInputType.phone,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-                const SizedBox(height: 32),
-                // Verify Button
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF0F2F5),
-                    borderRadius: BorderRadius.circular(24.0),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      
-                    },
-                    child: Text(
-                      AppConstants.otpButton,
+                    child: TextField(
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.phone,
+                          color: AppColor.getHintColor(isDarkMode),
+                        ),
+                        hintText: '(+91) 9876543210',
+                        hintStyle: TextStyle(
+                          fontSize: 16,
+                          color: AppColor.getHintColor(isDarkMode),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                        border: InputBorder.none,
+                      ),
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF2C3341),
+                        color: AppColor.getTextColor(isDarkMode),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 40),
+                  SizedBox(height: isLandscape ? 20 : 32),
 
-                // Fingerprint Icon
-                Icon(
-                  Icons.fingerprint,
-                  size: 60,
-                  color: const Color(0xFF6B7A8F),
-                ),
-                const SizedBox(height: 60),
-
-                // Terms and Privacy
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
+                  // Verify Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.getButtonColor(isDarkMode),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24.0),
+                        ),
+                        elevation: 4,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
                       onPressed: () {
-                        // Handle terms tap
+                        // Handle OTP button press
                       },
-                      child: CustomWidget.customTextWidget(text:AppConstants.termsText,fontSize: 16,textColor:AppColor.termTextColor )
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        // Handle privacy tap
-                      },
-                      child: 
-                      
-                      
-                      Text(
-                        'Privacy Policy',
+                      child: Text(
+                        AppConstants.otpButton,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: const Color(0xFF2C3341),
+                          color: AppColor.getButtonTextColor(isDarkMode),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                // Bottom indicator (like iOS home indicator)
-                Container(
-                  width: 80,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE0E0E0),
-                    borderRadius: BorderRadius.circular(2.5),
                   ),
-                ),
-              ],
+                  SizedBox(height: isLandscape ? 20 : 40),
+
+                  // Fingerprint Icon with animation
+                  GestureDetector(
+                    onTap: () {
+                      // Handle biometric authentication
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColor.getIconBackgroundColor(isDarkMode),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColor.getShadowColor(
+                              isDarkMode,
+                            ).withOpacity(0.3),
+                            blurRadius: 10,
+                            offset: const Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.fingerprint,
+                        size: fingerprintSize,
+                        color: AppColor.getIconColor(isDarkMode),
+                        semanticLabel: "Login with fingerprint",
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: verticalSpacing),
+
+                  // Terms and Privacy
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          // Handle terms tap
+                        },
+                        child: Text(
+                          "Terms and Conditions", // wording fixed
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.colorMode(
+                              mode: isDarkMode,
+                              darkModeColor: AppColor.whiteColor,
+                              lightModeColor: AppColor.termTextColor,
+                            ),
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Handle privacy tap
+                        },
+                        child: Text(
+                          AppConstants.privacyText,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.colorMode(
+                              mode: isDarkMode,
+                              darkModeColor: AppColor.whiteColor,
+                              lightModeColor: AppColor.termTextColor,
+                            ),
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Bottom Indicator
+                  Container(
+                    width: 80,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: AppColor.getIndicatorColor(isDarkMode),
+                      borderRadius: BorderRadius.circular(2.5),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
