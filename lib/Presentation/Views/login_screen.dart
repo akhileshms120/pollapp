@@ -169,7 +169,7 @@ class LoginScreen extends StatelessWidget {
                       child: Icon(
                         Icons.fingerprint,
                         size: fingerprintSize,
-                        color: AppColor.getIconColor(isDarkMode),
+                        color: AppColor.getIconBackgroundColor(isDarkMode),
                         semanticLabel: "Login with fingerprint",
                       ),
                     ),

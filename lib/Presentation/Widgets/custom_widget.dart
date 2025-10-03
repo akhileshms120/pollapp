@@ -11,11 +11,12 @@ class CustomWidget {
  
   static Widget customTextWidget({
     required String text,
+    double? height,
     double fontSize = 14.0,
     FontWeight fontWeight = FontWeight.normal,
     Color? textColor,
     Color? backgroundColor, 
-    TextOverflow? overflow = TextOverflow.ellipsis,
+    TextOverflow? overflow,
     TextAlign? textAlign = TextAlign.start,
     TextDecoration? textDecoration
 
@@ -25,7 +26,10 @@ class CustomWidget {
         text,
         overflow: overflow,
         textAlign: textAlign,
+      
         style: TextStyle(
+          
+          height: height,
           decoration:textDecoration ,
           fontSize: fontSize,
           fontWeight: fontWeight,

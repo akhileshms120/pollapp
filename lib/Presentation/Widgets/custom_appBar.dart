@@ -12,12 +12,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      
       title: Text(title),
       backgroundColor: isDarkMode?AppColor.darkBackground:AppColor.lightBackground,
       elevation: 0,
       leading: IconButton(
-        icon: CustomWidget.iconWidget(icon:Icons.arrow_back),
+        icon:
+        CustomWidget.iconWidget(icon:Icons.arrow_back,iconColor:Colors.white,isDarkMode: isDarkMode),
         onPressed: () => Get.back(),
       ),
     );

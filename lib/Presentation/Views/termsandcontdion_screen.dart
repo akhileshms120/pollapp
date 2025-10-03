@@ -45,32 +45,17 @@ void _lauchEmail() async {
   }
 }
 
-  Widget _buildHeading(String headtext) {
+  Widget _buildHeading(String headtext,bool isDarkMode) {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
-      child: Text(
-        headtext,
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      child:CustomWidget.customTextWidget(text: headtext,textColor:AppColor.getTextColor(isDarkMode), fontSize: 20,fontWeight: FontWeight.bold )
     );
   }
- Widget _buildParagraph(String text) {
+ Widget _buildParagraph(String text,bool isDarkMode) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 16,
-          height: 1.5,
-          color: Color(0xFF000000)
-        ),
-        textAlign: TextAlign.justify,
-        
-      ),
+      child:CustomWidget.customTextWidget(text:text,fontSize: 16,height: 1.5,textColor:AppColor.getTextColor(isDarkMode),textAlign:TextAlign.justify  )
+
     );
   }
   @override
@@ -81,32 +66,30 @@ void _lauchEmail() async {
         MediaQuery.of(context).orientation == Orientation.landscape;
     return Scaffold(
       backgroundColor:isDarkMode?AppColor.darkBackground:AppColor.lightBackground,
-      appBar:  CustomAppBar(title:AppConstants.appBarText),body:SingleChildScrollView(
+      appBar:  CustomAppBar(title:AppConstants.appBarText,isDarkMode: isDarkMode,),body:SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: SafeArea(
           child: Column(
              crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            _buildHeading(AppConstants.firstHeadingText),
-            _buildParagraph(AppConstants.firstParagraph),
-             _buildHeading(AppConstants.secondHeadingText),
-            _buildParagraph(AppConstants.secondParagraph),
-             _buildHeading(AppConstants.thirdHeadingText),
-            _buildParagraph(AppConstants.thirdParagraph),
-             _buildHeading(AppConstants.fourthHeadingText),
-            _buildParagraph(AppConstants.fourthParagraph),
-            _buildHeading(AppConstants.fourthHeadingText),
-            _buildParagraph(AppConstants.fourthParagraph),
-            _buildHeading(AppConstants.fifthHeadingText),
-            _buildParagraph(AppConstants.fifthParagraph),
-            _buildHeading(AppConstants.sixthHeadingText),
-            _buildParagraph(AppConstants.sixthParagraph),
-            _buildHeading(AppConstants.seventhHeadingText),
-            _buildParagraph(AppConstants.seventhParagraph),
-             _buildHeading(AppConstants.eightHeadingText),
-            _buildParagraph(AppConstants.eightParagraph),
-            _buildHeading(AppConstants.ninethHeadingText),
-            _buildParagraph(AppConstants.ninethParagraph),
+            _buildHeading(AppConstants.firstHeadingText,isDarkMode),
+            _buildParagraph(AppConstants.firstParagraph,isDarkMode),
+             _buildHeading(AppConstants.secondHeadingText,isDarkMode),
+            _buildParagraph(AppConstants.secondParagraph,isDarkMode),
+             _buildHeading(AppConstants.thirdHeadingText,isDarkMode),
+            _buildParagraph(AppConstants.thirdParagraph,isDarkMode),
+             _buildHeading(AppConstants.fourthHeadingText,isDarkMode),
+            _buildParagraph(AppConstants.fourthParagraph,isDarkMode),
+            _buildHeading(AppConstants.fifthHeadingText,isDarkMode),
+            _buildParagraph(AppConstants.fifthParagraph,isDarkMode),
+            _buildHeading(AppConstants.sixthHeadingText,isDarkMode),
+            _buildParagraph(AppConstants.sixthParagraph,isDarkMode),
+            _buildHeading(AppConstants.seventhHeadingText,isDarkMode),
+            _buildParagraph(AppConstants.seventhParagraph,isDarkMode),
+             _buildHeading(AppConstants.eightHeadingText,isDarkMode),
+            _buildParagraph(AppConstants.eightParagraph,isDarkMode),
+            _buildHeading(AppConstants.ninethHeadingText,isDarkMode),
+            _buildParagraph(AppConstants.ninethParagraph,isDarkMode),
             GestureDetector(onTap:_lauchEmail,
             child: CustomWidget.customTextWidget(text:AppConstants.polAppEmailid ,fontSize: 15,textColor: Colors.blue,textDecoration: TextDecoration.underline)
             ),
