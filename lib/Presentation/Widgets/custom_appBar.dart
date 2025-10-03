@@ -6,13 +6,14 @@ import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool isDarkMode;
+  final double fontSize;
 
-  const CustomAppBar({super.key, this.title = "",this.isDarkMode=false});
+  const CustomAppBar({super.key, this.title = "",this.isDarkMode=false,this.fontSize=25});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title),
+      title: CustomWidget.customTextWidget(text: title,fontSize:fontSize,textColor:AppColor.getTextColor(isDarkMode) ),
       backgroundColor: isDarkMode?AppColor.darkBackground:AppColor.lightBackground,
       elevation: 0,
       leading: IconButton(

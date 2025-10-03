@@ -99,4 +99,22 @@ static Widget customImageWidget({
   static Widget iconWidget({required IconData icon, Color? iconColor,bool isDarkMode=false}){
     return Icon(icon,color: AppColor.getIconBackgroundColor(isDarkMode),);
   }
+
+ //////////////////////Custom widget for privacy and terms and condtion/////////////////////////////////////////////////
+
+
+  static Widget buildHeading(String headtext,bool isDarkMode) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+      child:CustomWidget.customTextWidget(text: headtext,textColor:AppColor.getTextColor(isDarkMode), fontSize: 20,fontWeight: FontWeight.bold )
+    );
+  }
+ static Widget buildParagraph(String text,bool isDarkMode) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child:CustomWidget.customTextWidget(text:text,fontSize: 16,height: 1.5,textColor:AppColor.getTextColor(isDarkMode),textAlign:TextAlign.justify  )
+
+    );
+  }
+
 }

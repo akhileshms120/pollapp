@@ -56,8 +56,12 @@ class AppConstants {
   static const String ninethParagraph="1. If you would like to contact us to understand more about this Agreement or wish to contact us concerning any matter relating to it, you may send email to:";
   static const String polAppEmailid='mobileapp.pol@kerala.gov.in';
   static const String ninethParagraph2="'2. This document was last updated on: December 26, 2019',";
-
-
+///////////////////////////////////Privacy Policy /////////////////////////////////////
+  static const String privacyandpolicyScreentitle="Privacy Policy ";
+  static const String pfirstHeadingText="Privacy Policy ";
+  static const String pfirstParagraph="Kerala Police App does not share personal information of any kind with anyone. We will not sell or rent your name or personal information to any third party. Any data that a user stores via our facilities is wholly owned by that user.Kerala Police App only collects such information that is necessary for you to access and use our services. This information includes, user IP address, Location Information and Device Ids.";
+  static const String psecondHeadingText="Permission and their purpose";
+  static const String psecondParagraph="";
 
 
 }
