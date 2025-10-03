@@ -146,7 +146,7 @@ class _SplashViewState extends State<SplashView>
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Poll App',
+                            'Pol App',
                             style: TextStyle(
                               fontSize: 16,
                               color: isDarkMode

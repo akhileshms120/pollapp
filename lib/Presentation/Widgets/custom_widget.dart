@@ -17,6 +17,8 @@ class CustomWidget {
     Color? backgroundColor, 
     TextOverflow? overflow = TextOverflow.ellipsis,
     TextAlign? textAlign = TextAlign.start,
+    TextDecoration? textDecoration
+
   }) {
     try {
       return Text(
@@ -24,6 +26,7 @@ class CustomWidget {
         overflow: overflow,
         textAlign: textAlign,
         style: TextStyle(
+          decoration:textDecoration ,
           fontSize: fontSize,
           fontWeight: fontWeight,
           color: textColor ?? AppColor.blackColor, 
@@ -84,4 +87,12 @@ static Widget customImageWidget({
 
   static Widget verticalSpacer(double height) => SizedBox(height: height);
   static Widget horizontalSpacer(double width) => SizedBox(width: width);
+
+
+
+
+
+  static Widget iconWidget({required IconData icon, Color? iconColor,bool isDarkMode=false}){
+    return Icon(icon,color: AppColor.getIconBackgroundColor(isDarkMode),);
+  }
 }

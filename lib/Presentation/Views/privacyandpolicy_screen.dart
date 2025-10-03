@@ -8,7 +8,7 @@ class PrivacyandpolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomAppbar.customAppBar());
+      body: CustomAppBar());
     
   }
 }
