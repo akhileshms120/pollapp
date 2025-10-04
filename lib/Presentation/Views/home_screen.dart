@@ -6,6 +6,7 @@ import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 import 'package:pollapp/Presentation/Widgets/emergencyContat_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/location_corsel.dart';
+import 'package:pollapp/Presentation/Widgets/newCard.dart';
 
 // Wrapper that provides the cubit
 class HomeScreen extends StatelessWidget {
@@ -45,11 +46,20 @@ class HomeScreenContent extends StatelessWidget {
             _buildRecentlyUsedRow(),
             const SizedBox(height: 32),
             const Text(
-              'Emergency Numbwe',
+              'Emergency Number',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
                const EmergencyContactsCarousel(),
+                const SizedBox(height: 16),
+                   const Text(
+              'Latest News',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            
+            ),
+             const SizedBox(height: 16),
+            LatestNewsCarousel()
+
           ],
         ),
       ),
@@ -208,6 +218,8 @@ Widget _buildNavItem(IconData icon, String label, bool isSelected) {
       },
     );
   }
+  
+
 
 
 }
