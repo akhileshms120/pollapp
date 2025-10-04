@@ -5,6 +5,7 @@ import 'package:pollapp/Presentation/Cubit/cubit_files/recentlyUser_cubit.dart';
 import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 import 'package:pollapp/Presentation/Widgets/emergencyContat_corsel.dart';
+import 'package:pollapp/Presentation/Widgets/howtouse_widget.dart';
 import 'package:pollapp/Presentation/Widgets/location_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/newCard.dart';
 
@@ -29,7 +30,7 @@ class HomeScreenContent extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: [   
             const LocationCard(),
             const Text(
               'Services',
@@ -58,7 +59,19 @@ class HomeScreenContent extends StatelessWidget {
             
             ),
              const SizedBox(height: 16),
-            LatestNewsCarousel()
+            LatestNewsCarousel(),
+                  const SizedBox(height: 10),
+            Center(child: Text("View All")),
+            const SizedBox(height: 16),
+            
+             const Text(
+              'How to use',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            
+            ),
+            const SizedBox(height: 16,),
+            InfoCardsCarousel()
+
 
           ],
         ),
