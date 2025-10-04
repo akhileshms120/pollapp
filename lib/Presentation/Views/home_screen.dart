@@ -8,6 +8,7 @@ import 'package:pollapp/Presentation/Widgets/emergencyContat_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/howtouse_widget.dart';
 import 'package:pollapp/Presentation/Widgets/location_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/newCard.dart';
+import 'package:pollapp/Presentation/Widgets/shareAppCard_widget.dart';
 
 // Wrapper that provides the cubit
 class HomeScreen extends StatelessWidget {
@@ -70,7 +71,9 @@ class HomeScreenContent extends StatelessWidget {
             
             ),
             const SizedBox(height: 16,),
-            InfoCardsCarousel()
+            InfoCardsCarousel(),
+             const SizedBox(height: 16,),
+            SharePolAppCard()
 
 
           ],
