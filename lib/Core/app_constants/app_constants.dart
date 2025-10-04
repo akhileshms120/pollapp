@@ -61,7 +61,48 @@ class AppConstants {
   static const String pfirstHeadingText="Privacy Policy ";
   static const String pfirstParagraph="Kerala Police App does not share personal information of any kind with anyone. We will not sell or rent your name or personal information to any third party. Any data that a user stores via our facilities is wholly owned by that user.Kerala Police App only collects such information that is necessary for you to access and use our services. This information includes, user IP address, Location Information and Device Ids.";
   static const String psecondHeadingText="Permission and their purpose";
-  static const String psecondParagraph="";
+  static const String psecondParagraph="1. SMS :- Uses this permission only to access the message App for sending message if the user want to send message using Kerala Police App";
+  static const String pthirdParagraph="2. Photos/Media/Files & Storage :- Uses this permission for writing the database into the Storage Device";
+  static const String pfourthParagraph="3. Phone/Contacts/Call logs :- Uses this permission for accessing the contacts on the phone in order to display the contacts and make calls";
+  static const String pfifthParagraph="4. Draw over other apps :- This permission is used for display of incoming call information";
+  static const String psixthParagraph="5. Location / Network Access:- Used for Nearest Police Station Utility";
+  static const String pseventhParagraph="6. Microphone :- on the phone using the microphone";
+  static const String peightParagraph="7. Camera :- Kerala Police App accesses and records camera sensor and microphone data, which is used for the purpose of taking photos in order to make use of app services."; 
+  static const String pninthHeadingText=" Policy changes";
+  static const String pninthParagraph="1. If we change our privacy policy we will post those changes on this page.";
+  static const String ptenthParagraph=" 2. Last updated: December 26th, 2019";
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
 }

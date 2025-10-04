@@ -7,6 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/image_constant.dart';
+import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Controller/text_controller.dart';
 import 'package:pollapp/Presentation/Cubit/State/otpState.dart';
 import 'package:pollapp/Presentation/Cubit/State/timerState.dart';
@@ -55,6 +56,7 @@ class _OtpScreenState extends State<OtpScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Verifying OTP: $otp')),
     );
+    Get.offAllNamed(RoutesName.homeScreen);
   }
 
   @override

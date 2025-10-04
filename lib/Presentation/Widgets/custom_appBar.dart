@@ -27,3 +27,69 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
+
+class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+           Padding(
+            padding: EdgeInsets.only(right: 8.0),
+            child: CircleAvatar(
+              radius: 18,
+              backgroundColor: Colors.grey, 
+              child: Image.asset("assets/images/homeblack.png")
+            ),
+          ),
+          
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'KERALA POLICE',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const Text(
+                'Soft in Temperament, Firm in Action',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 11,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.search, color: Colors.black),
+          onPressed: () {
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.notifications_none, color: Colors.black),
+          onPressed: () {
+          },
+        ),
+      ],
+      automaticallyImplyLeading: false,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+
