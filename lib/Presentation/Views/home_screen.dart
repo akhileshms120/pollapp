@@ -4,6 +4,8 @@ import 'package:pollapp/Presentation/Cubit/State/recentlyUsed_state.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/recentlyUser_cubit.dart';
 import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
+import 'package:pollapp/Presentation/Widgets/emergencyContat_corsel.dart';
+import 'package:pollapp/Presentation/Widgets/location_corsel.dart';
 
 // Wrapper that provides the cubit
 class HomeScreen extends StatelessWidget {
@@ -27,6 +29,7 @@ class HomeScreenContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const LocationCard(),
             const Text(
               'Services',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -42,25 +45,60 @@ class HomeScreenContent extends StatelessWidget {
             _buildRecentlyUsedRow(),
             const SizedBox(height: 32),
             const Text(
-              'Emergency',
+              'Emergency Numbwe',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            _buildEmergencyCard(),
+               const EmergencyContactsCarousel(),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble_outline), label: 'Chat'),
-          BottomNavigationBarItem(icon: Icon(Icons.shield_outlined), label: 'Shield'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
-        ],
+    bottomNavigationBar:Container(
+  margin: const EdgeInsets.all(16),
+  height: 70,
+  decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(30),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.1),
+        blurRadius: 20,
+        offset: const Offset(0, 10),
       ),
+    ],
+  ),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: [
+      _buildNavItem(Icons.home_outlined, 'Home', true),
+      _buildNavItem(Icons.chat_bubble_outline, 'Service', false),
+      _buildNavItem(Icons.shield_outlined, 'Contact', false),
+      _buildNavItem(Icons.person_outline, 'Profile', false),
+    ],
+  ),
+),
     );
   }
-
+Widget _buildNavItem(IconData icon, String label, bool isSelected) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Icon(
+        icon,
+        color: isSelected ? Colors.blue : Colors.grey,
+        size: 24,
+      ),
+      const SizedBox(height: 4),
+      Text(
+        label,
+        style: TextStyle(
+          fontSize: 12,
+          color: isSelected ? Colors.blue : Colors.grey,
+        ),
+      ),
+    ],
+  );
+}
   void onServicePressed({required BuildContext context, required String serviceName}) {
     BlocProvider.of<RecentlyUsedCubit>(context).markAsUsed(serviceName);
   }
@@ -171,73 +209,7 @@ class HomeScreenContent extends StatelessWidget {
     );
   }
 
-  Widget _buildEmergencyCard() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.lightBlue.shade100,
-            Colors.lightGreen.shade100,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Text(
-              'SOS',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          const Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'SOS',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
-                  'Quick easycells action emergency contacts',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 }
 
 class _ServiceItem extends StatelessWidget {
