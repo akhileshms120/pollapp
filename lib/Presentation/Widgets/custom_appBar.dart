@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/colors.dart';
+import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -37,39 +38,42 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-           Padding(
-            padding: EdgeInsets.only(right: 8.0),
-            child: CircleAvatar(
-              radius: 18,
-              backgroundColor: Colors.grey, 
-              child: Image.asset("assets/images/homeblack.png")
+      title: GestureDetector(
+        onTap: ()=>Get.toNamed(RoutesName.keralaPolicePage),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+             Padding(
+              padding: EdgeInsets.only(right: 8.0),
+              child: CircleAvatar(
+                radius: 18,
+                backgroundColor: Colors.grey, 
+                child: Image.asset("assets/images/homeblack.png")
+              ),
             ),
-          ),
-          
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'KERALA POLICE',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+            
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'KERALA POLICE',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              const Text(
-                'Soft in Temperament, Firm in Action',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 11,
+                const Text(
+                  'Soft in Temperament, Firm in Action',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 11,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
       
       actions: <Widget>[

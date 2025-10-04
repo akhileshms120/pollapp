@@ -8,5 +8,6 @@ class RoutesName  {
   static const String otpScreen ='/otp_screen';
   static const String termsandCondtionScreen='/termsandCondtionScreen';
   static const String privancyPolicyotpScreen='/privancyPolicyotpScreen';
+  static const String keralaPolicePage="/keralaPolicePage";
 
 }
