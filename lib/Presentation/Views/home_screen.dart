@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 
 
@@ -8,23 +9,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:  CustomWidget.customTextWidget(text: 'KERALA POLICE'),
-        actions: [
-          
-         IconButton(
-      icon: const Icon(Icons.search),
-      onPressed: () {   
-      },
-    ),
-    IconButton(
-      icon: const Icon(Icons.notifications),
-      onPressed: () { 
-      },
-    ),
-    const SizedBox(width: 16.0), // Optional: 
-        ],
-      ),
+      appBar:HomeScreenAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -72,7 +57,7 @@ class HomeScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color:Colors.black,
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3),
@@ -86,12 +71,12 @@ class HomeScreen extends StatelessWidget {
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
         children: const [
-          _ServiceItem(icon: Icons.directions_car_outlined, label: 'Transport'),
-          _ServiceItem(icon: Icons.favorite_border, label: 'Health'),
-          _ServiceItem(icon: Icons.attach_money, label: 'Finance'),
-          _ServiceItem(icon: Icons.shopping_bag_outlined, label: 'Shopping'),
-          _ServiceItem(icon: Icons.home_outlined, label: 'Home'),
-          _ServiceItem(icon: Icons.work_outline, label: 'Work'),
+          _ServiceItem(icon: Icons.assignment, label: 'Complaint and Registration'),
+          _ServiceItem(icon: Icons.favorite_border, label: 'Certification of Non-involvment'),
+          _ServiceItem(icon: Icons.attach_money, label: 'Accident GD'),
+          _ServiceItem(icon: Icons.shopping_bag_outlined, label: 'Pol-Blood'),
+          _ServiceItem(icon: Icons.home_outlined, label: 'FIR Download'),
+          _ServiceItem(icon: Icons.work_outline, label: 'View All'),
         ],
       ),
     );
@@ -206,11 +191,7 @@ class _ServiceItem extends StatelessWidget {
       children: [
         Icon(icon, size: 30),
         const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12),
-          textAlign: TextAlign.center,
-        ),
+        CustomWidget.customTextWidget(text: label)
       ],
     );
   }
