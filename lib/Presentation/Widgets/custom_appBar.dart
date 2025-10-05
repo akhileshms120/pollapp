@@ -39,7 +39,7 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       title: GestureDetector(
-        onTap: ()=>Get.toNamed(RoutesName.keralaPolicePage),
+        onTap: ()=>Get.toNamed(RoutesName.keralaPoliceScreen),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -80,6 +80,7 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: const Icon(Icons.search, color: Colors.black),
           onPressed: () {
+            Get.toNamed(RoutesName.searchScreen);
           },
         ),
         IconButton(

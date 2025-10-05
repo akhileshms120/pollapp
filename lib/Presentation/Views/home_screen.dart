@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/recentlyUsed_state.dart';
+import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/recentlyUser_cubit.dart';
 import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
@@ -14,9 +16,15 @@ import 'package:pollapp/Presentation/Widgets/shareAppCard_widget.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RecentlyUsedCubit(),
+    return MultiBlocProvider(
+      providers: [ 
+        BlocProvider(
+        create: (context) => RecentlyUsedCubit(),),
+        BlocProvider(
+        create: (context) => BottomNavCubit())
+      ],
       child: HomeScreenContent(),
+      
     );
   }
 }
@@ -79,7 +87,8 @@ class HomeScreenContent extends StatelessWidget {
           ],
         ),
       ),
-    bottomNavigationBar:Container(
+    bottomNavigationBar:BlocBuilder<BottomNavCubit,BottomNavState>(builder: (context,state){
+    return Container(
   margin: const EdgeInsets.all(16),
   height: 70,
   decoration: BoxDecoration(
@@ -87,7 +96,7 @@ class HomeScreenContent extends StatelessWidget {
     borderRadius: BorderRadius.circular(30),
     boxShadow: [
       BoxShadow(
-        color: Colors.black.withOpacity(0.1),
+        color: Colors.black,
         blurRadius: 20,
         offset: const Offset(0, 10),
       ),
@@ -96,33 +105,42 @@ class HomeScreenContent extends StatelessWidget {
   child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
-      _buildNavItem(Icons.home_outlined, 'Home', true),
-      _buildNavItem(Icons.chat_bubble_outline, 'Service', false),
-      _buildNavItem(Icons.shield_outlined, 'Contact', false),
-      _buildNavItem(Icons.person_outline, 'Profile', false),
+      _buildNavItem(context:context,index:0,icon:Icons.home,label: 'Home',selectedColor: Colors.grey.shade700,isSelected:state.selectedIndex==0),
+      _buildNavItem(context:context,index:1,icon:Icons.grid_view, label:'Service', selectedColor:Colors.grey.shade700,isSelected:state.selectedIndex==1 ),
+      _buildSOSButton(context),
+      _buildNavItem(context:context,index:3,icon:Icons.contacts, label:'Contact', selectedColor:Colors.grey.shade700,isSelected: state.selectedIndex==3),
+      _buildNavItem(context:context,index:4,icon:Icons.person, label:'Profile',selectedColor:Colors.grey.shade700,isSelected: state.selectedIndex==4),
     ],
   ),
-),
-    );
+);
+    }
+    ));
   }
-Widget _buildNavItem(IconData icon, String label, bool isSelected) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Icon(
-        icon,
-        color: isSelected ? Colors.blue : Colors.grey,
-        size: 24,
-      ),
-      const SizedBox(height: 4),
-      Text(
-        label,
-        style: TextStyle(
-          fontSize: 12,
-          color: isSelected ? Colors.blue : Colors.grey,
+Widget _buildNavItem({required BuildContext context ,required int index ,required IconData icon,required String label, required bool isSelected, required Color selectedColor,}) {
+  return GestureDetector(
+    onTap: (){
+     context.read<BottomNavCubit>().selectTab(index);
+    },
+    behavior: HitTestBehavior.opaque,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          color: isSelected ?selectedColor:Colors.grey.shade400 ,
+          size: 24,
         ),
-      ),
-    ],
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: isSelected?FontWeight.w600:FontWeight.normal,
+            color: isSelected ? selectedColor : Colors.grey.shade400,
+          ),
+        ),
+      ],
+    ),
   );
 }
   void onServicePressed({required BuildContext context, required String serviceName}) {
@@ -235,10 +253,87 @@ Widget _buildNavItem(IconData icon, String label, bool isSelected) {
     );
   }
   
-
-
-
+Widget _buildSOSButton(BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      context.read<BottomNavCubit>().triggerSOS();
+       _showSOSDialog(context);
+    },
+    child: Container(
+      width: 65,
+      height: 65,
+      decoration: BoxDecoration(
+        color: Colors.red,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.red.withOpacity(0.3),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: const Center(
+        child: Text(
+          'SOS',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1,
+          ),
+        ),
+      ),
+    ),
+  );
+  
 }
+
+void _showSOSDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: const [
+            Icon(Icons.warning_amber_rounded, color: Colors.red, size: 30),
+            SizedBox(width: 8),
+            Text('SOS Emergency'),
+          ],
+        ),
+        content: const Text(
+          'Are you sure you want to trigger an emergency alert?',
+          style: TextStyle(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Handle emergency action
+              // Add your emergency contact logic here
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Emergency alert sent!'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Confirm'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
 
 class _ServiceItem extends StatelessWidget {
   final IconData icon;

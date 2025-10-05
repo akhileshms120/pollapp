@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-class KeralaPolicePage extends StatelessWidget {
-  const KeralaPolicePage({super.key});
+class KeralaPoliceScreen extends StatelessWidget {
+  const KeralaPoliceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
