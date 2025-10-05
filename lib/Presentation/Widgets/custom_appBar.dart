@@ -8,15 +8,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool isDarkMode;
   final double fontSize;
+  final double elevation;
 
-  const CustomAppBar({super.key, this.title = "",this.isDarkMode=false,this.fontSize=25});
+  const CustomAppBar({super.key, this.title = "",this.isDarkMode=false,this.fontSize=25,this.elevation=0});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: CustomWidget.customTextWidget(text: title,fontSize:fontSize,textColor:AppColor.getTextColor(isDarkMode) ),
       backgroundColor: isDarkMode?AppColor.darkBackground:AppColor.lightBackground,
-      elevation: 0,
+      elevation: elevation,
       leading: IconButton(
         icon:
         CustomWidget.iconWidget(icon:Icons.arrow_back,iconColor:Colors.white,isDarkMode: isDarkMode),
@@ -79,15 +80,15 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.search, color: Colors.black),
-          onPressed: () {
-            Get.toNamed(RoutesName.searchScreen);
-          },
+          onPressed: ()=>
+            Get.toNamed(RoutesName.searchScreen)
+          
         ),
         IconButton(
           icon: const Icon(Icons.notifications_none, color: Colors.black),
-          onPressed: () {
-          },
-        ),
+          onPressed: ()=>Get.toNamed(RoutesName.notificationScreen)
+          
+        )
       ],
       automaticallyImplyLeading: false,
     );

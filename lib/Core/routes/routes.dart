@@ -4,6 +4,7 @@ import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Views/home_screen.dart';
 import 'package:pollapp/Presentation/Views/keralapoilce_screen.dart';
 import 'package:pollapp/Presentation/Views/login_screen.dart';
+import 'package:pollapp/Presentation/Views/notification_screen.dart';
 import 'package:pollapp/Presentation/Views/oneboarding_screen.dart';
 import 'package:pollapp/Presentation/Views/otp_screen.dart';
 import 'package:pollapp/Presentation/Views/privacyandpolicy_screen.dart';
@@ -27,6 +28,7 @@ class RoutePages {
   GetPage(name:RoutesName.keralaPoliceScreen,page:()=>KeralaPoliceScreen(),
   transition: Transition.noTransition),
   GetPage(name:RoutesName.searchScreen , page: ()=>SearchHighlightScreen()),
+  GetPage(name:RoutesName.notificationScreen,page:()=>NotifcationScreen())
   
   
   

@@ -9,4 +9,5 @@ class RoutesName {
   static const String privancyPolicyotpScreen = '/privancyPolicyotpScreen';
   static const String keralaPoliceScreen = "/keralaPoliceScreen";
   static const String searchScreen = "/searchScreen";
+  static const String notificationScreen='/notificationScreen';
 }

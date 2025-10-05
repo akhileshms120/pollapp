@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 class KeralaPoliceScreen extends StatelessWidget {
   const KeralaPoliceScreen({super.key});
@@ -125,7 +127,7 @@ class KeralaPoliceScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: ()=>Get.back(),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1C2431),
                     shape: RoundedRectangleBorder(
