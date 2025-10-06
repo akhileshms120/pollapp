@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/recentlyUsed_state.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
@@ -120,6 +123,7 @@ Widget _buildNavItem({required BuildContext context ,required int index ,require
   return GestureDetector(
     onTap: (){
      context.read<BottomNavCubit>().selectTab(index);
+     Get.toNamed(RoutesName.servicesScreen);
     },
     behavior: HitTestBehavior.opaque,
     child: Column(
