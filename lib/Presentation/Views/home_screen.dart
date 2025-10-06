@@ -7,6 +7,7 @@ import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/recentlyUsed_state.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/recentlyUser_cubit.dart';
+import 'package:pollapp/Presentation/Widgets/commonviews_screen.dart';
 import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 import 'package:pollapp/Presentation/Widgets/emergencyContat_corsel.dart';
@@ -182,18 +183,22 @@ Widget _buildNavItem({required BuildContext context ,required int index ,require
           _ServiceItem(
             icon: Icons.assignment,
             label: 'Complaint and Registration',
-            onPressed: () => onServicePressed(
+            onPressed: () { onServicePressed(
               context: context,
               serviceName: 'Complaint and Registration',
-            ),
+            );
+            Get.toNamed(RoutesName.commonScreen,arguments: 'Complaint and Registration');
+            }
           ),
           _ServiceItem(
             icon: Icons.policy,
             label: 'Certification of Non-involvment',
-            onPressed: () => onServicePressed(
+            onPressed: () { onServicePressed(
               context: context,
               serviceName: 'Certification of Non-involvment',
-            ),
+            );
+            Get.toNamed(RoutesName.commonScreen,arguments: 'NIOC Requests');
+            }
           ),
           _ServiceItem(
             icon: Icons.assignment_late,

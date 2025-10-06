@@ -11,5 +11,10 @@ class RoutesName {
   static const String searchScreen = "/searchScreen";
   static const String notificationScreen='/notificationScreen';
   static const String contactScreen='/contactScreen';
-   static const String profileScreen='/profileScreen';
+  static const String profileScreen='/profileScreen';
+  static const String commonScreen='/commonScreen';
+  static const String complaintFormWidgetScreen='/complaintFormWidgetScreen';
+  
+
+
 }

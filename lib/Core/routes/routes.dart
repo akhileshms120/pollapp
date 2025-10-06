@@ -1,6 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
+import 'package:pollapp/Presentation/Widgets/commonviews_screen.dart';
 import 'package:pollapp/Presentation/Views/contact_screen.dart';
 import 'package:pollapp/Presentation/Views/home_screen.dart';
 import 'package:pollapp/Presentation/Views/keralapoilce_screen.dart';
@@ -13,6 +14,7 @@ import 'package:pollapp/Presentation/Views/profile_screen.dart';
 import 'package:pollapp/Presentation/Views/services_screen.dart';
 import 'package:pollapp/Presentation/Views/splash_screen.dart';
 import 'package:pollapp/Presentation/Views/termsandcontdion_screen.dart';
+import 'package:pollapp/Presentation/Widgets/registraion_screen.dart';
 import 'package:pollapp/Presentation/Widgets/search_widget.dart';
 
 class RoutePages {
@@ -34,7 +36,12 @@ class RoutePages {
   GetPage(name:RoutesName.notificationScreen,page:()=>NotifcationScreen()),
   GetPage(name: RoutesName.servicesScreen,page: ()=>ServiceScreen()),
   GetPage(name: RoutesName.contactScreen,page: ()=>ContactsScreen ()),
-  GetPage(name: RoutesName.profileScreen,page: ()=>ProfileScreen ())
+  GetPage(name: RoutesName.profileScreen,page: ()=>ProfileScreen ()),
+  GetPage(name: RoutesName.commonScreen,page: ()=>CommonScreen ()),
+   GetPage(name: RoutesName.commonScreen,page: ()=>ComplaintFormWidget ()),
+  
+
+ 
 
   
   
