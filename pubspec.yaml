@@ -78,9 +78,9 @@ flutter:
 
 #   android_12:
 #     color: "#FFFFFF"
-#     image: assets/images/logo1.png
+#     image: assets/images/logo.png
 #     icon_background_color: "#FFFFFF"       
-# Enable for iOS
+
 flutter_launcher_icons:
   android: true
   ios: true
