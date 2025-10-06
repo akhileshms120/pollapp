@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
+import 'package:pollapp/Domian/Entity/customScreenModel.dart';
 import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/recentlyUsed_state.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/recentlyUser_cubit.dart';
-import 'package:pollapp/Presentation/Widgets/commonviews_screen.dart';
 import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 import 'package:pollapp/Presentation/Widgets/emergencyContat_corsel.dart';
@@ -187,7 +187,7 @@ Widget _buildNavItem({required BuildContext context ,required int index ,require
               context: context,
               serviceName: 'Complaint and Registration',
             );
-            Get.toNamed(RoutesName.commonScreen,arguments: 'Complaint and Registration');
+            Get.toNamed(RoutesName.commonScreen,arguments:Customscreenmodel(appBarTitle: 'Complaint and Registration', noDraft: false));
             }
           ),
           _ServiceItem(
@@ -197,16 +197,18 @@ Widget _buildNavItem({required BuildContext context ,required int index ,require
               context: context,
               serviceName: 'Certification of Non-involvment',
             );
-            Get.toNamed(RoutesName.commonScreen,arguments: 'NIOC Requests');
+            Get.toNamed(RoutesName.commonScreen,arguments:Customscreenmodel(appBarTitle:  'NIOC Requests',noDraft: false));
             }
           ),
           _ServiceItem(
             icon: Icons.assignment_late,
             label: 'Accident GD',
-            onPressed: () => onServicePressed(
+            onPressed: (){ onServicePressed(
               context: context,
               serviceName: 'Accident GD',
-            ),
+            );
+             Get.toNamed(RoutesName.commonScreen,arguments:Customscreenmodel(appBarTitle: 'Accident GD',noDraft: true));
+            }
           ),
           _ServiceItem(
             icon: Icons.bloodtype_outlined,

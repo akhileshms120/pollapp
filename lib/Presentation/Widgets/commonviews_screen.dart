@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
+import 'package:pollapp/Domian/Entity/customScreenModel.dart';
 
 class CommonScreen extends StatefulWidget {
  
@@ -15,57 +16,82 @@ class CommonScreen extends StatefulWidget {
 }
 
 class _CommonScreenState extends State<CommonScreen> {
-    final String appBarTitle = Get.arguments ?? 'Default Title';
+
+String _pressedTab = "";
+    final Customscreenmodel customscreenmodel = Get.arguments;
 
   String _selectedTab = 'Submitted';
-  
- 
-  Widget _buildTab(String title) {
-    final bool isSelected = _selectedTab == title;
-
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => setState(() => _selectedTab = title),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          height: 46,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            gradient: isSelected
-                ? const LinearGradient(
-                    colors: [Color(0xFF2C3E50), Color(0xFF4CA1AF)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  )
-                : const LinearGradient(
-                    colors: [Color(0xFFFFFFFF), Color(0xFFF2F3F5)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [
-              if (isSelected)
-                BoxShadow(
-                  color: const Color(0xFF4CA1AF).withOpacity(0.35),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
+   
+   Widget _commonScreenUI(String pageName) {
+    switch (pageName) {
+      case 'Complaint and Registration':
+        return _buildTab(pageName);
+        default:
+        return Container();
+    }}
+Widget _buildTab(String title) {
+  final bool isSelected = _selectedTab == title;
+  return Expanded(
+    child: GestureDetector(
+      onTapDown: (_) => setState(() => _pressedTab = title),
+      onTapUp: (_) {
+        Future.delayed(const Duration(milliseconds: 100), () {
+          setState(() {
+            _pressedTab = '';
+            _selectedTab = title;
+          });
+        });
+      },
+      onTapCancel: () => setState(() => _pressedTab = ''),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        height: 46,
+        alignment: Alignment.center,
+        transform: Matrix4.identity()
+          ..scale(_pressedTab == title ? 0.96 : 1.0), // bounce effect
+        decoration: BoxDecoration(
+          gradient: isSelected
+              ? const LinearGradient(
+                  colors: [Color(0xFF2C3E50), Color(0xFF4CA1AF)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : const LinearGradient(
+                  colors: [Color(0xFFFFFFFF), Color(0xFFF6F7FB)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-            ],
+          borderRadius: BorderRadius.circular(25),
+          border: Border.all(
+            color: isSelected
+                ? const Color(0xFF4CA1AF)
+                : Colors.grey.withOpacity(0.3),
+            width: 1,
           ),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: isSelected ? Colors.white : Colors.black87,
-              fontSize: 15,
-              letterSpacing: 0.2,
+          boxShadow: [
+            BoxShadow(
+              color: isSelected
+                  ? const Color(0xFF4CA1AF).withOpacity(0.35)
+                  : Colors.grey.withOpacity(0.15),
+              blurRadius: isSelected ? 8 : 4,
+              offset: const Offset(0, 2),
             ),
+          ],
+        ),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: isSelected ? Colors.white : Colors.black87,
+            fontSize: 15,
+            letterSpacing: 0.2,
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildEmptyState() {
     return Center(
@@ -125,7 +151,7 @@ class _CommonScreenState extends State<CommonScreen> {
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           splashColor: Colors.white.withOpacity(0.2),
-          onTap: () {Get.toNamed(RoutesName.complaintFormWidgetScreen,arguments: appBarTitle);},
+          onTap: () {Get.toNamed(RoutesName.complaintFormWidgetScreen,arguments: customscreenmodel.appBarTitle);},
           child: const Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -163,8 +189,7 @@ class _CommonScreenState extends State<CommonScreen> {
           onPressed: () {},
         ),
         title: Text(
-          appBarTitle,
-          //'Complaint Requests',
+        customscreenmodel.appBarTitle,
           style: const TextStyle(
             fontWeight: FontWeight.w700,
             color: Colors.black,
@@ -199,7 +224,7 @@ class _CommonScreenState extends State<CommonScreen> {
             child: Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: const Color(0xFFE9EDF0),
+               // color: const Color(0xFFE9EDF0),
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Row(

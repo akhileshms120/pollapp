@@ -38,7 +38,7 @@ class RoutePages {
   GetPage(name: RoutesName.contactScreen,page: ()=>ContactsScreen ()),
   GetPage(name: RoutesName.profileScreen,page: ()=>ProfileScreen ()),
   GetPage(name: RoutesName.commonScreen,page: ()=>CommonScreen ()),
-   GetPage(name: RoutesName.commonScreen,page: ()=>ComplaintFormWidget ()),
+  GetPage(name: RoutesName.complaintFormWidgetScreen,page: ()=>ComplaintFormWidget ()),
   
 
  
