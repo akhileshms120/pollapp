@@ -1,6 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
+import 'package:pollapp/Presentation/Views/contact_screen.dart';
 import 'package:pollapp/Presentation/Views/home_screen.dart';
 import 'package:pollapp/Presentation/Views/keralapoilce_screen.dart';
 import 'package:pollapp/Presentation/Views/login_screen.dart';
@@ -8,6 +9,7 @@ import 'package:pollapp/Presentation/Views/notification_screen.dart';
 import 'package:pollapp/Presentation/Views/oneboarding_screen.dart';
 import 'package:pollapp/Presentation/Views/otp_screen.dart';
 import 'package:pollapp/Presentation/Views/privacyandpolicy_screen.dart';
+import 'package:pollapp/Presentation/Views/profile_screen.dart';
 import 'package:pollapp/Presentation/Views/services_screen.dart';
 import 'package:pollapp/Presentation/Views/splash_screen.dart';
 import 'package:pollapp/Presentation/Views/termsandcontdion_screen.dart';
@@ -30,7 +32,10 @@ class RoutePages {
   transition: Transition.noTransition),
   GetPage(name:RoutesName.searchScreen , page: ()=>SearchHighlightScreen()),
   GetPage(name:RoutesName.notificationScreen,page:()=>NotifcationScreen()),
-  GetPage(name: RoutesName.servicesScreen,page: ()=>ServicesHomePage())
+  GetPage(name: RoutesName.servicesScreen,page: ()=>ServiceScreen()),
+  GetPage(name: RoutesName.contactScreen,page: ()=>ContactsScreen ()),
+  GetPage(name: RoutesName.profileScreen,page: ()=>ProfileScreen ())
+
   
   
   

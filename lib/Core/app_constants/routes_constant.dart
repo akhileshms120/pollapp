@@ -10,4 +10,6 @@ class RoutesName {
   static const String keralaPoliceScreen = "/keralaPoliceScreen";
   static const String searchScreen = "/searchScreen";
   static const String notificationScreen='/notificationScreen';
+  static const String contactScreen='/contactScreen';
+   static const String profileScreen='/profileScreen';
 }

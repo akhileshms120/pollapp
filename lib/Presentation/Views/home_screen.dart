@@ -15,7 +15,7 @@ import 'package:pollapp/Presentation/Widgets/location_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/newCard.dart';
 import 'package:pollapp/Presentation/Widgets/shareAppCard_widget.dart';
 
-// Wrapper that provides the cubit
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -122,8 +122,14 @@ class HomeScreenContent extends StatelessWidget {
 Widget _buildNavItem({required BuildContext context ,required int index ,required IconData icon,required String label, required bool isSelected, required Color selectedColor,}) {
   return GestureDetector(
     onTap: (){
-     context.read<BottomNavCubit>().selectTab(index);
-     Get.toNamed(RoutesName.servicesScreen);
+       final bottomNavCubit = context.read<BottomNavCubit>();
+      bottomNavCubit.selectTab(index);
+     
+     if(index==1){
+  Get.toNamed(RoutesName.servicesScreen,arguments: bottomNavCubit);
+  
+     }else if(index==2){}else if(index==4){}
+   
     },
     behavior: HitTestBehavior.opaque,
     child: Column(
