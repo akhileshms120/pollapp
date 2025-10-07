@@ -72,6 +72,7 @@ class _OtpScreenState extends State<OtpScreen> {
         create: (_)=>OtpCubit(otpLength: widget.otpLength))
       ],
         child: Scaffold(
+           resizeToAvoidBottomInset: true,
           backgroundColor: Colors.white,
             appBar: AppBar(
         backgroundColor: Colors.white,
@@ -87,140 +88,148 @@ class _OtpScreenState extends State<OtpScreen> {
         centerTitle: true,
       ),
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                children: [
-                  const SizedBox(height: 48),
-                  // Logo
-                  Center(
-                    child: Image.asset(
-                      splash_logo, // replace with your asset
-                      height: 86,
-                      width: 86,
-                    ),
-                  ),
-                  const SizedBox(height: 28),
-                  Text('Verify OTP',
-                      style: theme.textTheme.headlineMedium ??
-                          const TextStyle(fontSize: 32, fontWeight: FontWeight.w800)),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Enter the OTP sent to ${_loginScreenTextcontroller.textEditingController.text}',
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.titleMedium ??
-                        const TextStyle(fontSize: 18, color: Color(0xFF4B5563)),
-                  ),
-                  const SizedBox(height: 28),
-        
-                  // 6 OTP boxes (responsive width)
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      const spacing = 12.0;
-                      final boxSize = min(
-                        72.0,
-                        (constraints.maxWidth -
-                                spacing * (widget.otpLength - 1)) /
-                            widget.otpLength,
-                      );
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: List.generate(widget.otpLength, (i) {
-                          return SizedBox(
-                            width: boxSize,
-                            height: 72,
-                            child: _OtpBox(
-                              controller: _controllers[i],
-                              focus: _nodes[i],
-                              first: i == 0,
-                              last: i == widget.otpLength - 1,
-                              onChanged: (){
-                                final otp=_controllers.map((c)=>c.text).join();
-                                context.read<OtpCubit>().onOtpChnageString(otp);
-                              },
-                            ),
-                          );
-                        }),
-                      );
-                    },
-                  ),
-        
-                  const SizedBox(height: 24),
-        
-                  // Resend
-                  GestureDetector(
-                    onTap:(){
-                        if (context.read<TimerCubit>().state.canResend) {
-        context.read<TimerCubit>().startTimer(); // restart timer
-      }
-                    },
-                    child:BlocBuilder<TimerCubit,TimerState>(builder: (context,state){
-                    return    Text(
-                      state.canResend
-                          ? 'Resend OTP'
-                          : 'Resend OTP in 00:${state.seconds.toString().padLeft(2, '0')}',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: state.canResend ? Colors.black : greyText,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    );
-                    })
-                 
-                  ),
-                  const SizedBox(height: 20),
-        
-                  // Verify button
-                  SizedBox(
-                    width: double.infinity,
-                    child: BlocBuilder<OtpCubit,OtpState>(
-                      builder: (context,state){ return ElevatedButton(
-                        onPressed: _isOtpComplete ? _onVerify : null,
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: Colors.black,
-                          disabledBackgroundColor: const Color(0xFFE5E7EB),
-                          foregroundColor: Colors.white,
-                          shape: const StadiumBorder(),
-                          padding: const EdgeInsets.symmetric(vertical: 18),
-                        ),
-                        child: const Text(
-                          'Verify',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                        ),
-                      );
-                      }
-                    ),
-                  ),
-                  const Spacer(),
-        
-                  // Footer links
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Terms and Condition',
-                          style:
-                              TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Privacy Policy',
-                          style:
-                              TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                ],
-              ),
+  child: SingleChildScrollView(  // Add this
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        children: [
+          const SizedBox(height: 48),
+          // Logo
+          Center(
+            child: Image.asset(
+              splash_logo,
+              height: 86,
+              width: 86,
             ),
           ),
+          const SizedBox(height: 28),
+          Text('Verify OTP',
+              style: theme.textTheme.headlineMedium ??
+                  const TextStyle(fontSize: 32, fontWeight: FontWeight.w800)),
+          const SizedBox(height: 8),
+          Text(
+            'Enter the OTP sent to ${_loginScreenTextcontroller.textEditingController.text}',
+            textAlign: TextAlign.center,
+            style: theme.textTheme.titleMedium ??
+                const TextStyle(fontSize: 18, color: Color(0xFF4B5563)),
+          ),
+          const SizedBox(height: 28),
+
+          // OTP boxes
+          LayoutBuilder(
+            builder: (context, constraints) {
+              const spacing = 12.0;
+              final boxSize = min(
+                72.0,
+                (constraints.maxWidth - spacing * (widget.otpLength - 1)) /
+                    widget.otpLength,
+              );
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(widget.otpLength, (i) {
+                  return SizedBox(
+                    width: boxSize,
+                    height: 72,
+                    child: _OtpBox(
+                      controller: _controllers[i],
+                      focus: _nodes[i],
+                      first: i == 0,
+                      last: i == widget.otpLength - 1,
+                      onChanged: () {
+                        final otp = _controllers.map((c) => c.text).join();
+                        context.read<OtpCubit>().onOtpChnageString(otp);
+                      },
+                    ),
+                  );
+                }),
+              );
+            },
+          ),
+
+          const SizedBox(height: 24),
+
+          // Resend
+          GestureDetector(
+            onTap: () {
+              if (context.read<TimerCubit>().state.canResend) {
+                context.read<TimerCubit>().startTimer();
+              }
+            },
+            child: BlocBuilder<TimerCubit, TimerState>(
+              builder: (context, state) {
+                return Text(
+                  state.canResend
+                      ? 'Resend OTP'
+                      : 'Resend OTP in 00:${state.seconds.toString().padLeft(2, '0')}',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: state.canResend ? Colors.black : greyText,
+                    fontWeight: FontWeight.w600,
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // Verify button
+          SizedBox(
+            width: double.infinity,
+            child: BlocBuilder<OtpCubit, OtpState>(
+              builder: (context, state) {
+                return ElevatedButton(
+                  onPressed: _isOtpComplete ? _onVerify : null,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: Colors.black,
+                    disabledBackgroundColor: const Color(0xFFE5E7EB),
+                    foregroundColor: Colors.white,
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                  ),
+                  child: const Text(
+                    'Verify',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                  ),
+                );
+              },
+            ),
+          ),
+          
+          SizedBox(height: MediaQuery.of(context).viewInsets.bottom + 20), // Add dynamic spacing
+          
+          // Footer links
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Terms and Condition',
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Privacy Policy',
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+        ],
+      ),
+    ),
+  ),
+),
+          
+          
+          
+          
+   
+       
         ),
       );
     

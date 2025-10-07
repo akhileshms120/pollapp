@@ -14,6 +14,7 @@ import 'package:pollapp/Presentation/Widgets/emergencyContat_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/howtouse_widget.dart';
 import 'package:pollapp/Presentation/Widgets/location_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/newCard.dart';
+import 'package:pollapp/Presentation/Widgets/pollappBottomSheet.dart';
 import 'package:pollapp/Presentation/Widgets/shareAppCard_widget.dart';
 
 
@@ -120,6 +121,18 @@ class HomeScreenContent extends StatelessWidget {
     }
     ));
   }
+
+  void _showPolBloodBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        
+        return const PolBloodBottomSheetContent();
+      },
+    );
+  }
 Widget _buildNavItem({required BuildContext context ,required int index ,required IconData icon,required String label, required bool isSelected, required Color selectedColor,}) {
   return GestureDetector(
     onTap: (){
@@ -213,10 +226,12 @@ Widget _buildNavItem({required BuildContext context ,required int index ,require
           _ServiceItem(
             icon: Icons.bloodtype_outlined,
             label: 'Pol-Blood',
-            onPressed: () => onServicePressed(
+            onPressed: () { onServicePressed(
               context: context,
               serviceName: 'Pol-Blood',
-            ),
+            );
+           _showPolBloodBottomSheet(context);
+            }
           ),
           _ServiceItem(
             icon: Icons.download_for_offline,
@@ -229,11 +244,7 @@ Widget _buildNavItem({required BuildContext context ,required int index ,require
           _ServiceItem(
             icon: Icons.arrow_right_alt,
             label: 'View All',
-            onPressed: (){},
-            // onPressed: () => onServicePressed(
-            //   context: context,
-            //   serviceName: 'View All',
-            // ),
+            onPressed: ()=>Get.toNamed(RoutesName.servicesScreen),
           ),
         ],
       ),

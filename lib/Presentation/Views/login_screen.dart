@@ -6,6 +6,7 @@ import 'package:pollapp/Core/app_constants/image_constant.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Controller/text_controller.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
+import 'package:pollapp/Presentation/Widgets/fingerPrintWidget.dart';
 
 class LoginScreen extends StatelessWidget {
    LoginScreen({super.key});
@@ -155,7 +156,8 @@ class LoginScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColor.getIconBackgroundColor(isDarkMode),
+                        color: Colors.transparent,
+                        //AppColor.getIconBackgroundColor(isDarkMode),
                         boxShadow: [
                           BoxShadow(
                             color: AppColor.getShadowColor(
@@ -166,12 +168,15 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Icon(
-                        Icons.fingerprint,
-                        size: fingerprintSize,
-                        color: AppColor.getIconBackgroundColor(isDarkMode),
-                        semanticLabel: "Login with fingerprint",
-                      ),
+                      child:FingerprintLoginButton(fingerprintSize:fingerprintSize,isDarkMode:isDarkMode,verticalSpacing:0)
+                      
+                      //  Icon(
+                      //   Icons.fingerprint,
+                      //   size: fingerprintSize,
+                      //   color: Colors.black,
+                      //   //AppColor.getIconBackgroundColor(isDarkMode),
+                      //   semanticLabel: "Login with fingerprint",
+                      // ),
                     ),
                   ),
                   SizedBox(height: verticalSpacing),

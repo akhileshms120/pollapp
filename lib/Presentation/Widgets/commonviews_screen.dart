@@ -24,10 +24,15 @@ String _pressedTab = "";
    
    Widget _commonScreenUI(String pageName) {
     switch (pageName) {
-      case 'Complaint and Registration':
-        return _buildTab(pageName);
+      case 'Accident GD':
+        return SizedBox();
         default:
-        return Container();
+        return Row(
+                children: [
+                   _buildTab('Submitted'),
+                   _buildTab('Draft'),
+                 ],
+               );
     }}
 Widget _buildTab(String title) {
   final bool isSelected = _selectedTab == title;
@@ -227,12 +232,7 @@ Widget _buildTab(String title) {
                // color: const Color(0xFFE9EDF0),
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: Row(
-                children: [
-                  _buildTab('Submitted'),
-                  _buildTab('Draft'),
-                ],
-              ),
+              child:_commonScreenUI(customscreenmodel.appBarTitle),
             ),
           ),
 
