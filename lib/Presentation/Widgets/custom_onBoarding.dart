@@ -78,11 +78,13 @@ class _OnboardingViewState extends State<OnboardingView> {
             enableLoop: false,
             waveType: WaveType.liquidReveal,
             positionSlideIcon: 0.7,
-            slideIconWidget: const Icon(
+            slideIconWidget:
+            
+            state.currentPageIndex < _pages.length - 1? const Icon(
               Icons.arrow_back_ios_rounded,
               color: Colors.black,
               size: 30,
-            ),
+            ):const SizedBox.shrink(),
             onPageChangeCallback: (index) {
               context.read<OnboardingCubit>().updatePage(index, _pages.length);
             },
