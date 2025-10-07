@@ -36,7 +36,7 @@ class SplashAnimationController extends GetxController
   void _setupAnimations() {
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 5000),
     );
 
     fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -119,7 +119,7 @@ class SplashView extends StatelessWidget {
                
                 CustomAnimatedHeader(
                   title: 'Kerala Police',
-                  subtitle: 'Pol App',
+                  subtitle: 'PolApp',
                   isDarkMode: isDarkMode,
                   fadeAnimation: animController.fadeAnimation,
                   slideAnimation: animController.slideAnimation,
