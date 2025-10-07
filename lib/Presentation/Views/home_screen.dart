@@ -10,6 +10,7 @@ import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/recentlyUser_cubit.dart';
 import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
+import 'package:pollapp/Presentation/Widgets/custombottomnavbar.dart';
 import 'package:pollapp/Presentation/Widgets/emergencyContat_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/howtouse_widget.dart';
 import 'package:pollapp/Presentation/Widgets/location_corsel.dart';
@@ -17,19 +18,15 @@ import 'package:pollapp/Presentation/Widgets/newCard.dart';
 import 'package:pollapp/Presentation/Widgets/pollappBottomSheet.dart';
 import 'package:pollapp/Presentation/Widgets/shareAppCard_widget.dart';
 
-
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [ 
-        BlocProvider(
-        create: (context) => RecentlyUsedCubit(),),
-        BlocProvider(
-        create: (context) => BottomNavCubit())
+      providers: [
+        BlocProvider(create: (context) => RecentlyUsedCubit()),
+        BlocProvider(create: (context) => BottomNavCubit()),
       ],
       child: HomeScreenContent(),
-      
     );
   }
 }
@@ -39,12 +36,13 @@ class HomeScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeScreenAppBar(),
+      appBar: 
+      HomeScreenAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [   
+          children: [
             const LocationCard(),
             const Text(
               'Services',
@@ -65,61 +63,41 @@ class HomeScreenContent extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-               const EmergencyContactsCarousel(),
-                const SizedBox(height: 16),
-                   const Text(
+            const EmergencyContactsCarousel(),
+            const SizedBox(height: 16),
+            const Text(
               'Latest News',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            
             ),
-             const SizedBox(height: 16),
+            const SizedBox(height: 16),
             LatestNewsCarousel(),
-                  const SizedBox(height: 10),
+            const SizedBox(height: 10),
             Center(child: Text("View All")),
             const SizedBox(height: 16),
-            
-             const Text(
+
+            const Text(
               'How to use',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            
             ),
-            const SizedBox(height: 16,),
+            const SizedBox(height: 16),
             InfoCardsCarousel(),
-             const SizedBox(height: 16,),
-            SharePolAppCard()
-
-
+            const SizedBox(height: 16),
+            SharePolAppCard(),
           ],
         ),
       ),
-    bottomNavigationBar:BlocBuilder<BottomNavCubit,BottomNavState>(builder: (context,state){
-    return Container(
-  margin: const EdgeInsets.all(16),
-  height: 70,
-  decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(30),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black,
-        blurRadius: 20,
-        offset: const Offset(0, 10),
+      bottomNavigationBar: SafeArea(
+        child: BlocBuilder<BottomNavCubit, BottomNavState>(
+          builder: (context, state) {
+            return CustomBottomNavigationBar(
+              selectedIndex: state.selectedIndex,
+              cubit: context.read<BottomNavCubit>(),
+            );
+            
+          },
+        ),
       ),
-    ],
-  ),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
-      _buildNavItem(context:context,index:0,icon:Icons.home,label: 'Home',selectedColor: Colors.grey.shade700,isSelected:state.selectedIndex==0),
-      _buildNavItem(context:context,index:1,icon:Icons.grid_view, label:'Service', selectedColor:Colors.grey.shade700,isSelected:state.selectedIndex==1 ),
-      _buildSOSButton(context),
-      _buildNavItem(context:context,index:3,icon:Icons.contacts, label:'Contact', selectedColor:Colors.grey.shade700,isSelected: state.selectedIndex==3),
-      _buildNavItem(context:context,index:4,icon:Icons.person, label:'Profile',selectedColor:Colors.grey.shade700,isSelected: state.selectedIndex==4),
-    ],
-  ),
-);
-    }
-    ));
+    );
   }
 
   void _showPolBloodBottomSheet(BuildContext context) {
@@ -128,46 +106,56 @@ class HomeScreenContent extends StatelessWidget {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-        
         return const PolBloodBottomSheetContent();
       },
     );
   }
-Widget _buildNavItem({required BuildContext context ,required int index ,required IconData icon,required String label, required bool isSelected, required Color selectedColor,}) {
-  return GestureDetector(
-    onTap: (){
-       final bottomNavCubit = context.read<BottomNavCubit>();
-      bottomNavCubit.selectTab(index);
-     
-     if(index==1){
-  Get.toNamed(RoutesName.servicesScreen,arguments: bottomNavCubit);
-  
-     }else if(index==2){}else if(index==4){}
-   
-    },
-    behavior: HitTestBehavior.opaque,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          color: isSelected ?selectedColor:Colors.grey.shade400 ,
-          size: 24,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: isSelected?FontWeight.w600:FontWeight.normal,
+
+  Widget _buildNavItem({
+    required BuildContext context,
+    required int index,
+    required IconData icon,
+    required String label,
+    required bool isSelected,
+    required Color selectedColor,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        final bottomNavCubit = context.read<BottomNavCubit>();
+        bottomNavCubit.selectTab(index);
+
+        if (index == 1) {
+          Get.toNamed(RoutesName.servicesScreen, arguments: bottomNavCubit);
+        } else if (index == 2) {
+        } else if (index == 4) {}
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
             color: isSelected ? selectedColor : Colors.grey.shade400,
+            size: 24,
           ),
-        ),
-      ],
-    ),
-  );
-}
-  void onServicePressed({required BuildContext context, required String serviceName}) {
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+              color: isSelected ? selectedColor : Colors.grey.shade400,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void onServicePressed({
+    required BuildContext context,
+    required String serviceName,
+  }) {
     BlocProvider.of<RecentlyUsedCubit>(context).markAsUsed(serviceName);
   }
 
@@ -196,55 +184,71 @@ Widget _buildNavItem({required BuildContext context ,required int index ,require
           _ServiceItem(
             icon: Icons.assignment,
             label: 'Complaint and Registration',
-            onPressed: () { onServicePressed(
-              context: context,
-              serviceName: 'Complaint and Registration',
-            );
-            Get.toNamed(RoutesName.commonScreen,arguments:Customscreenmodel(appBarTitle: 'Complaint and Registration', noDraft: false));
-            }
+            onPressed: () {
+              onServicePressed(
+                context: context,
+                serviceName: 'Complaint and Registration',
+              );
+              Get.toNamed(
+                RoutesName.commonScreen,
+                arguments: Customscreenmodel(
+                  appBarTitle: 'Complaint and Registration',
+                  noDraft: false,
+                ),
+              );
+            },
           ),
           _ServiceItem(
             icon: Icons.policy,
             label: 'Certification of Non-involvment',
-            onPressed: () { onServicePressed(
-              context: context,
-              serviceName: 'Certification of Non-involvment',
-            );
-            Get.toNamed(RoutesName.commonScreen,arguments:Customscreenmodel(appBarTitle:  'NIOC Requests',noDraft: false));
-            }
+            onPressed: () {
+              onServicePressed(
+                context: context,
+                serviceName: 'Certification of Non-involvment',
+              );
+              Get.toNamed(
+                RoutesName.commonScreen,
+                arguments: Customscreenmodel(
+                  appBarTitle: 'NIOC Requests',
+                  noDraft: false,
+                ),
+              );
+            },
           ),
           _ServiceItem(
             icon: Icons.assignment_late,
             label: 'Accident GD',
-            onPressed: (){ onServicePressed(
-              context: context,
-              serviceName: 'Accident GD',
-            );
-             Get.toNamed(RoutesName.commonScreen,arguments:Customscreenmodel(appBarTitle: 'Accident GD',noDraft: true));
-            }
+            onPressed: () {
+              onServicePressed(context: context, serviceName: 'Accident GD');
+              Get.toNamed(
+                RoutesName.commonScreen,
+                arguments: Customscreenmodel(
+                  appBarTitle: 'Accident GD',
+                  noDraft: true,
+                ),
+              );
+            },
           ),
           _ServiceItem(
             icon: Icons.bloodtype_outlined,
             label: 'Pol-Blood',
-            onPressed: () { onServicePressed(
-              context: context,
-              serviceName: 'Pol-Blood',
-            );
-           _showPolBloodBottomSheet(context);
-            }
+            onPressed: () {
+              onServicePressed(context: context, serviceName: 'Pol-Blood');
+              _showPolBloodBottomSheet(context);
+            },
           ),
           _ServiceItem(
             icon: Icons.download_for_offline,
             label: 'FIR Download',
-            onPressed: () => onServicePressed(
-              context: context,
-              serviceName: 'FIR Download',
-            ),
+            onPressed: () {
+              onServicePressed(context: context, serviceName: 'FIR Download');
+              Get.toNamed(RoutesName.firdownloadPage);
+            },
           ),
           _ServiceItem(
             icon: Icons.arrow_right_alt,
             label: 'View All',
-            onPressed: ()=>Get.toNamed(RoutesName.servicesScreen),
+            onPressed: () => Get.toNamed(RoutesName.servicesScreen),
           ),
         ],
       ),
@@ -280,44 +284,43 @@ Widget _buildNavItem({required BuildContext context ,required int index ,require
       },
     );
   }
-  
-Widget _buildSOSButton(BuildContext context) {
-  return GestureDetector(
-    onTap: () {
-      context.read<BottomNavCubit>().triggerSOS();
-       _showSOSDialog(context);
-    },
-    child: Container(
-      width: 65,
-      height: 65,
-      decoration: BoxDecoration(
-        color: Colors.red,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.red.withOpacity(0.3),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: const Center(
-        child: Text(
-          'SOS',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
+
+  Widget _buildSOSButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        context.read<BottomNavCubit>().triggerSOS();
+        _showSOSDialog(context);
+      },
+      child: Container(
+        width: 65,
+        height: 65,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.red.withOpacity(0.3),
+              blurRadius: 15,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: const Center(
+          child: Text(
+            'SOS',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1,
+            ),
           ),
         ),
       ),
-    ),
-  );
-  
-}
+    );
+  }
 
-void _showSOSDialog(BuildContext context) {
+  void _showSOSDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -361,8 +364,6 @@ void _showSOSDialog(BuildContext context) {
   }
 }
 
-
-
 class _ServiceItem extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -385,18 +386,11 @@ class _ServiceItem extends StatelessWidget {
           shadowColor: Colors.black26,
           child: IconButton.filledTonal(
             onPressed: onPressed,
-            icon: Icon(
-              icon,
-              size: 30,
-              color: Colors.black,
-            ),
+            icon: Icon(icon, size: 30, color: Colors.black),
           ),
         ),
         const SizedBox(height: 4),
-        CustomWidget.customTextWidget(
-          text: label,
-          textAlign: TextAlign.center,
-        ),
+        CustomWidget.customTextWidget(text: label, textAlign: TextAlign.center),
       ],
     );
   }
@@ -405,10 +399,8 @@ class _ServiceItem extends StatelessWidget {
 class ServiceIconWidget extends StatelessWidget {
   final String serviceId;
 
-  const ServiceIconWidget({
-    Key? key,
-    required this.serviceId,
-  }) : super(key: key);
+  const ServiceIconWidget({Key? key, required this.serviceId})
+    : super(key: key);
 
   IconData _getIconForService(String serviceName) {
     switch (serviceName) {

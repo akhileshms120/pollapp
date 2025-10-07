@@ -21,13 +21,11 @@ class _LocationCardState extends State<LocationCard>
   void initState() {
     super.initState();
     
-    // Setup Animation Controller
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
 
-    // Fade and Slide Animations for the text content
     _fadeAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -44,12 +42,10 @@ class _LocationCardState extends State<LocationCard>
       curve: Curves.easeOut,
     ));
 
-    // Start initial animation and auto-toggle
     _animationController.forward();
     _startAutoToggle();
   }
 
-  /// Sets up a timer to automatically switch between 'Jurisdiction' and 'You're near to' states.
   void _startAutoToggle() {
     _autoToggleTimer = Timer.periodic(
       const Duration(seconds: 5),
@@ -57,7 +53,6 @@ class _LocationCardState extends State<LocationCard>
     );
   }
 
-  /// Toggles the state and restarts the transition animation.
   void _toggleState() {
     setState(() {
       isNear = !isNear;
@@ -75,223 +70,247 @@ class _LocationCardState extends State<LocationCard>
 
   @override
   Widget build(BuildContext context) {
-    // NEW DIMENSIONS: Height 200.0, Width 500.0
-    const double cardMaxHeight = 200.0;
-    const double cardMaxWidth = 500.0;
-    
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SizedBox(
-          height: cardMaxHeight, // Max Height
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: cardMaxWidth), // Max Width
-            padding: const EdgeInsets.all(16), // Adjusted Padding
-            decoration: BoxDecoration(
-              // Gradient matching the original UI (orange/yellow fade)
-              gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFFFFF9CC), 
-                  Color(0xFFFFDDCC), 
-                ],
+      child: Container(
+        height: 200,
+        width: double.infinity,decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          gradient: LinearGradient(colors: [ Color(0xFFFFF9CC), 
+                     Color(0xFFFFDDCC), ]),
+                     boxShadow:[BoxShadow(
+                      color: Colors.black.withAlpha(1),
+                      blurRadius: 15,
+                      offset: const Offset(0,8)
+                     )]
+        ),
+        child: _buildVerticalLayout(1000, 5),
+      ),
+    );
+   
+  }
+
+  // Vertical layout for portrait phones
+  Widget _buildVerticalLayout(double screenWidth, double contentPadding) {
+    final isSmallScreen = screenWidth < 360;
+    final isLargeScreen = contentPadding > 20;
+    
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+          _buildAnimatedIcon(isLargeScreen),
+                 _buildAnimatedText(isSmallScreen, isLargeScreen),
+                  _buildIndicatorDots(isSmallScreen, isLargeScreen),
+            ],
+          ),
+        ),
+        SizedBox(width: 150,height: 150,
+          child: CityIllustration()),
+    ],);
+  }
+
+  // Horizontal layout for landscape and tablets
+  Widget _buildHorizontalLayout(double screenWidth, double contentPadding) {
+    final isSmallScreen = screenWidth < 600;
+    final isLargeScreen = contentPadding > 20;
+    
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Left Section - Text and Buttons
+        Expanded(
+          flex: 3,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildAnimatedIcon(isLargeScreen),
+              SizedBox(height: isLargeScreen ? 8 : (isSmallScreen ? 4 : 6)),
+              _buildAnimatedText(isSmallScreen, isLargeScreen),
+              SizedBox(height: isLargeScreen ? 12 : (isSmallScreen ? 8 : 12)),
+              _buildButtons(isSmallScreen, isLargeScreen),
+              SizedBox(height: isLargeScreen ? 8 : (isSmallScreen ? 6 : 8)),
+              _buildIndicatorDots(isSmallScreen, isLargeScreen),
+            ],
+          ),
+        ),
+        
+        SizedBox(width: isLargeScreen ? 24 : (isSmallScreen ? 12 : 20)),
+        
+        // Right Section - City Illustration
+        Expanded(
+          flex: 2,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: isLargeScreen ? 220 : 200,
+                maxHeight: isLargeScreen ? 160 : 140,
               ),
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 15,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                
-                // Changed to a Row for the wide aspect ratio
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-                  crossAxisAlignment: CrossAxisAlignment.center, // Center all content vertically
-                  children: [
-                    // --- Left Section (Text, Icon, Buttons) ---
-                    Flexible(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center, 
-                        mainAxisAlignment: MainAxisAlignment.center, // Center content within column height
-                        children: [
-                          // Animated Icon (Toggles between 1 or 2 pins)
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 400),
-                            transitionBuilder: (child, animation) {
-                              return ScaleTransition(
-                                scale: animation,
-                                child: child,
-                              );
-                            },
-                            child: Row(
-                              key: ValueKey<bool>(isNear), // Key drives the switch animation
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.location_on,
-                                  color: Color(0xFF8B0000), // Dark red
-                                  size: 20, // Further reduced size
-                                ),
-                                if (isNear) ...[
-                                  const SizedBox(width: 4),
-                                  const Icon(
-                                    Icons.location_on,
-                                    color: Color(0xFF8B0000), // Dark red
-                                    size: 20, // Further reduced size
-                                  ),
-                                ],
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 4), // Reduced spacing
-                          
-                          // Animated Text (Fades and Slides in)
-                          FadeTransition(
-                            opacity: _fadeAnimation,
-                            child: SlideTransition(
-                              position: _slideAnimation,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    isNear ? "You're near to" : "Jurisdiction",
-                                    style: TextStyle(
-                                      fontSize: 12, // Further reduced size
-                                      color: Colors.grey[600],
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  const Text(
-                                    "MUSEUM",
-                                    style: TextStyle(
-                                      fontSize: 20, // Further reduced size
-                                      color: Color(0xFF4A0E0E), // Very dark red/brown
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.0, 
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12), // Reduced spacing
-                          
-                          // Buttons with Scale Animation
-                          Wrap(
-                            spacing: 8, 
-                            runSpacing: 8,
-                            alignment: WrapAlignment.start,
-                            children: [
-                              // Primary Button (Get Details)
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF2C3E50), 
-                                  foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, // Reduced padding
-                                    vertical: 8, // Reduced padding
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8), 
-                                  ),
-                                  elevation: 0,
-                                ),
-                                child: const Text(
-                                  "Details", 
-                                  style: TextStyle(
-                                    fontSize: 12, // Further reduced size
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              // Secondary Button (Refresh/Toggle)
-                              OutlinedButton(
-                                onPressed: _toggleState,
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: const Color(0xFF2C3E50),
-                                  padding: const EdgeInsets.all(6), // Reduced padding
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8), 
-                                  ),
-                                  side: const BorderSide(
-                                    color: Color(0xFF2C3E50),
-                                    width: 1.5, 
-                                  ),
-                                ),
-                                child: const Icon(Icons.refresh, size: 16), // Reduced icon size
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8), // Reduced spacing
-                          
-                          // Indicator Dots
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              _buildIndicatorDot(context, isNear, 6), // Reduced dot size
-                              const SizedBox(width: 6),
-                              _buildIndicatorDot(context, !isNear, 6), // Reduced dot size
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    
-                    const SizedBox(width: 20), // Separator
-                    
-                    // --- Right Section - City Illustration (Fixed size for Row layout) ---
-                    SizedBox(
-                      // Size tailored to fit inside 200 height card
-                      width: 180, 
-                      height: 160, 
-                      child: const _CityIllustration(), // Uses default internal sizes now
-                    ),
-                  ],
-                );
-              },
+              child: const CityIllustration(),
             ),
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAnimatedIcon([bool isLargeScreen = false]) {
+    final iconSize = isLargeScreen ? 20.0 : 16.0;
+    
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 400),
+      transitionBuilder: (child, animation) {
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+        );
+      },
+      child: Row(
+        key: ValueKey<bool>(isNear),
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.location_on,
+            color: const Color(0xFF8B0000),
+            size: iconSize,
+          ),
+          if (isNear) ...[
+            SizedBox(width: isLargeScreen ? 4 : 3),
+            Icon(
+              Icons.location_on,
+              color: const Color(0xFF8B0000),
+              size: iconSize,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAnimatedText(bool isSmallScreen, [bool isLargeScreen = false]) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              isNear ? "You're near to" : "Jurisdiction",
+              style: TextStyle(
+                fontSize: isLargeScreen ? 11 : (isSmallScreen ? 8 : 9),
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            Text(
+              "MUSEUM",
+              style: TextStyle(
+                fontSize: isLargeScreen ? 18 : (isSmallScreen ? 14 : 15),
+                color: const Color(0xFF4A0E0E),
+                fontWeight: FontWeight.bold,
+                letterSpacing: isLargeScreen ? 0.9 : 0.7,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  /// Helper to build the state indicator dots
-  Widget _buildIndicatorDot(BuildContext context, bool isActive, double size) {
+  Widget _buildButtons(bool isSmallScreen, [bool isLargeScreen = false]) {
+    return Wrap(
+      spacing: isLargeScreen ? 5 : (isSmallScreen ? 2 : 3),
+      runSpacing: isLargeScreen ? 5 : (isSmallScreen ? 2 : 3),
+      alignment: WrapAlignment.start,
+      children: [
+        ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF2C3E50),
+            foregroundColor: Colors.white,
+            padding: EdgeInsets.symmetric(
+              horizontal: isLargeScreen ? 12 : (isSmallScreen ? 8 : 9),
+              vertical: isLargeScreen ? 5 : (isSmallScreen ? 2 : 3),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6),
+            ),
+            elevation: 0,
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Text(
+            "Details",
+            style: TextStyle(
+              fontSize: isLargeScreen ? 10 : (isSmallScreen ? 8 : 9),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        OutlinedButton(
+          onPressed: _toggleState,
+          style: OutlinedButton.styleFrom(
+            foregroundColor: const Color(0xFF2C3E50),
+            padding: EdgeInsets.all(isLargeScreen ? 4 : (isSmallScreen ? 2 : 3)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6),
+            ),
+            side: const BorderSide(
+              color: Color(0xFF2C3E50),
+              width: 1.2,
+            ),
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Icon(Icons.refresh, size: isLargeScreen ? 12 : (isSmallScreen ? 9 : 10)),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIndicatorDots(bool isSmallScreen, [bool isLargeScreen = false]) {
+    final dotSize = isLargeScreen ? 4.5 : (isSmallScreen ? 3.0 : 3.5);
+    
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildIndicatorDot(isNear, dotSize),
+        SizedBox(width: isLargeScreen ? 4 : (isSmallScreen ? 2 : 3)),
+        _buildIndicatorDot(!isNear, dotSize),
+      ],
+    );
+  }
+
+  Widget _buildIndicatorDot(bool isActive, double size) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: isActive 
-            ? const Color(0xFF8B0000) // Active dot color
-            : Colors.grey[400], // Inactive dot color
+        color: isActive ? const Color(0xFF8B0000) : Colors.grey[400],
         shape: BoxShape.circle,
       ),
     );
   }
 }
 
-// --- CITY ILLUSTRATION WIDGET (Preserves the Bouncing Pin Animation) ---
-class _CityIllustration extends StatefulWidget {
-  // Removed scale parameter, as we manage size via the parent SizedBox now
-  const _CityIllustration({Key? key}) : super(key: key);
+// --- CITY ILLUSTRATION WIDGET ---
+class CityIllustration extends StatefulWidget {
+  const CityIllustration({Key? key}) : super(key: key);
 
   @override
-  State<_CityIllustration> createState() => _CityIllustrationState();
+  State<CityIllustration> createState() => _CityIllustrationState();
 }
 
-class _CityIllustrationState extends State<_CityIllustration>
+class _CityIllustrationState extends State<CityIllustration>
     with SingleTickerProviderStateMixin {
   late AnimationController _bounceController;
   late Animation<double> _bounceAnimation;
@@ -302,18 +321,16 @@ class _CityIllustrationState extends State<_CityIllustration>
     _bounceController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
-    )..repeat(reverse: true); // Loop the animation
+    )..repeat(reverse: true);
 
     _bounceAnimation = Tween<double>(
       begin: 0,
-      end: 5, // Reduced bounce height to fit 160 height
+      end: 5,
     ).animate(CurvedAnimation(
       parent: _bounceController,
       curve: Curves.easeInOut,
     ));
   }
-  
-  // Removed didUpdateWidget since the scale parameter is gone
 
   @override
   void dispose() {
@@ -323,76 +340,84 @@ class _CityIllustrationState extends State<_CityIllustration>
 
   @override
   Widget build(BuildContext context) {
-    // No external Transform.scale needed, using internal fixed sizing
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        // Clouds (background element)
-        Positioned(
-          top: 10,
-          right: 10,
-          child: _buildCloud(20), // Reduced size
-        ),
-        Positioned(
-          top: 20,
-          right: 40,
-          child: _buildCloud(12), // Reduced size
-        ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Scale illustration based on available space
+        final scale = (constraints.maxWidth / 180).clamp(0.5, 1.2);
         
-        // Buildings (positioned at the bottom)
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
+        return Transform.scale(
+          scale: scale,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            clipBehavior: Clip.none,
             children: [
-              _buildBuilding(45, Colors.grey[400]!), // Reduced height
-              const SizedBox(width: 4),
-              _buildBuilding(60, Colors.grey[300]!), // Reduced height
-              const SizedBox(width: 4),
-              _buildBuilding(55, const Color(0xFF2C3E50)), // Reduced height
-              const SizedBox(width: 4),
-              _buildBuilding(40, Colors.grey[350]!), // Reduced height
-            ],
-          ),
-        ),
-        
-        // Animated Bouncing Pin (Location Icon)
-        Positioned(
-          top: 5, // Adjusted position for new height
-          right: 20,
-          child: AnimatedBuilder(
-            animation: _bounceAnimation,
-            builder: (context, child) {
-              return Transform.translate(
-                // Applies the vertical bounce
-                offset: Offset(0, _bounceAnimation.value),
-                child: const Icon(
-                  Icons.location_on,
-                  size: 50, // Reduced size
-                  color: Color(0xFFFFC107), // Yellow pin color
-                  shadows: [
-                    Shadow(
-                      color: Colors.black26,
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    ),
+              // Clouds
+              Positioned(
+                top: 10,
+                right: 10,
+                child: _buildCloud(20),
+              ),
+              Positioned(
+                top: 20,
+                right: 40,
+                child: _buildCloud(12),
+              ),
+              
+              // Buildings
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildBuilding(45, Colors.grey[400]!),
+                    const SizedBox(width: 4),
+                    _buildBuilding(60, Colors.grey[300]!),
+                    const SizedBox(width: 4),
+                    _buildBuilding(55, const Color(0xFF2C3E50)),
+                    const SizedBox(width: 4),
+                    _buildBuilding(40, Colors.grey[350]!),
                   ],
                 ),
-              );
-            },
+              ),
+              
+              // Animated Bouncing Pin
+              Positioned(
+                top: 5,
+                right: 20,
+                child: AnimatedBuilder(
+                  animation: _bounceAnimation,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: Offset(0, _bounceAnimation.value),
+                      child: const Icon(
+                        Icons.location_on,
+                        size: 50,
+                        color: Color(0xFFFFC107),
+                        shadows: [
+                          Shadow(
+                            color: Colors.black26,
+                            blurRadius: 5,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 
-  // Helper methods to draw building elements
   Widget _buildBuilding(double height, Color color) {
     return Container(
-      width: 30, // Reduced width
+      width: 30,
       height: height,
       decoration: BoxDecoration(
         color: color,
@@ -402,8 +427,8 @@ class _CityIllustrationState extends State<_CityIllustration>
       ),
       child: Column(
         children: [
-          const SizedBox(height: 3), // Reduced spacing
-          for (int i = 0; i < (height ~/ 10); i++) ...[ // Adjusted window count
+          const SizedBox(height: 3),
+          for (int i = 0; i < (height ~/ 10); i++) ...[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -411,7 +436,7 @@ class _CityIllustrationState extends State<_CityIllustration>
                 _buildWindow(),
               ],
             ),
-            const SizedBox(height: 3), // Reduced spacing
+            const SizedBox(height: 3),
           ],
         ],
       ),
@@ -420,8 +445,8 @@ class _CityIllustrationState extends State<_CityIllustration>
 
   Widget _buildWindow() {
     return Container(
-      width: 3, // Reduced size
-      height: 3, // Reduced size
+      width: 3,
+      height: 3,
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(1),

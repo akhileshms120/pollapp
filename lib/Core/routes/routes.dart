@@ -1,6 +1,9 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
+import 'package:pollapp/Presentation/Views/bloodrequest_screen.dart';
+import 'package:pollapp/Presentation/Views/donorregistrion.dart';
+import 'package:pollapp/Presentation/Views/firdownload_screen.dart';
 import 'package:pollapp/Presentation/Widgets/commonviews_screen.dart';
 import 'package:pollapp/Presentation/Views/contact_screen.dart';
 import 'package:pollapp/Presentation/Views/home_screen.dart';
@@ -39,9 +42,12 @@ class RoutePages {
   GetPage(name: RoutesName.profileScreen,page: ()=>ProfileScreen ()),
   GetPage(name: RoutesName.commonScreen,page: ()=>CommonScreen ()),
   GetPage(name: RoutesName.complaintFormWidgetScreen,page: ()=>ComplaintFormWidget ()),
+  GetPage(name: RoutesName.bloodRequestScreen,page: ()=>BloodRequestPage ()),
+  GetPage(name: RoutesName. donorRegistration,page: ()=>DonorProfilePage ()),
+  GetPage(name: RoutesName. firdownloadPage,page: ()=>FirDownloadScreen()),
   
 
- 
+
 
   
   

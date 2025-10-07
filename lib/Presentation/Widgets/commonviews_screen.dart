@@ -191,7 +191,7 @@ Widget _buildTab(String title) {
         shadowColor: Colors.black12,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
-          onPressed: () {},
+          onPressed: ()=>Get.back(),
         ),
         title: Text(
         customscreenmodel.appBarTitle,

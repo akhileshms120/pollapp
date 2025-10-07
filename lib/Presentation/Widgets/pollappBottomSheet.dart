@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:pollapp/Core/app_constants/routes_constant.dart';
 
 // This widget defines the content that will be displayed INSIDE the bottom sheet.
 class PolBloodBottomSheetContent extends StatelessWidget {
@@ -55,11 +58,7 @@ class PolBloodBottomSheetContent extends StatelessWidget {
               height: 60, // Taller button
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // Handle Blood Request
-                  Navigator.pop(context); // Close sheet after action
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Blood Request Tapped!')),
-                  );
+              Get.toNamed(RoutesName.bloodRequestScreen);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red[700], // Red color for blood request
@@ -84,11 +83,7 @@ class PolBloodBottomSheetContent extends StatelessWidget {
               height: 60, // Taller button
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // Handle Donor Registration
-                  Navigator.pop(context); // Close sheet after action
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Donor Registration Tapped!')),
-                  );
+                   Get.toNamed(RoutesName.donorRegistration);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700], // Blue color for donor registration

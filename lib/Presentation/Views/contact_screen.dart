@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
+import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
+import 'package:pollapp/Presentation/Widgets/custombottomnavbar.dart';
 
 // --- Data Models for Contacts ---
 class Contact {
@@ -9,20 +15,29 @@ class Contact {
   final Color color;
 
   Contact(this.name, this.detail, this.type)
-      : initials = name.substring(0, 1).toUpperCase(),
-        color = _getColorForInitial(name.substring(0, 1));
+    : initials = name.substring(0, 1).toUpperCase(),
+      color = _getColorForInitial(name.substring(0, 1));
 
   static Color _getColorForInitial(String initial) {
     switch (initial.toUpperCase()) {
-      case 'T': return const Color(0xFF1F3255);
-      case 'M': return Colors.brown;
-      case 'A': return Colors.teal;
-      case 'D': return Colors.purple;
-      case 'P': return Colors.deepOrange;
-      case 'C': return Colors.blueGrey;
-      case 'V': return Colors.green;
-      case 'R': return Colors.indigo;
-      default: return Colors.grey;
+      case 'T':
+        return const Color(0xFF1F3255);
+      case 'M':
+        return Colors.brown;
+      case 'A':
+        return Colors.teal;
+      case 'D':
+        return Colors.purple;
+      case 'P':
+        return Colors.deepOrange;
+      case 'C':
+        return Colors.blueGrey;
+      case 'V':
+        return Colors.green;
+      case 'R':
+        return Colors.indigo;
+      default:
+        return Colors.grey;
     }
   }
 }
@@ -60,38 +75,58 @@ class ContactsScreen extends StatefulWidget {
 }
 
 class _ContactsScreenState extends State<ContactsScreen> {
-  int _selectedIndex = 2; // Contacts tab in bottom nav
+  final newIndex = Get.arguments;
+
+  late final BottomNavCubit bottomNavCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    bottomNavCubit = BottomNavCubit();
+    if (newIndex != null) {
+      bottomNavCubit.selectTab(newIndex!);
+    }
+  }
+
+  @override
+  void dispose() {
+    bottomNavCubit.close();
+    super.dispose();
+  }
+
   int _selectedFilterIndex = 1; // Default to 'Helpline' tab based on Image 1
 
   List<Contact> get _currentContacts {
     switch (_selectedFilterIndex) {
-      case 0: return allContacts; // 'All' tab
-      case 1: return helplineContacts; // 'Helpline' tab
-      case 2: return []; // 'Emergency' tab is empty
-      default: return [];
+      case 0:
+        return allContacts; // 'All' tab
+      case 1:
+        return helplineContacts; // 'Helpline' tab
+      case 2:
+        return []; // 'Emergency' tab is empty
+      default:
+        return [];
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    bool showAddButton = _selectedFilterIndex == 2; // Only show add button on Emergency tab
+    bool showAddButton =
+        _selectedFilterIndex == 2; // Only show add button on Emergency tab
 
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildBody(),
-      bottomNavigationBar: _buildBottomNavBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Stack(
-        alignment: Alignment.center,
-        children: [
-          _buildSOSButton(), // Always present SOS button
-          if (showAddButton) // Conditionally show the Add button
-            Positioned(
-              right: 16, // Adjust position as needed
-              bottom: 16,
-              child: _buildAddButton(),
+    return BlocProvider<BottomNavCubit>.value(
+      value: bottomNavCubit,
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: _buildBody(),
+        bottomNavigationBar: SafeArea(
+          child: BlocBuilder<BottomNavCubit, BottomNavState>(
+            builder: (context, state) => CustomBottomNavigationBar(
+              selectedIndex: state.selectedIndex,
+              cubit: context.read<BottomNavCubit>(),
             ),
-        ],
+          ),
+        ),
       ),
     );
   }
@@ -119,10 +154,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
           ),
           Text(
             'Seamless Police Contact Directory',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 14,
-            ),
+            style: TextStyle(color: Colors.grey, fontSize: 14),
           ),
         ],
       ),
@@ -140,19 +172,17 @@ class _ContactsScreenState extends State<ContactsScreen> {
     return Column(
       children: [
         _buildSegmentedControl(),
-        // Only show search bar for 'All' or 'Helpline' if desired, or always show.
-        // For simplicity, I'll keep it always present for now, similar to original reference image for general context.
-        // If search should only be on 'All', wrap this in conditional check: if (_selectedFilterIndex == 0)
+
         _selectedFilterIndex == 0
             ? const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: _SearchBar(),
               )
-            : const SizedBox(height: 10), // Give some padding if search bar isn't there.
+            : const SizedBox(
+                height: 10,
+              ), // Give some padding if search bar isn't there.
 
-        _currentContacts.isEmpty
-            ? _buildEmptyState()
-            : _buildContactList(),
+        _currentContacts.isEmpty ? _buildEmptyState() : _buildContactList(),
       ],
     );
   }
@@ -214,11 +244,15 @@ class _ContactsScreenState extends State<ContactsScreen> {
       child: ListView.separated(
         itemCount: _currentContacts.length,
         padding: EdgeInsets.zero,
-        separatorBuilder: (context, index) => const Divider(height: 1, indent: 80, endIndent: 16),
+        separatorBuilder: (context, index) =>
+            const Divider(height: 1, indent: 80, endIndent: 16),
         itemBuilder: (context, index) {
           final contact = _currentContacts[index];
           return ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 4,
+            ),
             leading: CircleAvatar(
               radius: 24,
               backgroundColor: contact.color,
@@ -233,17 +267,11 @@ class _ContactsScreenState extends State<ContactsScreen> {
             ),
             title: Text(
               contact.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
             ),
             subtitle: Text(
               contact.detail,
-              style: const TextStyle(
-                color: Colors.grey,
-                fontSize: 14,
-              ),
+              style: const TextStyle(color: Colors.grey, fontSize: 14),
             ),
             trailing: IconButton(
               icon: const Icon(Icons.call, size: 20, color: Color(0xFF1F3255)),
@@ -284,95 +312,10 @@ class _ContactsScreenState extends State<ContactsScreen> {
                 color: Colors.grey.shade700,
               ),
             ),
-            const SizedBox(height: 100), // Push the text up a bit to make room for FAB
+            const SizedBox(
+              height: 100,
+            ), // Push the text up a bit to make room for FAB
           ],
-        ),
-      ),
-    );
-  }
-
-  // --- SOS Floating Action Button ---
-  Widget _buildSOSButton() {
-    return FloatingActionButton(
-      shape: const CircleBorder(),
-      backgroundColor: Colors.red,
-      onPressed: () {
-        // Handle SOS button press
-      },
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.sos_outlined, color: Colors.white, size: 30),
-        ],
-      ),
-    );
-  }
-
-  // --- Add Floating Action Button (for Emergency tab) ---
-  Widget _buildAddButton() {
-    return FloatingActionButton(
-      shape: const CircleBorder(),
-      backgroundColor: Colors.red.shade700,
-      onPressed: () {
-        // Handle add new emergency contact
-      },
-      child: const Icon(Icons.add, color: Colors.white, size: 30),
-    );
-  }
-
-  // --- Bottom Navigation Bar ---
-  Widget _buildBottomNavBar() {
-    return BottomAppBar(
-      color: Colors.white,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8.0,
-      elevation: 5,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          _buildNavItem(Icons.home_outlined, 0, 'Home'),
-          _buildNavItem(Icons.grid_view, 1, 'Services'),
-          const SizedBox(width: 40), // Spacer for the FAB
-          _buildNavItem(Icons.contact_phone_outlined, 2, 'Contacts'),
-          _buildNavItem(Icons.more_horiz, 3, 'More'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, int index, String label) {
-    bool isSelected = _selectedIndex == index;
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          setState(() {
-            _selectedIndex = index;
-            // If Contacts tab is selected again, we might want to revert filter or maintain it
-            if (index == 2 && _selectedFilterIndex == -1) { // Example: if coming from another tab, reset to 'Helpline'
-              _selectedFilterIndex = 1;
-            }
-          });
-        },
-        customBorder: const CircleBorder(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Icon(
-                icon,
-                color: isSelected ? const Color(0xFF1F3255) : Colors.grey.shade600,
-              ),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: isSelected ? const Color(0xFF1F3255) : Colors.grey.shade600,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -398,7 +341,10 @@ class _SearchBar extends StatelessWidget {
             hintText: 'Search among 1602 contacts',
             border: InputBorder.none,
             prefixIcon: Icon(Icons.search, color: Colors.grey),
-            suffixIcon: Icon(Icons.tune, color: Color(0xFF1F3255)), // Filter icon
+            suffixIcon: Icon(
+              Icons.tune,
+              color: Color(0xFF1F3255),
+            ), // Filter icon
             contentPadding: EdgeInsets.symmetric(vertical: 14),
           ),
           style: TextStyle(fontSize: 16),

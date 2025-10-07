@@ -1,33 +1,49 @@
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/servicestate.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/servicescreen_cubit.dart';
+import 'package:pollapp/Presentation/Widgets/custombottomnavbar.dart';
 
-class ServiceScreen extends StatelessWidget {
-      final bottomNavCubit = Get.arguments as BottomNavCubit?;
- @override     
-Widget build(BuildContext context) {
-  return MultiBlocProvider(
-    providers: [
-      bottomNavCubit != null
-          ? BlocProvider.value(value: bottomNavCubit!)
-          : BlocProvider(create: (context) => BottomNavCubit()),
-      BlocProvider(create: (context) => ServicesCubit()),
-    ],
-    child: ServicesHomePage(),
-  );
+class ServiceScreen extends StatefulWidget {
+  @override
+  State<ServiceScreen> createState() => _ServiceScreenState();
 }
+
+class _ServiceScreenState extends State<ServiceScreen> {
+  final _newIndex = Get.arguments;
+
+  late final BottomNavCubit bottomNavCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    bottomNavCubit = BottomNavCubit();
+    if (_newIndex != null) {
+      bottomNavCubit.selectTab(_newIndex!);
+    }
+  }
+
+  @override
+  void dispose() {
+    bottomNavCubit.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<BottomNavCubit>.value(value: bottomNavCubit),
+        BlocProvider(create: (context) => ServicesCubit()),
+      ],
+      child: ServicesHomePage(),
+    );
+  }
 }
 
 class ServicesHomePage extends StatelessWidget {
@@ -39,14 +55,14 @@ class ServicesHomePage extends StatelessWidget {
       isNew: false,
     ),
     ServiceItem(
-        image: "assets/images/new/services/pcc.png",
-     
+      image: "assets/images/new/services/pcc.png",
+
       title: 'Certificate of Non-Inv...',
       color: Color(0xFF9C27B0),
       isNew: false,
     ),
     ServiceItem(
-         image: "assets/images/new/services/mike.png",
+      image: "assets/images/new/services/mike.png",
 
       title: 'Mike Sanction Registration',
       color: Color(0xFFFF9800),
@@ -54,28 +70,28 @@ class ServicesHomePage extends StatelessWidget {
     ),
     ServiceItem(
       image: "assets/images/new/services/fir.png",
-    
+
       title: 'FIR Download',
       color: Color(0xFF4CAF50),
       isNew: false,
     ),
     ServiceItem(
-         image: "assets/images/new/services/accident.png",
-    
+      image: "assets/images/new/services/accident.png",
+
       title: 'Accident GD',
       color: Color(0xFFF44336),
       isNew: false,
     ),
     ServiceItem(
-       image: "assets/images/new/services/lost-property.png",
-      
+      image: "assets/images/new/services/lost-property.png",
+
       title: 'Lost Property',
       color: Color(0xFFFFEB3B),
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/payment.png",
-     
+
       title: 'Payment History',
       color: Color(0xFF3F51B5),
       isNew: false,
@@ -88,22 +104,22 @@ class ServicesHomePage extends StatelessWidget {
       isNew: false,
     ),
     ServiceItem(
-             image: "assets/images/new/services/grievance-report.png",
-  
+      image: "assets/images/new/services/grievance-report.png",
+
       title: 'Grievances Redressal',
       color: Color(0xFFF44336),
       isNew: true,
     ),
     ServiceItem(
-     image: "assets/images/new/services/arrest-search.png",
-    
+      image: "assets/images/new/services/arrest-search.png",
+
       title: 'Arrest Search',
       color: Color(0xFF607D8B),
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/feedback.png",
-      
+
       title: 'Feedback',
       color: Color(0xFF009688),
       isNew: true,
@@ -112,169 +128,169 @@ class ServicesHomePage extends StatelessWidget {
 
   final List<ServiceItem> polBloodServices = [
     ServiceItem(
-            image: "assets/images/new/services/blood-donate.png",
-    
+      image: "assets/images/new/services/blood-donate.png",
+
       title: 'Blood Donation',
       color: Color(0xFFDC2626),
       isNew: false,
     ),
     ServiceItem(
-           image: "assets/images/new/services/blood-request.png",
+      image: "assets/images/new/services/blood-request.png",
 
       title: 'Blood Request',
       color: Color(0xFF2563EB),
       isNew: false,
     ),
   ];
-   final List<ServiceItem> citizenSafteyServices = [
-  ServiceItem(
-    image: "assets/images/new/services/track-trip.png",
-    title: 'Track My Trip',
-    color: Color(0xFF00BCD4), // Cyan
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/locked-house.png",
-    title: 'Locked House Information',
-    color: Color(0xFF8E24AA), // Purple
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/senior-citizen.png",
-    title: 'Senior Citizen Information',
-    color: Color(0xFFFF6F00), // Deep Orange
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/single-woman.png",
-    title: 'Single Woman',
-    color: Color(0xFFD81B60), // Pink
-    isNew: false,
-  ),
-];
+  final List<ServiceItem> citizenSafteyServices = [
+    ServiceItem(
+      image: "assets/images/new/services/track-trip.png",
+      title: 'Track My Trip',
+      color: Color(0xFF00BCD4), // Cyan
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/locked-house.png",
+      title: 'Locked House Information',
+      color: Color(0xFF8E24AA), // Purple
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/senior-citizen.png",
+      title: 'Senior Citizen Information',
+      color: Color(0xFFFF6F00), // Deep Orange
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/single-woman.png",
+      title: 'Single Woman',
+      color: Color(0xFFD81B60), // Pink
+      isNew: false,
+    ),
+  ];
 
-final List<ServiceItem> reportToUs = [
-  ServiceItem(
-    image: "assets/images/new/services/report-offence.png",
-    title: 'Report An Offence',
-    color: Color(0xFFE53935), // Red
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/abandoned.png",
-    title: 'Report Abandoned List',
-    color: Color(0xFF43A047), // Green
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/spam-report.png",
-    title: 'Report A Cyber Fraud',
-    color: Color(0xFFFF7043), // Deep Orange
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/share-info.png",
-    title: 'Share Information Anonymously',
-    color: Color(0xFF5E35B1), // Deep Purple
-    isNew: false,
-  ),
-];
+  final List<ServiceItem> reportToUs = [
+    ServiceItem(
+      image: "assets/images/new/services/report-offence.png",
+      title: 'Report An Offence',
+      color: Color(0xFFE53935), // Red
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/abandoned.png",
+      title: 'Report Abandoned List',
+      color: Color(0xFF43A047), // Green
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/spam-report.png",
+      title: 'Report A Cyber Fraud',
+      color: Color(0xFFFF7043), // Deep Orange
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/share-info.png",
+      title: 'Share Information Anonymously',
+      color: Color(0xFF5E35B1), // Deep Purple
+      isNew: false,
+    ),
+  ];
 
-final List<ServiceItem> personalServices = [
-  ServiceItem(
-    image: "assets/images/new/services/appointment.png",
-    title: 'Appointment With SHO',
-    color: Color(0xFF00897B), // Teal
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/find-ps.png",
-    title: 'Search Police Station',
-    color: Color(0xFF1E88E5), // Blue
-    isNew: false,
-  ),
-];
+  final List<ServiceItem> personalServices = [
+    ServiceItem(
+      image: "assets/images/new/services/appointment.png",
+      title: 'Appointment With SHO',
+      color: Color(0xFF00897B), // Teal
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/find-ps.png",
+      title: 'Search Police Station',
+      color: Color(0xFF1E88E5), // Blue
+      isNew: false,
+    ),
+  ];
 
-final List<ServiceItem> informationServices = [
-  ServiceItem(
-    image: "assets/images/new/services/internet-tips.png",
-    title: 'Internet Tips',
-    color: Color(0xFF6D4C41), // Brown
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/cyber-security.png",
-    title: 'Cyber Security Information',
-    color: Color(0xFF26A69A), // Teal
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/tourist-guide.png",
-    title: 'Tourist Guide',
-    color: Color(0xFFAB47BC), // Purple
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/user-manual.png",
-    title: 'User Manual',
-    color: Color(0xFF42A5F5), // Light Blue
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/training.png",
-    title: 'Awareness Classes',
-    color: Color(0xFFFFA726), // Orange
-    isNew: false,
-  ),
-];
+  final List<ServiceItem> informationServices = [
+    ServiceItem(
+      image: "assets/images/new/services/internet-tips.png",
+      title: 'Internet Tips',
+      color: Color(0xFF6D4C41), // Brown
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/cyber-security.png",
+      title: 'Cyber Security Information',
+      color: Color(0xFF26A69A), // Teal
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/tourist-guide.png",
+      title: 'Tourist Guide',
+      color: Color(0xFFAB47BC), // Purple
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/user-manual.png",
+      title: 'User Manual',
+      color: Color(0xFF42A5F5), // Light Blue
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/training.png",
+      title: 'Awareness Classes',
+      color: Color(0xFFFFA726), // Orange
+      isNew: false,
+    ),
+  ];
 
-final List<ServiceItem> rateUs = [
-  ServiceItem(
-    image: "assets/images/new/services/rate-ps.png",
-    title: 'Rate Police Station',
-    color: Color(0xFFFDD835), // Yellow
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/rate-app.png",
-    title: 'Rate Application',
-    color: Color(0xFF66BB6A), // Light Green
-    isNew: false,
-  ),
-];
+  final List<ServiceItem> rateUs = [
+    ServiceItem(
+      image: "assets/images/new/services/rate-ps.png",
+      title: 'Rate Police Station',
+      color: Color(0xFFFDD835), // Yellow
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/rate-app.png",
+      title: 'Rate Application',
+      color: Color(0xFF66BB6A), // Light Green
+      isNew: false,
+    ),
+  ];
 
-final List<ServiceItem> webLinks = [
-  ServiceItem(
-    image: "assets/images/new/services/social-media.png",
-    title: 'Social Media',
-    color: Color(0xFF29B6F6), // Light Blue
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/kerala-govt.png",
-    title: 'Government of Kerala',
-    color: Color(0xFF8D6E63), // Brown
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/kerala-police.png",
-    title: 'Kerala Police',
-    color: Color(0xFF5C6BC0), // Indigo
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/thuna.png",
-    title: 'Citizen Services (THUNA)',
-    color: Color(0xFF26C6DA), // Cyan
-    isNew: false,
-  ),
-  ServiceItem(
-    image: "assets/images/new/services/cyberdome.png",
-    title: 'Cyber Dome',
-    color: Color(0xFF7E57C2), // Deep Purple
-    isNew: false,
-  ),
-];
+  final List<ServiceItem> webLinks = [
+    ServiceItem(
+      image: "assets/images/new/services/social-media.png",
+      title: 'Social Media',
+      color: Color(0xFF29B6F6), // Light Blue
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/kerala-govt.png",
+      title: 'Government of Kerala',
+      color: Color(0xFF8D6E63), // Brown
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/kerala-police.png",
+      title: 'Kerala Police',
+      color: Color(0xFF5C6BC0), // Indigo
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/thuna.png",
+      title: 'Citizen Services (THUNA)',
+      color: Color(0xFF26C6DA), // Cyan
+      isNew: false,
+    ),
+    ServiceItem(
+      image: "assets/images/new/services/cyberdome.png",
+      title: 'Cyber Dome',
+      color: Color(0xFF7E57C2), // Deep Purple
+      isNew: false,
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -340,7 +356,7 @@ final List<ServiceItem> webLinks = [
                 servicesState,
                 thunaServices.length,
               ),
-                 SizedBox(height: 16),
+              SizedBox(height: 16),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
@@ -351,13 +367,14 @@ final List<ServiceItem> webLinks = [
                     color: Colors.black87,
                   ),
                 ),
-              ), 
+              ),
               _buildServiceGrid(
                 context,
-                 citizenSafteyServices,
+                citizenSafteyServices,
                 servicesState,
                 thunaServices.length + polBloodServices.length,
-              ),  SizedBox(height: 16),
+              ),
+              SizedBox(height: 16),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
@@ -367,16 +384,18 @@ final List<ServiceItem> webLinks = [
                     fontWeight: FontWeight.w600,
                     color: Colors.black87,
                   ),
-                  
                 ),
-              ),  _buildServiceGrid(
+              ),
+              _buildServiceGrid(
                 context,
-                 reportToUs,
+                reportToUs,
                 servicesState,
-                thunaServices.length + polBloodServices.length + citizenSafteyServices.length,
-              ),  
-              
-                SizedBox(height: 16),
+                thunaServices.length +
+                    polBloodServices.length +
+                    citizenSafteyServices.length,
+              ),
+
+              SizedBox(height: 16),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
@@ -388,13 +407,16 @@ final List<ServiceItem> webLinks = [
                   ),
                 ),
               ),
-               _buildServiceGrid(
+              _buildServiceGrid(
                 context,
-                 personalServices,
+                personalServices,
                 servicesState,
-  thunaServices.length + polBloodServices.length + citizenSafteyServices.length + reportToUs.length, // Fixed
-              ),  
-                 SizedBox(height: 16),
+                thunaServices.length +
+                    polBloodServices.length +
+                    citizenSafteyServices.length +
+                    reportToUs.length, // Fixed
+              ),
+              SizedBox(height: 16),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
@@ -405,14 +427,18 @@ final List<ServiceItem> webLinks = [
                     color: Colors.black87,
                   ),
                 ),
-                
-              ),  
-                _buildServiceGrid(
+              ),
+              _buildServiceGrid(
                 context,
-                 informationServices,
+                informationServices,
                 servicesState,
-                 thunaServices.length + polBloodServices.length + citizenSafteyServices.length + reportToUs.length + personalServices.length,
-              ),  SizedBox(height: 16),
+                thunaServices.length +
+                    polBloodServices.length +
+                    citizenSafteyServices.length +
+                    reportToUs.length +
+                    personalServices.length,
+              ),
+              SizedBox(height: 16),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
@@ -423,13 +449,19 @@ final List<ServiceItem> webLinks = [
                     color: Colors.black87,
                   ),
                 ),
-              ), 
-                _buildServiceGrid(
+              ),
+              _buildServiceGrid(
                 context,
-                 rateUs,
+                rateUs,
                 servicesState,
-                thunaServices.length + polBloodServices.length + citizenSafteyServices.length + reportToUs.length + personalServices.length + informationServices.length,
-              ),   SizedBox(height: 16),
+                thunaServices.length +
+                    polBloodServices.length +
+                    citizenSafteyServices.length +
+                    reportToUs.length +
+                    personalServices.length +
+                    informationServices.length,
+              ),
+              SizedBox(height: 16),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
@@ -441,18 +473,30 @@ final List<ServiceItem> webLinks = [
                   ),
                 ),
               ),
-                _buildServiceGrid(
+              _buildServiceGrid(
                 context,
-                 webLinks,
+                webLinks,
                 servicesState,
-                thunaServices.length + polBloodServices.length + citizenSafteyServices.length + reportToUs.length + personalServices.length + informationServices.length + rateUs.length,
-              ), 
+                thunaServices.length +
+                    polBloodServices.length +
+                    citizenSafteyServices.length +
+                    reportToUs.length +
+                    personalServices.length +
+                    informationServices.length +
+                    rateUs.length,
+              ),
             ],
           );
         },
       ),
-      bottomNavigationBar: BlocBuilder<BottomNavCubit, BottomNavState>(
-        builder: (context, state) => _buildBottomNav(state, context),
+      bottomNavigationBar: SafeArea(
+        child: BlocBuilder<BottomNavCubit, BottomNavState>(
+          builder: (context, state) => CustomBottomNavigationBar(
+            selectedIndex: state.selectedIndex,
+            cubit: context.read<BottomNavCubit>(),
+          ),
+          //_buildBottomNav(state, context),
+        ),
       ),
     );
   }
@@ -501,10 +545,7 @@ final List<ServiceItem> webLinks = [
       tween: Tween(begin: scale, end: scale),
       duration: Duration(milliseconds: 200),
       builder: (context, animatedScale, child) {
-        return Transform.scale(
-          scale: animatedScale,
-          child: child,
-        );
+        return Transform.scale(scale: animatedScale, child: child);
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 200),
@@ -559,33 +600,32 @@ final List<ServiceItem> webLinks = [
                             ),
                           ],
                         ),
-                        child:Container(
-  width: 56,
-  height: 56,
-  decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(16),
-    border: Border.all(
-      color: service.color.withOpacity(0.3),
-      width: 2,
-    ),
-    boxShadow: [
-      BoxShadow(
-        color: service.color.withOpacity(0.2),
-        blurRadius: 8,
-        offset: Offset(0, 4),
-      ),
-    ],
-  ),
-  padding: EdgeInsets.all(12),
-  child: Image.asset(
-    service.image,
-    width: 32,
-    height: 32,
-    fit: BoxFit.contain,
-  ),
-)
- 
+                        child: Container(
+                          width: 56,
+                          height: 56,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: service.color.withOpacity(0.3),
+                              width: 2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: service.color.withOpacity(0.2),
+                                blurRadius: 8,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.all(12),
+                          child: Image.asset(
+                            service.image,
+                            width: 32,
+                            height: 32,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                       ),
                       Spacer(),
                       Text(
@@ -607,7 +647,10 @@ final List<ServiceItem> webLinks = [
                     top: 8,
                     right: 8,
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: Color(0xFFFF5252),
                         borderRadius: BorderRadius.circular(12),
@@ -636,182 +679,6 @@ final List<ServiceItem> webLinks = [
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildBottomNav(dynamic state, BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(16),
-      height: 70,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavItem(
-            context: context,
-            index: 0,
-            icon: Icons.home,
-            label: 'Home',
-            selectedColor: Colors.grey.shade700,
-            isSelected: state.selectedIndex == 0,
-          ),
-          _buildNavItem(
-            context: context,
-            index: 1,
-            icon: Icons.grid_view,
-            label: 'Service',
-            selectedColor: Colors.grey.shade700,
-            isSelected: state.selectedIndex == 1,
-          ),
-          _buildSOSButton(context),
-          _buildNavItem(
-            context: context,
-            index: 3,
-            icon: Icons.contacts,
-            label: 'Contact',
-            selectedColor: Colors.grey.shade700,
-            isSelected: state.selectedIndex == 3,
-          ),
-          _buildNavItem(
-            context: context,
-            index: 4,
-            icon: Icons.person,
-            label: 'Profile',
-            selectedColor: Colors.grey.shade700,
-            isSelected: state.selectedIndex == 4,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem({
-    required BuildContext context,
-    required int index,
-    required IconData icon,
-    required String label,
-    required bool isSelected,
-    required Color selectedColor,
-  }) {
-    return GestureDetector(
-      onTap: () {
-        context.read<BottomNavCubit>().selectTab(index);
-        if(index==0){
-          Get.toNamed(RoutesName.homeScreen);
-        }else if(index==3){
-         Get.toNamed(RoutesName.contactScreen);
-        }
-        else if(index==4){
-         Get.toNamed(RoutesName.profileScreen);
-        }
-       
-      },
-      behavior: HitTestBehavior.opaque,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            color: isSelected ? selectedColor : Colors.grey.shade400,
-            size: 24,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-              color: isSelected ? selectedColor : Colors.grey.shade400,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSOSButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.read<BottomNavCubit>().triggerSOS();
-        _showSOSDialog(context);
-      },
-      child: Container(
-        width: 65,
-        height: 65,
-        decoration: BoxDecoration(
-          color: Colors.red,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.red.withOpacity(0.3),
-              blurRadius: 15,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        child: const Center(
-          child: Text(
-            'SOS',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showSOSDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Row(
-          children: const [
-            Icon(Icons.warning_amber_rounded, color: Colors.red, size: 30),
-            SizedBox(width: 8),
-            Text('SOS Emergency'),
-          ],
-        ),
-        content: const Text(
-          'Are you sure you want to trigger an emergency alert?',
-          style: TextStyle(fontSize: 16),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Emergency alert sent!'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Confirm'),
-          ),
-        ],
       ),
     );
   }
