@@ -104,6 +104,13 @@ class AppConstants {
   static const String eventPerformance = 'Event/Performance Request';
   static const String grevanceReadresseal = 'Grievances Redressal';
   static const String arrestSearch = "Arrest Search";
+  static const String lockedHouse = 'Locked House Information';
+  static const String trackmytrip = "Track My Trip";
+  static const String seniorCitizen = 'Senior Citizen Information';
+  static const String singlewoman = 'Single Woman Living Alone';
+  static const String reportOffence = 'Report An Offence';
+  static const String reportAbandoned = 'Report Abandoned List';
+  static const reportCyberFraud = 'Report A Cyber Fraud';
 
   //
 }

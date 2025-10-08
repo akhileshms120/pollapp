@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
 
-
-
 class FirDownloadScreen extends StatefulWidget {
   const FirDownloadScreen({super.key});
 
@@ -12,99 +10,19 @@ class FirDownloadScreen extends StatefulWidget {
 
 class _FirDownloadScreenState extends State<FirDownloadScreen> {
   // State to manage which view is active
-  bool _isAdvancedSearch = false; 
+  bool _isAdvancedSearch = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppConstants.firdownload),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0, // Clean, flat app bar
-        actions: [
-          // Elegant button to switch to advanced search
-          if (!_isAdvancedSearch)
-            TextButton.icon(
-              icon: const Icon(Icons.search),
-              label: const Text('Advanced Search'),
-              onPressed: () {
-                setState(() {
-                  _isAdvancedSearch = true;
-                });
-              },
-            ),
-          // Back button for advanced search
-          if (_isAdvancedSearch)
-            IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                setState(() {
-                  _isAdvancedSearch = false;
-                });
-              },
-            ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            // Conditionally show the appropriate form
-            _isAdvancedSearch 
-                ? const AdvancedSearchForm()
-                : const BasicSearchForm(),
-          ],
-        ),
-      ),
-      // Bottom persistent action bar
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            // Clear Data button
-            TextButton(
-              onPressed: () { /* Handle Clear Data */ },
-              child: const Text(
-                'Clear Data',
-                style: TextStyle(
-                  color: Colors.deepPurple,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const Spacer(),
-            // Submit button
-            ElevatedButton(
-              onPressed: () { /* Handle Submit */ },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text(
-                'Submit',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
-        ),
-      ),
+    return Column(
+      children: [
+        // Conditionally show the appropriate form
+        _isAdvancedSearch
+            ? const AdvancedSearchForm()
+            : const BasicSearchForm(),
+      ],
     );
+    // Bottom persistent action bar
   }
 }
 
@@ -132,7 +50,9 @@ class BasicSearchForm extends StatelessWidget {
           icon: Icons.list_alt,
           items: const ['2023', '2024', '2025'], // Example data
           selectedValue: '2025',
-          onChanged: (val) { /* Handle selection */ },
+          onChanged: (val) {
+            /* Handle selection */
+          },
         ),
         const SizedBox(height: 15),
         // Police District Dropdown
@@ -141,7 +61,9 @@ class BasicSearchForm extends StatelessWidget {
           icon: Icons.anchor, // Using the 'anchor' icon from the image
           items: const ['District A', 'District B'],
           selectedValue: 'District A',
-          onChanged: (val) { /* Handle selection */ },
+          onChanged: (val) {
+            /* Handle selection */
+          },
         ),
         const SizedBox(height: 15),
         // Police Station Dropdown
@@ -150,7 +72,9 @@ class BasicSearchForm extends StatelessWidget {
           icon: Icons.local_police_outlined,
           items: const ['Station X', 'Station Y'],
           selectedValue: 'Station X',
-          onChanged: (val) { /* Handle selection */ },
+          onChanged: (val) {
+            /* Handle selection */
+          },
         ),
         const SizedBox(height: 15),
         // Captcha Field
@@ -181,7 +105,9 @@ class AdvancedSearchForm extends StatelessWidget {
           icon: Icons.list_alt,
           items: const ['2023', '2024', '2025'], // Example data
           selectedValue: '2025',
-          onChanged: (val) { /* Handle selection */ },
+          onChanged: (val) {
+            /* Handle selection */
+          },
           required: false,
         ),
         const SizedBox(height: 15),
@@ -199,7 +125,9 @@ class AdvancedSearchForm extends StatelessWidget {
           icon: Icons.anchor,
           items: const ['District A', 'District B'],
           selectedValue: 'District A',
-          onChanged: (val) { /* Handle selection */ },
+          onChanged: (val) {
+            /* Handle selection */
+          },
         ),
         const SizedBox(height: 15),
         // Police Station Dropdown (Required here)
@@ -208,21 +136,27 @@ class AdvancedSearchForm extends StatelessWidget {
           icon: Icons.local_police_outlined,
           items: const ['Station X', 'Station Y'],
           selectedValue: 'Station X',
-          onChanged: (val) { /* Handle selection */ },
+          onChanged: (val) {
+            /* Handle selection */
+          },
         ),
         const SizedBox(height: 15),
         // Starting Date
         _buildDateField(
           label: 'Starting Date*',
           icon: Icons.calendar_today_outlined,
-          onTap: () { /* Show date picker */ },
+          onTap: () {
+            /* Show date picker */
+          },
         ),
         const SizedBox(height: 15),
         // Ending Date
         _buildDateField(
           label: 'Ending Date*',
           icon: Icons.calendar_today_outlined,
-          onTap: () { /* Show date picker */ },
+          onTap: () {
+            /* Show date picker */
+          },
         ),
         const SizedBox(height: 10),
         // Max period info
@@ -259,7 +193,9 @@ Widget _buildTextField({
 }) {
   return TextFormField(
     decoration: InputDecoration(
-      labelText: required ? label : label, // Label includes asterisk if required
+      labelText: required
+          ? label
+          : label, // Label includes asterisk if required
       hintText: hint,
       prefixIcon: Icon(icon, color: Colors.deepPurple),
     ),
@@ -283,10 +219,7 @@ Widget _buildDropdownField({
     icon: const Icon(Icons.keyboard_arrow_down),
     isExpanded: true,
     items: items.map((String value) {
-      return DropdownMenuItem<String>(
-        value: value,
-        child: Text(value),
-      );
+      return DropdownMenuItem<String>(value: value, child: Text(value));
     }).toList(),
     onChanged: onChanged,
   );
@@ -303,7 +236,10 @@ Widget _buildDateField({
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon, color: Colors.deepPurple),
-        suffixIcon: const Icon(Icons.calendar_today_outlined, color: Colors.deepPurple),
+        suffixIcon: const Icon(
+          Icons.calendar_today_outlined,
+          color: Colors.deepPurple,
+        ),
       ),
       child: const Text(
         'Select Date', // Placeholder text
@@ -353,7 +289,9 @@ Widget _buildCaptchaField(BuildContext context) {
           const SizedBox(width: 10),
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.deepPurple, size: 30),
-            onPressed: () { /* Refresh captcha */ },
+            onPressed: () {
+              /* Refresh captcha */
+            },
           ),
         ],
       ),

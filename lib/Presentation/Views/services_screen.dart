@@ -148,25 +148,25 @@ class ServicesHomePage extends StatelessWidget {
   final List<ServiceItem> citizenSafteyServices = [
     ServiceItem(
       image: "assets/images/new/services/track-trip.png",
-      title: 'Track My Trip',
+      title: AppConstants.trackmytrip,
       color: Color(0xFF00BCD4), // Cyan
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/locked-house.png",
-      title: 'Locked House Information',
+      title: AppConstants.lockedHouse,
       color: Color(0xFF8E24AA), // Purple
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/senior-citizen.png",
-      title: 'Senior Citizen Information',
+      title: AppConstants.seniorCitizen,
       color: Color(0xFFFF6F00), // Deep Orange
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/single-woman.png",
-      title: 'Single Woman',
+      title: AppConstants.singlewoman,
       color: Color(0xFFD81B60), // Pink
       isNew: false,
     ),
@@ -175,19 +175,19 @@ class ServicesHomePage extends StatelessWidget {
   final List<ServiceItem> reportToUs = [
     ServiceItem(
       image: "assets/images/new/services/report-offence.png",
-      title: 'Report An Offence',
+      title: AppConstants.reportOffence,
       color: Color(0xFFE53935), // Red
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/abandoned.png",
-      title: 'Report Abandoned List',
+      title: AppConstants.reportAbandoned,
       color: Color(0xFF43A047), // Green
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/spam-report.png",
-      title: 'Report A Cyber Fraud',
+      title: AppConstants.reportCyberFraud,
       color: Color(0xFFFF7043), // Deep Orange
       isNew: false,
     ),
@@ -690,48 +690,57 @@ class ServicesHomePage extends StatelessWidget {
 void _callNavigation(String servicename) {
   String _titleToSend = "";
   bool _disableButton = false;
-  String _routeName = "";
+
   if (AppConstants.completeReistration == servicename) {
     _titleToSend = 'Complaint Requests';
     _disableButton = false;
-    _routeName = RoutesName.commonScreen;
   } else if (AppConstants.certifcationofNonInvolvment == servicename) {
     _titleToSend = 'NIOC Requests';
     _disableButton = false;
-    _routeName = RoutesName.commonScreen;
   } else if (AppConstants.mikesanction == servicename) {
     _titleToSend = 'Mike List';
     _disableButton = false;
-    _routeName = RoutesName.commonScreen;
   } else if (AppConstants.firdownload == servicename) {
-    _routeName = RoutesName.firdownloadPage;
+    _titleToSend = AppConstants.firdownload;
   } else if (AppConstants.accidentGD == servicename) {
     _titleToSend = 'Accident GD Requests';
     _disableButton = true;
-    _routeName = RoutesName.commonScreen;
-  }else if(AppConstants.lostProperty==servicename){
-    _titleToSend='Lost Property Requests';
-    _disableButton=true;
-    _routeName=RoutesName.commonScreen;
-  }else if(AppConstants.paymentHistory==servicename){
-     _titleToSend=servicename;
-    _disableButton=true;
-    _routeName=RoutesName.commonScreen;
-  }else if(AppConstants.eventPerformance==servicename){
-    _titleToSend=AppConstants.eventPerformance;
-    _disableButton=false;
-    _routeName=RoutesName.commonScreen;
-  }else if(AppConstants.grevanceReadresseal==servicename){
-    _titleToSend='Grievance About Services';
-    _disableButton=true;
-     _routeName=RoutesName.commonScreen;
-  }else if(AppConstants.arrestSearch==servicename){
-    _titleToSend=AppConstants.arrestSearch;
-    _disableButton=true;
-    _routeName=RoutesName.commonScreen;
+  } else if (AppConstants.lostProperty == servicename) {
+    _titleToSend = 'Lost Property Requests';
+    _disableButton = true;
+  } else if (AppConstants.paymentHistory == servicename) {
+    _titleToSend = servicename;
+    _disableButton = true;
+  } else if (AppConstants.eventPerformance == servicename) {
+    _titleToSend = AppConstants.eventPerformance;
+    _disableButton = false;
+    ;
+  } else if (AppConstants.grevanceReadresseal == servicename) {
+    _titleToSend = 'Grievance About Services';
+    _disableButton = true;
+  } else if (AppConstants.arrestSearch == servicename) {
+    _titleToSend = AppConstants.arrestSearch;
+    _disableButton = true;
+  } else if (AppConstants.lockedHouse == servicename) {
+    _titleToSend = "Locked House Requests";
+    _disableButton = true;
+  } else if (AppConstants.trackmytrip == servicename) {
+    _titleToSend = servicename;
+    _disableButton = true;
+  }else if(AppConstants.seniorCitizen==servicename){
+    _titleToSend=servicename;
+  }else if(AppConstants.singlewoman==servicename){
+   _titleToSend=servicename;
+  }else if(AppConstants.reportOffence==servicename){
+    _titleToSend=servicename;
+  }else if(AppConstants.reportAbandoned==servicename){
+    _titleToSend="Abandoned Report List";
+  }else if(AppConstants.reportCyberFraud==servicename){
+    _titleToSend='Cyber Report List';
   }
+
   Get.toNamed(
-    _routeName,
+    RoutesName.commonScreen,
     arguments: Customscreenmodel(
       appBarTitle: _titleToSend,
       noDraft: _disableButton,

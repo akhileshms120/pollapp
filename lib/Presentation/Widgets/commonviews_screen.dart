@@ -4,15 +4,17 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Domian/Entity/customScreenModel.dart';
+import 'package:pollapp/Presentation/Views/firdownload_screen.dart';
 import 'package:pollapp/Presentation/Widgets/arrestSearch_screen.dart';
 import 'package:pollapp/Presentation/Widgets/filterindutWidget.dart';
 import 'package:pollapp/Presentation/Widgets/grevanceReadresseal.dart';
 import 'package:pollapp/Presentation/Widgets/sortwidget.dart';
+import 'package:pollapp/Presentation/Widgets/tracktrip_widget.dart';
 
 class CommonScreen extends StatefulWidget {
   CommonScreen({Key? key}) : super(key: key);
   bool activate = false;
-  
+
   @override
   State<CommonScreen> createState() => _CommonScreenState();
 }
@@ -28,10 +30,18 @@ class _CommonScreenState extends State<CommonScreen> {
       case 'Grievance About Services':
       case 'Accident GD Requests':
       case 'Lost Property Requests':
+      case 'Locked House Requests':
+      case AppConstants.singlewoman:
       case AppConstants.arrestSearch:
+      case AppConstants.trackmytrip:
+      case AppConstants.firdownload:
+      case AppConstants.seniorCitizen:
+      case AppConstants.reportOffence:
+      case AppConstants.reportAbandoned:
+      case 'Cyber Report List':
         // For form screens, show nothing in the tab area
         return const SizedBox.shrink();
-        
+
       case AppConstants.paymentHistory:
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,13 +94,16 @@ class _CommonScreenState extends State<CommonScreen> {
   Widget _commonScreenContentUI(String pageName) {
     switch (pageName) {
       case 'Arrest Search':
-       return ArrestSearchScreen();
+        return ArrestSearchScreen();
       case 'Grievance About Services':
         return GrievanceFormScreen();
-      case 'Accident GD Requests':
-        return SizedBox();
-      case 'Lost Property Requests':
-        return SizedBox();
+      case 'Track My Trip':
+        return TrackMyTripScreen();
+      case AppConstants.firdownload:
+        return FirDownloadScreen();
+      // case 'Accident GD Requests':
+      // case 'Lost Property Requests':
+      //   return SizedBox();
       default:
         // For list screens, show empty state in a card
         return Expanded(
@@ -265,10 +278,9 @@ class _CommonScreenState extends State<CommonScreen> {
   // Check if the current screen is a form that needs scrolling
   bool _isFormScreen() {
     return customscreenmodel.appBarTitle == 'Grievance About Services' ||
-           customscreenmodel.appBarTitle == 'Accident GD Requests' ||
-           customscreenmodel.appBarTitle == 'Lost Property Requests'||
-           customscreenmodel.appBarTitle==AppConstants.arrestSearch;
-           
+        customscreenmodel.appBarTitle == AppConstants.arrestSearch ||
+        customscreenmodel.appBarTitle == AppConstants.trackmytrip ||
+        customscreenmodel.appBarTitle == AppConstants.firdownload;
   }
 
   @override
@@ -316,23 +328,30 @@ class _CommonScreenState extends State<CommonScreen> {
       ),
       body: _isFormScreen()
           ? Column(
-            children: [
-              // Tab area (hidden for forms but kept for consistency)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                child: _commonScreenTabUI(customscreenmodel.appBarTitle),
-              ),
-              // Main form content
-              SingleChildScrollView(child: _commonScreenContentUI(customscreenmodel.appBarTitle)),
-              // Spacing for bottom button
-              const SizedBox(height: 100),
-            ],
-          )
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
+                  child: _commonScreenTabUI(customscreenmodel.appBarTitle),
+                ),
+                // Main form content
+                SingleChildScrollView(
+                  child: _commonScreenContentUI(customscreenmodel.appBarTitle),
+                ),
+                // Spacing for bottom button
+                const SizedBox(height: 100),
+              ],
+            )
           : Column(
               children: [
                 // Tabs/filters
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
                   child: Container(
                     padding: const EdgeInsets.all(4),
                     child: _commonScreenTabUI(customscreenmodel.appBarTitle),
@@ -342,7 +361,9 @@ class _CommonScreenState extends State<CommonScreen> {
                 _commonScreenContentUI(customscreenmodel.appBarTitle),
               ],
             ),
-      bottomNavigationBar: _isFormScreen()? SizedBox():_buildNewRequestButton()
+      bottomNavigationBar: _isFormScreen()
+          ? SizedBox()
+          : _buildNewRequestButton(),
     );
   }
 }
