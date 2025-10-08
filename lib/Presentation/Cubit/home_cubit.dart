@@ -16,7 +16,7 @@ class HomeCubit extends Cubit<HomescreenState> {
       ),
       ServiceEntity(
         id: '2',
-        title: 'Certificate\nof Non-Inv...',
+        title: 'Certificate\nof Non-Involvment',
         iconName: 'verified_outlined', route: '',
       ),
       ServiceEntity(

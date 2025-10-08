@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Domian/Entity/customScreenModel.dart';
 import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// Actual home screen content
+
 class HomeScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -183,16 +184,16 @@ class HomeScreenContent extends StatelessWidget {
         children: [
           _ServiceItem(
             icon: Icons.assignment,
-            label: 'Complaint and Registration',
+            label: AppConstants.completeReistration,
             onPressed: () {
               onServicePressed(
                 context: context,
-                serviceName: 'Complaint and Registration',
+                serviceName: AppConstants.completeReistration,
               );
               Get.toNamed(
                 RoutesName.commonScreen,
                 arguments: Customscreenmodel(
-                  appBarTitle: 'Complaint and Registration',
+                  appBarTitle: AppConstants.completeReistration,
                   noDraft: false,
                 ),
               );
@@ -200,11 +201,11 @@ class HomeScreenContent extends StatelessWidget {
           ),
           _ServiceItem(
             icon: Icons.policy,
-            label: 'Certification of Non-involvment',
+            label: AppConstants.certifcationofNonInvolvment,
             onPressed: () {
               onServicePressed(
                 context: context,
-                serviceName: 'Certification of Non-involvment',
+                serviceName: AppConstants.certifcationofNonInvolvment,
               );
               Get.toNamed(
                 RoutesName.commonScreen,
@@ -217,13 +218,13 @@ class HomeScreenContent extends StatelessWidget {
           ),
           _ServiceItem(
             icon: Icons.assignment_late,
-            label: 'Accident GD',
+            label: AppConstants.accidentGD,
             onPressed: () {
-              onServicePressed(context: context, serviceName: 'Accident GD');
+              onServicePressed(context: context, serviceName: AppConstants.accidentGD);
               Get.toNamed(
                 RoutesName.commonScreen,
                 arguments: Customscreenmodel(
-                  appBarTitle: 'Accident GD',
+                  appBarTitle: AppConstants.accidentGD,
                   noDraft: true,
                 ),
               );
@@ -239,9 +240,9 @@ class HomeScreenContent extends StatelessWidget {
           ),
           _ServiceItem(
             icon: Icons.download_for_offline,
-            label: 'FIR Download',
+            label: AppConstants.firdownload,
             onPressed: () {
-              onServicePressed(context: context, serviceName: 'FIR Download');
+              onServicePressed(context: context, serviceName: AppConstants.firdownload);
               Get.toNamed(RoutesName.firdownloadPage);
             },
           ),
@@ -404,15 +405,15 @@ class ServiceIconWidget extends StatelessWidget {
 
   IconData _getIconForService(String serviceName) {
     switch (serviceName) {
-      case 'Complaint and Registration':
+      case AppConstants.completeReistration:
         return Icons.assignment;
-      case 'Certification of Non-involvment':
+      case AppConstants.certifcationofNonInvolvment:
         return Icons.policy;
-      case 'Accident GD':
+      case AppConstants.accidentGD:
         return Icons.assignment_late;
       case 'Pol-Blood':
         return Icons.bloodtype_outlined;
-      case 'FIR Download':
+      case AppConstants.firdownload:
         return Icons.download_for_offline;
       case 'View All':
         return Icons.arrow_right_alt;
@@ -423,15 +424,15 @@ class ServiceIconWidget extends StatelessWidget {
 
   Color _getBackgroundColor(String serviceName) {
     switch (serviceName) {
-      case 'Complaint and Registration':
+      case AppConstants.completeReistration:
         return const Color(0xFFE0F7FA);
-      case 'Certification of Non-involvment':
+      case AppConstants.certifcationofNonInvolvment:
         return const Color(0xFFFCE4EC);
-      case 'Accident GD':
+      case AppConstants.accidentGD:
         return const Color(0xFFFFF9C4);
       case 'Pol-Blood':
         return const Color(0xFFFFCDD2);
-      case 'FIR Download':
+      case AppConstants.firdownload:
         return const Color(0xFFE1BEE7);
       // case 'View All':
       //   return const Color(0xFFDCEDC8);
@@ -442,15 +443,15 @@ class ServiceIconWidget extends StatelessWidget {
 
   Color _getIconColor(String serviceName) {
     switch (serviceName) {
-      case 'Complaint and Registration':
+      case AppConstants.completeReistration:
         return Colors.teal.shade700;
-      case 'Certification of Non-involvment':
+      case AppConstants.certifcationofNonInvolvment:
         return Colors.pink.shade700;
-      case 'Accident GD':
+      case AppConstants.accidentGD:
         return Colors.amber.shade700;
       case 'Pol-Blood':
         return Colors.red.shade700;
-      case 'FIR Download':
+      case AppConstants.firdownload:
         return Colors.purple.shade700;
       // case 'View All':
       //   return Colors.green.shade700;

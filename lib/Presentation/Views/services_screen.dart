@@ -3,10 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:pollapp/Core/app_constants/app_constants.dart';
+import 'package:pollapp/Core/app_constants/routes_constant.dart';
+import 'package:pollapp/Domian/Entity/customScreenModel.dart';
 import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/servicestate.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/servicescreen_cubit.dart';
+import 'package:pollapp/Presentation/Widgets/commonviews_screen.dart';
 import 'package:pollapp/Presentation/Widgets/custombottomnavbar.dart';
 
 class ServiceScreen extends StatefulWidget {
@@ -57,63 +61,62 @@ class ServicesHomePage extends StatelessWidget {
     ServiceItem(
       image: "assets/images/new/services/pcc.png",
 
-      title: 'Certificate of Non-Inv...',
+      title: AppConstants.certifcationofNonInvolvment,
       color: Color(0xFF9C27B0),
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/mike.png",
 
-      title: 'Mike Sanction Registration',
+      title: AppConstants.mikesanction,
       color: Color(0xFFFF9800),
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/fir.png",
 
-      title: 'FIR Download',
+      title: AppConstants.firdownload,
       color: Color(0xFF4CAF50),
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/accident.png",
 
-      title: 'Accident GD',
+      title: AppConstants.accidentGD,
       color: Color(0xFFF44336),
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/lost-property.png",
 
-      title: 'Lost Property',
+      title: AppConstants.lostProperty,
       color: Color(0xFFFFEB3B),
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/payment.png",
 
-      title: 'Payment History',
+      title: AppConstants.paymentHistory,
       color: Color(0xFF3F51B5),
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/event.png",
 
-      title: 'Event/Performance',
+      title: AppConstants.eventPerformance,
       color: Color(0xFFE91E63),
       isNew: false,
     ),
     ServiceItem(
       image: "assets/images/new/services/grievance-report.png",
-
-      title: 'Grievances Redressal',
+      title: AppConstants.grevanceReadresseal,
       color: Color(0xFFF44336),
       isNew: true,
     ),
     ServiceItem(
       image: "assets/images/new/services/arrest-search.png",
 
-      title: 'Arrest Search',
+      title: AppConstants.arrestSearch,
       color: Color(0xFF607D8B),
       isNew: false,
     ),
@@ -564,7 +567,7 @@ class ServicesHomePage extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              // Handle service tap
+              _callNavigation(service.title);
             },
             onTapDown: (_) {
               context.read<ServicesCubit>().pressCard(index);
@@ -682,6 +685,58 @@ class ServicesHomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+void _callNavigation(String servicename) {
+  String _titleToSend = "";
+  bool _disableButton = false;
+  String _routeName = "";
+  if (AppConstants.completeReistration == servicename) {
+    _titleToSend = 'Complaint Requests';
+    _disableButton = false;
+    _routeName = RoutesName.commonScreen;
+  } else if (AppConstants.certifcationofNonInvolvment == servicename) {
+    _titleToSend = 'NIOC Requests';
+    _disableButton = false;
+    _routeName = RoutesName.commonScreen;
+  } else if (AppConstants.mikesanction == servicename) {
+    _titleToSend = 'Mike List';
+    _disableButton = false;
+    _routeName = RoutesName.commonScreen;
+  } else if (AppConstants.firdownload == servicename) {
+    _routeName = RoutesName.firdownloadPage;
+  } else if (AppConstants.accidentGD == servicename) {
+    _titleToSend = 'Accident GD Requests';
+    _disableButton = true;
+    _routeName = RoutesName.commonScreen;
+  }else if(AppConstants.lostProperty==servicename){
+    _titleToSend='Lost Property Requests';
+    _disableButton=true;
+    _routeName=RoutesName.commonScreen;
+  }else if(AppConstants.paymentHistory==servicename){
+     _titleToSend=servicename;
+    _disableButton=true;
+    _routeName=RoutesName.commonScreen;
+  }else if(AppConstants.eventPerformance==servicename){
+    _titleToSend=AppConstants.eventPerformance;
+    _disableButton=false;
+    _routeName=RoutesName.commonScreen;
+  }else if(AppConstants.grevanceReadresseal==servicename){
+    _titleToSend='Grievance About Services';
+    _disableButton=true;
+     _routeName=RoutesName.commonScreen;
+  }else if(AppConstants.arrestSearch==servicename){
+    _titleToSend=AppConstants.arrestSearch;
+    _disableButton=true;
+    _routeName=RoutesName.commonScreen;
+  }
+  Get.toNamed(
+    _routeName,
+    arguments: Customscreenmodel(
+      appBarTitle: _titleToSend,
+      noDraft: _disableButton,
+    ),
+  );
 }
 
 class ServiceItem {

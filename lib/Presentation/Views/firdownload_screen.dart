@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pollapp/Core/app_constants/app_constants.dart';
 
 
 
@@ -17,7 +18,7 @@ class _FirDownloadScreenState extends State<FirDownloadScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FIR Download'),
+        title: const Text(AppConstants.firdownload),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0, // Clean, flat app bar

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pollapp/Core/app_constants/app_constants.dart';
 
 class InfoCard extends StatelessWidget {
   final String title;
@@ -114,7 +115,7 @@ class InfoCardsCarousel extends StatelessWidget {
         "arrowColor": Colors.deepOrange,
       },
       {
-        "title": "FIR Download",
+        "title": AppConstants.firdownload,
         "description": "Need FIR details.Download a copy!!",
         "image": "assets/images/new/userManual/fir.png",
         "colors": [const Color(0xFF00B09B), const Color(0xFF96C93D)],

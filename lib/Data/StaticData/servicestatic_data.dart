@@ -1,3 +1,4 @@
+import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Domian/Entity/emergencyContact_entity.dart';
 import 'package:pollapp/Domian/Entity/service_entity.dart';
 
@@ -7,13 +8,13 @@ class StaticData {
     ServiceEntity(id: '1', title: 'Complaint\nRegistration', iconName: 'mail_outline', route:'complaint_screen'),
     ServiceEntity(
         id: '2',
-        title: 'Certificate of\nNon-Involv...',
+        title: 'Certificate of \n Non-Involvement in Offences',
         iconName: 'verified_outlined',
         route: 'certificate_screen'
       ),
       ServiceEntity(
         id: '3',
-        title: 'Accident GD',
+        title: AppConstants.accidentGD,
         iconName: 'car_crash_outlined',
         route: 'accident_screen'
       ),
