@@ -4,23 +4,39 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/colors.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool isDarkMode;
   final double fontSize;
   final double elevation;
 
-  const CustomAppBar({super.key, this.title = "",this.isDarkMode=false,this.fontSize=25,this.elevation=0});
+  const CustomAppBar({
+    super.key,
+    this.title = "",
+    this.isDarkMode = false,
+    this.fontSize = 25,
+    this.elevation = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: CustomWidget.customTextWidget(text: title,fontSize:fontSize,textColor:AppColor.getTextColor(isDarkMode) ),
-      backgroundColor: isDarkMode?AppColor.darkBackground:AppColor.lightBackground,
+      title: CustomWidget.customTextWidget(
+        text: title,
+        fontSize: fontSize,
+        textColor: AppColor.getTextColor(isDarkMode),
+      ),
+      backgroundColor: isDarkMode
+          ? AppColor.darkBackground
+          : AppColor.lightBackground,
       elevation: elevation,
       leading: IconButton(
-        icon:
-        CustomWidget.iconWidget(icon:Icons.arrow_back,iconColor:Colors.white,isDarkMode: isDarkMode),
+        icon: CustomWidget.iconWidget(
+          icon: Icons.arrow_back,
+          iconColor: Colors.white,
+          isDarkMode: isDarkMode,
+        ),
         onPressed: () => Get.back(),
       ),
     );
@@ -30,72 +46,137 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-
 class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
-
+  const HomeScreenAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Color iconColor = Colors.black87;
+
     return AppBar(
-      backgroundColor: Colors.white,
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.transparent,
       elevation: 0,
-      title: GestureDetector(
-        onTap: ()=>Get.toNamed(RoutesName.keralaPoliceScreen),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-             Padding(
-              padding: EdgeInsets.only(right: 8.0),
-              child: CircleAvatar(
-                radius: 18,
-                backgroundColor: Colors.grey, 
-                child: Image.asset("assets/images/homeblack.png")
-              ),
+      scrolledUnderElevation: 0,
+      toolbarHeight: 130,
+      flexibleSpace: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+             Color(0xFFFFF8F3), // beige base
+    Color(0xFFFFEAE2),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              offset: Offset(0, 3),
             ),
-            
+          ],
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // --- Center logo + text ---
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
+                const SizedBox(height: 28),
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 44,
+                  height: 44,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(height: 6),
                 const Text(
-                  'KERALA POLICE',
+                  "Kerala Police",
                   style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    letterSpacing: 0.3,
                   ),
                 ),
                 const Text(
-                  'Soft in Temperament, Firm in Action',
+                  "Soft in Temperament, Firm in Action",
                   style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 11,
+                    color: Colors.black54,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
+
+            // --- Top-right icons ---
+            Positioned(
+              top: 25,
+              right: 50,
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.search_rounded, color: iconColor),
+                    onPressed: () {},
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.white.withOpacity(0.9),
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(8),
+                    ),
+                  ),
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.notifications_none_rounded,
+                          color: iconColor,
+                        ),
+                        onPressed: () {},
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.white.withOpacity(0.9),
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(8),
+                        ),
+                      ),
+                      Positioned(
+                        right: 10,
+                        top: 10,
+                        child: Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: Colors.redAccent,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // --- Bottom divider ---
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: Divider(
+                color: Color(0x1F000000),
+                height: 0,
+                thickness: 0.8,
+              ),
+            ),
           ],
         ),
       ),
-      
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.search, color: Colors.black),
-          onPressed: ()=>
-            Get.toNamed(RoutesName.searchScreen)
-          
-        ),
-        IconButton(
-          icon: const Icon(Icons.notifications_none, color: Colors.black),
-          onPressed: ()=>Get.toNamed(RoutesName.notificationScreen)
-          
-        )
-      ],
-      automaticallyImplyLeading: false,
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(130);
 }
-
-
