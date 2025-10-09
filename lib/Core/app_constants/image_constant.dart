@@ -12,3 +12,11 @@ const String onBoardingImage5="assets/images/screen5.png";
 const String splash_logo="assets/images/logo.png";
 
 const String errorImage="assets/images/errorimage.png";
+
+
+////////////////////////service Image constant//////////////
+const String completeReistration="assets/images/new/services/complaint.png";
+const String certifcationofNonInvolvment="assets/images/new/services/pcc.png";
+const String accidentGD="assets/images/new/services/accident.png";
+const String polblood="assets/images/new/services/blood-bank.png";
+const String firDownload="assets/images/new/services/fir.png";

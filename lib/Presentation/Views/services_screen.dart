@@ -4,13 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
+import 'package:pollapp/Core/app_constants/image_constant.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Domian/Entity/customScreenModel.dart';
 import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/servicestate.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
+import 'package:pollapp/Presentation/Cubit/cubit_files/recentlyUser_cubit.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/servicescreen_cubit.dart';
-import 'package:pollapp/Presentation/Widgets/commonviews_screen.dart';
+import 'package:pollapp/Presentation/Singleton/recently_used_singleton.dart';
 import 'package:pollapp/Presentation/Widgets/custombottomnavbar.dart';
 
 class ServiceScreen extends StatefulWidget {
@@ -44,6 +46,9 @@ class _ServiceScreenState extends State<ServiceScreen> {
       providers: [
         BlocProvider<BottomNavCubit>.value(value: bottomNavCubit),
         BlocProvider(create: (context) => ServicesCubit()),
+        BlocProvider<RecentlyUsedCubit>.value(
+          value: RecentlyUsedSingleton().cubit,
+        ),
       ],
       child: ServicesHomePage(),
     );
@@ -53,14 +58,13 @@ class _ServiceScreenState extends State<ServiceScreen> {
 class ServicesHomePage extends StatelessWidget {
   final List<ServiceItem> thunaServices = [
     ServiceItem(
-      image: "assets/images/new/services/complaint.png",
-      title: 'Complaint Registration',
+      image: completeReistration,
+      title: AppConstants.completeReistration,
       color: Color(0xFF2196F3),
       isNew: false,
     ),
     ServiceItem(
-      image: "assets/images/new/services/pcc.png",
-
+      image: certifcationofNonInvolvment,
       title: AppConstants.certifcationofNonInvolvment,
       color: Color(0xFF9C27B0),
       isNew: false,
@@ -73,14 +77,13 @@ class ServicesHomePage extends StatelessWidget {
       isNew: false,
     ),
     ServiceItem(
-      image: "assets/images/new/services/fir.png",
-
+      image: firDownload,
       title: AppConstants.firdownload,
       color: Color(0xFF4CAF50),
       isNew: false,
     ),
     ServiceItem(
-      image: "assets/images/new/services/accident.png",
+      image: accidentGD,
 
       title: AppConstants.accidentGD,
       color: Color(0xFFF44336),
@@ -567,7 +570,7 @@ class ServicesHomePage extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              _callNavigation(service.title);
+              _callNavigation(service.title, context);
             },
             onTapDown: (_) {
               context.read<ServicesCubit>().pressCard(index);
@@ -687,7 +690,7 @@ class ServicesHomePage extends StatelessWidget {
   }
 }
 
-void _callNavigation(String servicename) {
+void _callNavigation(String servicename, BuildContext context) {
   String _titleToSend = "";
   bool _disableButton = false;
 
@@ -727,16 +730,16 @@ void _callNavigation(String servicename) {
   } else if (AppConstants.trackmytrip == servicename) {
     _titleToSend = servicename;
     _disableButton = true;
-  }else if(AppConstants.seniorCitizen==servicename){
-    _titleToSend=servicename;
-  }else if(AppConstants.singlewoman==servicename){
-   _titleToSend=servicename;
-  }else if(AppConstants.reportOffence==servicename){
-    _titleToSend=servicename;
-  }else if(AppConstants.reportAbandoned==servicename){
-    _titleToSend="Abandoned Report List";
-  }else if(AppConstants.reportCyberFraud==servicename){
-    _titleToSend='Cyber Report List';
+  } else if (AppConstants.seniorCitizen == servicename) {
+    _titleToSend = servicename;
+  } else if (AppConstants.singlewoman == servicename) {
+    _titleToSend = servicename;
+  } else if (AppConstants.reportOffence == servicename) {
+    _titleToSend = servicename;
+  } else if (AppConstants.reportAbandoned == servicename) {
+    _titleToSend = "Abandoned Report List";
+  } else if (AppConstants.reportCyberFraud == servicename) {
+    _titleToSend = 'Cyber Report List';
   }
 
   Get.toNamed(
@@ -746,6 +749,7 @@ void _callNavigation(String servicename) {
       noDraft: _disableButton,
     ),
   );
+    context.read<RecentlyUsedCubit>().markAsUsed(servicename);
 }
 
 class ServiceItem {

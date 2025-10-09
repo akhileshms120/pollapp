@@ -9,14 +9,16 @@ import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/recentlyUsed_state.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/recentlyUser_cubit.dart';
+import 'package:pollapp/Presentation/Singleton/recently_used_singleton.dart';
 import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
-import 'package:pollapp/Presentation/Widgets/custom_widget.dart';
 import 'package:pollapp/Presentation/Widgets/custombottomnavbar.dart';
 import 'package:pollapp/Presentation/Widgets/emergencyContat_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/howtouse_widget.dart';
 import 'package:pollapp/Presentation/Widgets/location_corsel.dart';
 import 'package:pollapp/Presentation/Widgets/newCard.dart';
 import 'package:pollapp/Presentation/Widgets/pollappBottomSheet.dart';
+import 'package:pollapp/Presentation/Widgets/progressicon.dart';
+import 'package:pollapp/Presentation/Widgets/serviceIcon_widget.dart';
 import 'package:pollapp/Presentation/Widgets/shareAppCard_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,7 +26,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => RecentlyUsedCubit()),
+        BlocProvider<RecentlyUsedCubit>.value(
+          value: RecentlyUsedSingleton().cubit,
+        ),
+       // BlocProvider(create: (context) => RecentlyUsedCubit()),
         BlocProvider(create: (context) => BottomNavCubit()),
       ],
       child: HomeScreenContent(),
@@ -32,13 +37,11 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
 class HomeScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: 
-      HomeScreenAppBar(),
+      appBar: HomeScreenAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -94,7 +97,6 @@ class HomeScreenContent extends StatelessWidget {
               selectedIndex: state.selectedIndex,
               cubit: context.read<BottomNavCubit>(),
             );
-            
           },
         ),
       ),
@@ -161,98 +163,95 @@ class HomeScreenContent extends StatelessWidget {
   }
 
   Widget _buildServicesGrid({required BuildContext context}) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: GridView.count(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        crossAxisCount: 3,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        children: [
-          _ServiceItem(
-            icon: Icons.assignment,
-            label: AppConstants.completeReistration,
-            onPressed: () {
-              onServicePressed(
-                context: context,
-                serviceName: AppConstants.completeReistration,
-              );
-              Get.toNamed(
-                RoutesName.commonScreen,
-                arguments: Customscreenmodel(
-                  appBarTitle: AppConstants.completeReistration,
-                  noDraft: false,
-                ),
-              );
-            },
-          ),
-          _ServiceItem(
-            icon: Icons.policy,
-            label: AppConstants.certifcationofNonInvolvment,
-            onPressed: () {
-              onServicePressed(
-                context: context,
-                serviceName: AppConstants.certifcationofNonInvolvment,
-              );
-              Get.toNamed(
-                RoutesName.commonScreen,
-                arguments: Customscreenmodel(
-                  appBarTitle: 'NIOC Requests',
-                  noDraft: false,
-                ),
-              );
-            },
-          ),
-          _ServiceItem(
-            icon: Icons.assignment_late,
-            label: AppConstants.accidentGD,
-            onPressed: () {
-              onServicePressed(context: context, serviceName: AppConstants.accidentGD);
-              Get.toNamed(
-                RoutesName.commonScreen,
-                arguments: Customscreenmodel(
-                  appBarTitle: AppConstants.accidentGD,
-                  noDraft: true,
-                ),
-              );
-            },
-          ),
-          _ServiceItem(
-            icon: Icons.bloodtype_outlined,
-            label: 'Pol-Blood',
-            onPressed: () {
-              onServicePressed(context: context, serviceName: 'Pol-Blood');
-              _showPolBloodBottomSheet(context);
-            },
-          ),
-          _ServiceItem(
-            icon: Icons.download_for_offline,
-            label: AppConstants.firdownload,
-            onPressed: () {
-              onServicePressed(context: context, serviceName: AppConstants.firdownload);
-              Get.toNamed(RoutesName.firdownloadPage);
-            },
-          ),
-          _ServiceItem(
-            icon: Icons.arrow_right_alt,
-            label: 'View All',
-            onPressed: () => Get.toNamed(RoutesName.servicesScreen),
-          ),
-        ],
-      ),
+    return GridView.count(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: 3,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+      childAspectRatio: 0.85,
+      children: [
+        ProgressCircleItem(
+          title: AppConstants.certifcationofNonInvolvment,
+          progress: 0.2,
+          onPressed: () {
+            onServicePressed(
+              context: context,
+              serviceName: AppConstants.certifcationofNonInvolvment,
+            );
+            Get.toNamed(
+              RoutesName.commonScreen,
+              arguments: Customscreenmodel(
+                appBarTitle: AppConstants.completeReistration,
+                noDraft: false,
+              ),
+            );
+          },
+        ),
+        ProgressCircleItem(
+          title: AppConstants.completeReistration,
+          progress: 0.2,
+          onPressed: () {
+            onServicePressed(
+              context: context,
+              serviceName: AppConstants.completeReistration,
+            );
+            Get.toNamed(
+              RoutesName.commonScreen,
+              arguments: Customscreenmodel(
+                appBarTitle: AppConstants.completeReistration,
+                noDraft: false,
+              ),
+            );
+          },
+        ),
+        ProgressCircleItem(
+          title: AppConstants.accidentGD,
+          progress: 0,
+          onPressed: () {
+            onServicePressed(
+              context: context,
+              serviceName: AppConstants.accidentGD,
+            );
+            Get.toNamed(
+              RoutesName.commonScreen,
+              arguments: Customscreenmodel(
+                appBarTitle: AppConstants.accidentGD,
+                noDraft: false,
+              ),
+            );
+          },
+        ),
+        ProgressCircleItem(
+          title: 'Pol-Blood',
+          progress: 0,
+          onPressed: () {
+            onServicePressed(
+              context: context,
+              serviceName: 'Pol-Blood',
+            );
+           _showPolBloodBottomSheet(context);
+          },
+        ),
+        ProgressCircleItem(
+          title: AppConstants.firdownload,
+          progress: 0,
+          onPressed: () {
+            onServicePressed(
+              context: context,
+              serviceName: AppConstants.firdownload,
+            );
+            Get.toNamed(
+              RoutesName.commonScreen,
+              arguments: Customscreenmodel(
+                appBarTitle: AppConstants.firdownload,
+                noDraft: false,
+              ),
+            );
+          },
+        ),
+      NavigationCircleItem(onPressed:()=>Get.toNamed(RoutesName.servicesScreen) ,title: 'View All',showArrow: true,)
+      ],
     );
   }
 
@@ -276,7 +275,7 @@ class HomeScreenContent extends StatelessWidget {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: state.topServices.length,
-            separatorBuilder: (context, index) => const SizedBox(width: 8),
+            separatorBuilder: (context, index) => const SizedBox(width: 15),
             itemBuilder: (context, index) {
               return ServiceIconWidget(serviceId: state.topServices[index]);
             },
@@ -285,203 +284,10 @@ class HomeScreenContent extends StatelessWidget {
       },
     );
   }
-
-  Widget _buildSOSButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.read<BottomNavCubit>().triggerSOS();
-        _showSOSDialog(context);
-      },
-      child: Container(
-        width: 65,
-        height: 65,
-        decoration: BoxDecoration(
-          color: Colors.red,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.red.withOpacity(0.3),
-              blurRadius: 15,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        child: const Center(
-          child: Text(
-            'SOS',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showSOSDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Row(
-          children: const [
-            Icon(Icons.warning_amber_rounded, color: Colors.red, size: 30),
-            SizedBox(width: 8),
-            Text('SOS Emergency'),
-          ],
-        ),
-        content: const Text(
-          'Are you sure you want to trigger an emergency alert?',
-          style: TextStyle(fontSize: 16),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Handle emergency action
-              // Add your emergency contact logic here
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Emergency alert sent!'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Confirm'),
-          ),
-        ],
-      ),
-    );
-  }
+ 
 }
 
-class _ServiceItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onPressed;
 
-  const _ServiceItem({
-    required this.icon,
-    required this.label,
-    required this.onPressed,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Material(
-          shape: const CircleBorder(),
-          elevation: 4,
-          shadowColor: Colors.black26,
-          child: IconButton.filledTonal(
-            onPressed: onPressed,
-            icon: Icon(icon, size: 30, color: Colors.black),
-          ),
-        ),
-        const SizedBox(height: 4),
-        CustomWidget.customTextWidget(text: label, textAlign: TextAlign.center),
-      ],
-    );
-  }
-}
 
-class ServiceIconWidget extends StatelessWidget {
-  final String serviceId;
 
-  const ServiceIconWidget({Key? key, required this.serviceId})
-    : super(key: key);
-
-  IconData _getIconForService(String serviceName) {
-    switch (serviceName) {
-      case AppConstants.completeReistration:
-        return Icons.assignment;
-      case AppConstants.certifcationofNonInvolvment:
-        return Icons.policy;
-      case AppConstants.accidentGD:
-        return Icons.assignment_late;
-      case 'Pol-Blood':
-        return Icons.bloodtype_outlined;
-      case AppConstants.firdownload:
-        return Icons.download_for_offline;
-      case 'View All':
-        return Icons.arrow_right_alt;
-      default:
-        return Icons.apps;
-    }
-  }
-
-  Color _getBackgroundColor(String serviceName) {
-    switch (serviceName) {
-      case AppConstants.completeReistration:
-        return const Color(0xFFE0F7FA);
-      case AppConstants.certifcationofNonInvolvment:
-        return const Color(0xFFFCE4EC);
-      case AppConstants.accidentGD:
-        return const Color(0xFFFFF9C4);
-      case 'Pol-Blood':
-        return const Color(0xFFFFCDD2);
-      case AppConstants.firdownload:
-        return const Color(0xFFE1BEE7);
-      // case 'View All':
-      //   return const Color(0xFFDCEDC8);
-      default:
-        return Colors.grey[200]!;
-    }
-  }
-
-  Color _getIconColor(String serviceName) {
-    switch (serviceName) {
-      case AppConstants.completeReistration:
-        return Colors.teal.shade700;
-      case AppConstants.certifcationofNonInvolvment:
-        return Colors.pink.shade700;
-      case AppConstants.accidentGD:
-        return Colors.amber.shade700;
-      case 'Pol-Blood':
-        return Colors.red.shade700;
-      case AppConstants.firdownload:
-        return Colors.purple.shade700;
-      // case 'View All':
-      //   return Colors.green.shade700;
-      default:
-        return Colors.black;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 60,
-      height: 60,
-      decoration: BoxDecoration(
-        color: _getBackgroundColor(serviceId),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Icon(
-        _getIconForService(serviceId),
-        color: _getIconColor(serviceId),
-        size: 28,
-      ),
-    );
-  }
-}
