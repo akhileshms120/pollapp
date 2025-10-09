@@ -7,8 +7,10 @@ import 'package:pollapp/Core/app_constants/routes_constant.dart';
 import 'package:pollapp/Core/routes/navigation.dart';
 import 'package:pollapp/Domian/Entity/customScreenModel.dart';
 import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
+import 'package:pollapp/Presentation/Cubit/State/progressHome_state.dart';
 import 'package:pollapp/Presentation/Cubit/State/recentlyUsed_state.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/bottonnav_cubit.dart';
+import 'package:pollapp/Presentation/Cubit/cubit_files/progreeshome_cubit.dart';
 import 'package:pollapp/Presentation/Cubit/cubit_files/recentlyUser_cubit.dart';
 import 'package:pollapp/Presentation/Singleton/recently_used_singleton.dart';
 import 'package:pollapp/Presentation/Widgets/custom_appBar.dart';
@@ -30,7 +32,8 @@ class HomeScreen extends StatelessWidget {
         BlocProvider<RecentlyUsedCubit>.value(
           value: RecentlyUsedSingleton().cubit,
         ),
-       // BlocProvider(create: (context) => RecentlyUsedCubit()),
+        // BlocProvider(create: (context) => RecentlyUsedCubit()),
+       
         BlocProvider(create: (context) => BottomNavCubit()),
       ],
       child: HomeScreenContent(),
@@ -164,95 +167,96 @@ class HomeScreenContent extends StatelessWidget {
   }
 
   Widget _buildServicesGrid({required BuildContext context}) {
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 3,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
-      childAspectRatio: 0.85,
-      children: [
-        ProgressCircleItem(
-          title: AppConstants.certifcationofNonInvolvment,
-          progress: 0.2,
-          onPressed: () {
-            onServicePressed(
-              context: context,
-              serviceName: AppConstants.certifcationofNonInvolvment,
-            );
-            Get.toNamed(
-              RoutesName.commonScreen,
-              arguments: Customscreenmodel(
-                appBarTitle: AppConstants.completeReistration,
-           
-              ),
-            );
-          },
-        ),
-        ProgressCircleItem(
-          title: AppConstants.completeReistration,
-          progress: 0.2,
-          onPressed: () {
-            onServicePressed(
-              context: context,
-              serviceName: AppConstants.completeReistration,
-            );
-            Get.toNamed(
-              RoutesName.commonScreen,
-              arguments: Customscreenmodel(
-                appBarTitle: AppConstants.completeReistration,
-          
-              ),
-            );
-          },
-        ),
-        ProgressCircleItem(
-          title: AppConstants.accidentGD,
-          progress: 0,
-          onPressed: () {
-            onServicePressed(
-              context: context,
-              serviceName: AppConstants.accidentGD,
-            );
-            Get.toNamed(
-              RoutesName.commonScreen,
-              arguments: Customscreenmodel(
-                appBarTitle: AppConstants.accidentGD,
-            
-              ),
-            );
-          },
-        ),
-        ProgressCircleItem(
-          title: 'Pol-Blood',
-          progress: 0,
-          onPressed: () {
-            onServicePressed(
-              context: context,
-              serviceName: 'Pol-Blood',
-            );
-           _showPolBloodBottomSheet(context);
-          },
-        ),
-        ProgressCircleItem(
-          title: AppConstants.firdownload,
-          progress: 0,
-          onPressed: () {
-            onServicePressed(
-              context: context,
-              serviceName: AppConstants.firdownload,
-            );
-            Get.toNamed(
-              RoutesName.commonScreen,
-              arguments: Customscreenmodel(
-                appBarTitle: AppConstants.firdownload,
-             
-              ),
-            );
-          },
-        ),
-      NavigationCircleItem(onPressed:()=>Get.toNamed(RoutesName.servicesScreen) ,title: 'View All',showArrow: true,)
-      ],
+    return BlocBuilder<ServiceProgressCubit, ServiceProgressState>(
+      builder: (context, state) {
+        return GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 3,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          childAspectRatio: 0.85,
+          children: [
+            ProgressCircleItem(
+              title: AppConstants.certifcationofNonInvolvment,
+              progress: state.servicesProgress[AppConstants.completeReistration] ?? 0.0,
+              onPressed: () {
+                onServicePressed(
+                  context: context,
+                  serviceName: AppConstants.certifcationofNonInvolvment,
+                );
+                Get.toNamed(
+                  RoutesName.commonScreen,
+                  arguments: Customscreenmodel(
+                    appBarTitle: AppConstants.completeReistration,
+                  ),
+                );
+              },
+            ),
+            ProgressCircleItem(
+              title: AppConstants.completeReistration,
+              progress: 0.2,
+              onPressed: () {
+                onServicePressed(
+                  context: context,
+                  serviceName: AppConstants.completeReistration,
+                );
+                Get.toNamed(
+                  RoutesName.commonScreen,
+                  arguments: Customscreenmodel(
+                    appBarTitle: AppConstants.completeReistration,
+                  ),
+                );
+              },
+            ),
+            ProgressCircleItem(
+              title: AppConstants.accidentGD,
+              progress: 0,
+              onPressed: () {
+                onServicePressed(
+                  context: context,
+                  serviceName: AppConstants.accidentGD,
+                );
+                Get.toNamed(
+                  RoutesName.commonScreen,
+                  arguments: Customscreenmodel(
+                    appBarTitle: AppConstants.accidentGD,
+                  ),
+                );
+              },
+            ),
+            ProgressCircleItem(
+              title: 'Pol-Blood',
+              progress: 0,
+              onPressed: () {
+                onServicePressed(context: context, serviceName: 'Pol-Blood');
+                _showPolBloodBottomSheet(context);
+              },
+            ),
+            ProgressCircleItem(
+              title: AppConstants.firdownload,
+              progress: 0,
+              onPressed: () {
+                onServicePressed(
+                  context: context,
+                  serviceName: AppConstants.firdownload,
+                );
+                Get.toNamed(
+                  RoutesName.commonScreen,
+                  arguments: Customscreenmodel(
+                    appBarTitle: AppConstants.firdownload,
+                  ),
+                );
+              },
+            ),
+            NavigationCircleItem(
+              onPressed: () => Get.toNamed(RoutesName.servicesScreen),
+              title: 'View All',
+              showArrow: true,
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -279,18 +283,15 @@ class HomeScreenContent extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(width: 15),
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () => NavigationService().navigateToService(serviceName:state.usedServices[index]),
-                child: ServiceIconWidget(serviceId: state.topServices[index]));
+                onTap: () => NavigationService().navigateToService(
+                  serviceName: state.usedServices[index],
+                ),
+                child: ServiceIconWidget(serviceId: state.topServices[index]),
+              );
             },
           ),
         );
       },
     );
   }
- 
 }
-
-
-
-
-
