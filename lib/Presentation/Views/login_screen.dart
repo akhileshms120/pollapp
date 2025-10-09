@@ -58,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                   Column(
                     children: [
                       Image.asset(
-                        splash_logo,
+                        ImageConstant.splash_logo,
                         width: logoSize,
                         height: logoSize,
                       ),

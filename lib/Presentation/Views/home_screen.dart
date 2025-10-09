@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
+import 'package:pollapp/Core/routes/navigation.dart';
 import 'package:pollapp/Domian/Entity/customScreenModel.dart';
 import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/recentlyUsed_state.dart';
@@ -183,7 +184,7 @@ class HomeScreenContent extends StatelessWidget {
               RoutesName.commonScreen,
               arguments: Customscreenmodel(
                 appBarTitle: AppConstants.completeReistration,
-                noDraft: false,
+           
               ),
             );
           },
@@ -200,7 +201,7 @@ class HomeScreenContent extends StatelessWidget {
               RoutesName.commonScreen,
               arguments: Customscreenmodel(
                 appBarTitle: AppConstants.completeReistration,
-                noDraft: false,
+          
               ),
             );
           },
@@ -217,7 +218,7 @@ class HomeScreenContent extends StatelessWidget {
               RoutesName.commonScreen,
               arguments: Customscreenmodel(
                 appBarTitle: AppConstants.accidentGD,
-                noDraft: false,
+            
               ),
             );
           },
@@ -245,7 +246,7 @@ class HomeScreenContent extends StatelessWidget {
               RoutesName.commonScreen,
               arguments: Customscreenmodel(
                 appBarTitle: AppConstants.firdownload,
-                noDraft: false,
+             
               ),
             );
           },
@@ -277,7 +278,9 @@ class HomeScreenContent extends StatelessWidget {
             itemCount: state.topServices.length,
             separatorBuilder: (context, index) => const SizedBox(width: 15),
             itemBuilder: (context, index) {
-              return ServiceIconWidget(serviceId: state.topServices[index]);
+              return GestureDetector(
+                onTap: () => NavigationService().navigateToService(serviceName:state.usedServices[index]),
+                child: ServiceIconWidget(serviceId: state.topServices[index]));
             },
           ),
         );

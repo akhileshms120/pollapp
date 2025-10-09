@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Core/app_constants/image_constant.dart';
 
-
 class ServiceIconWidget extends StatelessWidget {
   final String serviceId;
 
@@ -12,19 +11,25 @@ class ServiceIconWidget extends StatelessWidget {
   String _getIconForService(String serviceName) {
     switch (serviceName) {
       case AppConstants.completeReistration:
-        return completeReistration;
-       case AppConstants.certifcationofNonInvolvment:
-         return certifcationofNonInvolvment;
-       case AppConstants.accidentGD:
-         return accidentGD;
-       case 'Pol-Blood':
-        return polblood;
-       case AppConstants.firdownload:
-        return firDownload;
+        return ImageConstant.completeReistration;
+      case AppConstants.certifcationofNonInvolvment:
+        return ImageConstant.certifcationofNonInvolvment;
+      case AppConstants.accidentGD:
+        return ImageConstant.accidentGD;
+      case 'Pol-Blood':
+        return ImageConstant.polblood;
+      case AppConstants.firdownload:
+        return ImageConstant.firDownload;
+      case AppConstants.mikesanction:
+        return ImageConstant.mikesanction;
+      case AppConstants.lostProperty:
+        return ImageConstant.lostProperty;
+      case AppConstants.paymentHistory:
+        return ImageConstant.payment;
       // case 'View All':
       //   return Icons.arrow_right_alt;
-       default:
-         return "";
+      default:
+        return "";
     }
   }
 
@@ -40,8 +45,12 @@ class ServiceIconWidget extends StatelessWidget {
         return const Color(0xFFFFCDD2);
       case AppConstants.firdownload:
         return const Color(0xFFE1BEE7);
-      // case 'View All':
-      //   return const Color(0xFFDCEDC8);
+      case AppConstants.mikesanction:
+        return Color(0xFFFF9800);
+      case AppConstants.lostProperty:
+        return Color(0xFFFFEB3B);
+      case AppConstants.paymentHistory:
+        return Color.fromARGB(255, 228, 138, 168);
       default:
         return Colors.grey[200]!;
     }
@@ -59,6 +68,8 @@ class ServiceIconWidget extends StatelessWidget {
         return Colors.red.shade700;
       case AppConstants.firdownload:
         return Colors.purple.shade700;
+   case AppConstants.paymentHistory:
+        return Colors.red.shade700;
       // case 'View All':
       //   return Colors.green.shade700;
       default:
@@ -83,7 +94,7 @@ class ServiceIconWidget extends StatelessWidget {
           ),
         ],
       ),
-      child:Image.asset(
+      child: Image.asset(
         _getIconForService(serviceId),
         color: _getIconColor(serviceId),
         colorBlendMode: BlendMode.srcIn,

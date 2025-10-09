@@ -28,31 +28,31 @@ class _OnboardingViewState extends State<OnboardingView> {
       OnboardingPage(
         title: AppConstants.screen1MainTitle,
         description: AppConstants.screen1SubTitle,
-        image: onBoardingImage1,
+        image: ImageConstant.onBoardingImage1,
         bgColor: const Color(0xFF81B8DB),
       ),
       OnboardingPage(
         title: AppConstants.screen2MainTitle,
         description: AppConstants.screen2SubTitle,
-        image: onBoardingImage2,
+        image: ImageConstant.onBoardingImage2,
         bgColor: const Color(0xFFF7C25E),
       ),
       OnboardingPage(
         title: AppConstants.screen3MainTitle,
         description: AppConstants.screen3SubTitle,
-        image: onBoardingImage3,
+        image: ImageConstant.onBoardingImage3,
         bgColor: const Color(0xFFB8EB9E),
       ),
       OnboardingPage(
         title: AppConstants.screen4MainTitle,
         description: AppConstants.screen4SubTitle,
-        image: onBoardingImage4,
+        image: ImageConstant.onBoardingImage4,
         bgColor: const Color(0xFF47C3BE),
       ),
       OnboardingPage(
         title: AppConstants.screen3MainTitle,
         description: AppConstants.screen3SubTitle,
-        image: onBoardingImage5,
+        image: ImageConstant.onBoardingImage5,
         bgColor: const Color(0xFFEC6D4B),
       ),
     ];

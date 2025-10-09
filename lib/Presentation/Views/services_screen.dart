@@ -6,6 +6,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pollapp/Core/app_constants/app_constants.dart';
 import 'package:pollapp/Core/app_constants/image_constant.dart';
 import 'package:pollapp/Core/app_constants/routes_constant.dart';
+import 'package:pollapp/Core/routes/navigation.dart';
 import 'package:pollapp/Domian/Entity/customScreenModel.dart';
 import 'package:pollapp/Presentation/Cubit/State/bottomNavState.dart';
 import 'package:pollapp/Presentation/Cubit/State/servicestate.dart';
@@ -58,54 +59,52 @@ class _ServiceScreenState extends State<ServiceScreen> {
 class ServicesHomePage extends StatelessWidget {
   final List<ServiceItem> thunaServices = [
     ServiceItem(
-      image: completeReistration,
+      image: ImageConstant.completeReistration,
       title: AppConstants.completeReistration,
       color: Color(0xFF2196F3),
       isNew: false,
     ),
     ServiceItem(
-      image: certifcationofNonInvolvment,
+      image: ImageConstant.certifcationofNonInvolvment,
       title: AppConstants.certifcationofNonInvolvment,
       color: Color(0xFF9C27B0),
       isNew: false,
     ),
     ServiceItem(
-      image: "assets/images/new/services/mike.png",
+      image:ImageConstant.mikesanction,
 
       title: AppConstants.mikesanction,
       color: Color(0xFFFF9800),
       isNew: false,
     ),
     ServiceItem(
-      image: firDownload,
+      image: ImageConstant.firDownload,
       title: AppConstants.firdownload,
       color: Color(0xFF4CAF50),
       isNew: false,
     ),
     ServiceItem(
-      image: accidentGD,
+      image: ImageConstant.accidentGD,
 
       title: AppConstants.accidentGD,
       color: Color(0xFFF44336),
       isNew: false,
     ),
     ServiceItem(
-      image: "assets/images/new/services/lost-property.png",
-
+      image: ImageConstant.lostProperty,
       title: AppConstants.lostProperty,
       color: Color(0xFFFFEB3B),
       isNew: false,
     ),
     ServiceItem(
-      image: "assets/images/new/services/payment.png",
+      image:ImageConstant.payment,
 
       title: AppConstants.paymentHistory,
       color: Color(0xFF3F51B5),
       isNew: false,
     ),
     ServiceItem(
-      image: "assets/images/new/services/event.png",
-
+      image: ImageConstant.payment,
       title: AppConstants.eventPerformance,
       color: Color(0xFFE91E63),
       isNew: false,
@@ -570,7 +569,8 @@ class ServicesHomePage extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              _callNavigation(service.title, context);
+              NavigationService().navigateToService(serviceName: service.title);
+              //_callNavigation(service.title, context);
             },
             onTapDown: (_) {
               context.read<ServicesCubit>().pressCard(index);
@@ -746,7 +746,6 @@ void _callNavigation(String servicename, BuildContext context) {
     RoutesName.commonScreen,
     arguments: Customscreenmodel(
       appBarTitle: _titleToSend,
-      noDraft: _disableButton,
     ),
   );
     context.read<RecentlyUsedCubit>().markAsUsed(servicename);

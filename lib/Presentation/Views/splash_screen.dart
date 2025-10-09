@@ -110,7 +110,7 @@ class SplashView extends StatelessWidget {
                 // Animated Logo Container
                 CustomAnimatedLogo(
                   size: 150,
-                  imagePath: splash_logo,
+                  imagePath: ImageConstant.splash_logo,
                   isDarkMode: isDarkMode,
                   fadeAnimation: animController.fadeAnimation,
                   scaleAnimation: animController.scaleAnimation,

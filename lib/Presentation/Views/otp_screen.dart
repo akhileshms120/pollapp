@@ -97,7 +97,7 @@ class _OtpScreenState extends State<OtpScreen> {
           // Logo
           Center(
             child: Image.asset(
-              splash_logo,
+              ImageConstant.splash_logo,
               height: 86,
               width: 86,
             ),
